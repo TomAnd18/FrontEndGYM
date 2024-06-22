@@ -1,42 +1,25 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import "./App.css";
+import NavBar from "./components/NavBar";
+import StackedList from "./components/StackedList";
+import Calendar from "./components/Calendar";
 
 function App() {
-  const [count, setCount] = useState(0)
-
-  function handleClickMore() {
-    if (count < 100) {
-      setCount(count + 1);
-    }
-  }
-
-  function handleClickLess() {
-    if (count > 0) {
-      setCount(count - 1);
-    }
-  }
-
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={ handleClickLess }> ➖ </button>
-        <span style={{ margin: '0 1rem', background: '#1a1a1a', padding: '10px', borderRadius: '8px' }}> {count} </span>
-        <button onClick={ handleClickMore }> ➕ </button> <br></br><br></br>
-        <button onClick={() => setCount(0)}> Reset </button>
+      <div className="w-full">
+        <NavBar />
+        <div className="w-full px-4 py-10 flex flex-col justify-around md:flex-row">
+          <div className="w-full md:w-1/2">
+            <StackedList />
+          </div>
+          <div className="container w-auto flex justify-center">
+            <Calendar />
+          </div>
+        </div>
       </div>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
