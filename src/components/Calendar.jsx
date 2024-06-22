@@ -5,6 +5,7 @@ export default function Calendar() {
   const [days, setDays] = useState([]);
   const daysM = ["Lu", "Ma", "Mi", "Ju", "Vi", "Sa", "Do"];
 
+  //Nombres de los dias de la semana
   const divDays = daysM.map((day, index) => {
     return (
       <div key={"name-day-" + index} className="flex justify-center">
@@ -12,6 +13,17 @@ export default function Calendar() {
       </div>
     );
   });
+
+  //Controlar los bordes de cada item del calendario
+  const getBorderItem = (index) => {
+    return index % 7 === 6 && index != 41
+      ? "border-b"
+      : index == 41
+      ? ""
+      : index >= 35 && index <= 40
+      ? "border-r"
+      : "border-r border-b";
+  };
 
   // Array para los nombres de los meses
   const months = [
@@ -29,6 +41,7 @@ export default function Calendar() {
     "Diciembre",
   ];
 
+  //Obtener dia actual
   const getCurrentDay = () => {
     const now = new Date();
     const day = now.getDate();
@@ -39,8 +52,6 @@ export default function Calendar() {
   const getCalendarDays = (year, month) => {
     const firstDay = new Date(year, month, 0);
     const lastDay = new Date(year, month + 1, 0);
-    console.log(firstDay);
-    console.log(lastDay);
 
     let prevMonthDays = [];
     let currentMonthDays = [];
@@ -49,54 +60,39 @@ export default function Calendar() {
     // Días del mes anterior
     const startDay = firstDay.getDay();
     const prevMonthLastDate = new Date(year, month, 0).getDate();
-    console.log(startDay);
-    console.log(prevMonthLastDate);
+
     for (let i = startDay - 1; i >= 0; i--) {
-      prevMonthDays.push(prevMonthLastDate - i);
+      prevMonthDays.push({
+        day: prevMonthLastDate - i,
+        backgroundC: "bg-gray-50",
+        color: "text-gray-300",
+      });
     }
 
     // Días del mes actual
     const lastDate = lastDay.getDate();
+
     for (let i = 1; i <= lastDate; i++) {
-      currentMonthDays.push(i);
+      currentMonthDays.push({
+        day: i,
+        backgroundC: "none",
+        color: "text-gray-600",
+      });
     }
 
     // Días del mes siguiente para llenar la cuadrícula de 7x6
     const totalDays = prevMonthDays.length + currentMonthDays.length;
     const remainingDays = 42 - totalDays; // 42 días para una cuadrícula de 7x6
+
     for (let i = 1; i <= remainingDays; i++) {
-      nextMonthDays.push(i);
+      nextMonthDays.push({
+        day: i,
+        backgroundC: "bg-gray-50",
+        color: "text-gray-300",
+      });
     }
-    console.log(prevMonthDays);
-    console.log(currentMonthDays);
-    console.log(nextMonthDays);
 
-    // const arrayDays = [...prevMonthDays, ...currentMonthDays, ...nextMonthDays];
-    let arrayNewDays = [];
-
-    prevMonthDays.map((day) => {
-      arrayNewDays.push({
-        day: day,
-        bg: "bg-gray-50",
-        c: "text-gray-300",
-      });
-    });
-    currentMonthDays.map((day) => {
-      arrayNewDays.push({
-        day: day,
-        bg: "none",
-        c: "text-gray-600",
-      });
-    });
-    nextMonthDays.map((day) => {
-      arrayNewDays.push({
-        day: day,
-        bg: "bg-gray-50",
-        c: "text-gray-300",
-      });
-    });
-
-    return arrayNewDays;
+    return [...prevMonthDays, ...currentMonthDays, ...nextMonthDays];
   };
 
   const handlePrevMonth = () => {
@@ -115,7 +111,6 @@ export default function Calendar() {
     const year = currentDate.getFullYear();
     const month = currentDate.getMonth();
     setDays(getCalendarDays(year, month));
-    console.log(days);
   }, [currentDate]);
 
   return (
@@ -145,9 +140,13 @@ export default function Calendar() {
           {days.map((day, index) => (
             <button
               key={"day-" + index}
-              className={`border-r border-b w-12 h-10 text-sm hover:bg-gray-100 flex justify-center items-center font-semibold ${day.bg} ${day.c}`}
+              className={`${getBorderItem(
+                index
+              )} w-12 h-10 text-sm hover:bg-gray-100 flex justify-center items-center font-semibold ${
+                day.backgroundC
+              } ${day.color}`}
             >
-              <span
+              <time
                 className={
                   getCurrentDay() == day.day
                     ? "bg-gray-800 text-white flex w-8 h-8 justify-center items-center rounded-full"
@@ -155,7 +154,7 @@ export default function Calendar() {
                 }
               >
                 {day.day}
-              </span>
+              </time>
             </button>
           ))}
         </div>
