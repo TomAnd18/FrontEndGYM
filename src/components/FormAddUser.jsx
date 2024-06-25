@@ -70,21 +70,38 @@ export default function Example({ closeModalForm }) {
 
             <div className="sm:col-span-3">
               <label
-                htmlFor="country"
+                htmlFor="subscription"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
                 Suscripción
               </label>
               <div className="mt-2">
                 <select
-                  id="country"
-                  name="country"
+                  id="subscription"
+                  name="subscription"
                   autoComplete="country-name"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                 >
                   <option>Standard</option>
                   <option>Premium</option>
                 </select>
+              </div>
+            </div>
+            <div className="sm:col-span-3">
+              <label
+                htmlFor="date-of-birthday"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                Fecha de nacimiento
+              </label>
+              <div className="mt-2">
+                <input
+                  type="date"
+                  name="date-of-birthday"
+                  id="date-of-birthday"
+                  autoComplete="given-name"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
               </div>
             </div>
           </div>
@@ -95,18 +112,15 @@ export default function Example({ closeModalForm }) {
               <div className="relative flex gap-x-3">
                 <div className="flex h-6 items-center">
                   <input
-                    id="comments"
-                    name="comments"
+                    id="pay"
+                    name="pay"
                     type="checkbox"
                     className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
                   />
                 </div>
                 <div className="text-sm leading-6">
-                  <label
-                    htmlFor="comments"
-                    className="font-medium text-gray-900"
-                  >
-                    Realizo el pago de mes
+                  <label htmlFor="pay" className="font-medium text-gray-900">
+                    Realizó el pago del mes
                   </label>
                 </div>
               </div>

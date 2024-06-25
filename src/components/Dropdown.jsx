@@ -56,7 +56,7 @@ export default function Example() {
             href="#"
             className={classNames(
               focus ? "bg-gray-100 text-gray-900" : "text-gray-500",
-              "flex px-4 py-2 text-sm flex-row items-center justify-start font-semibold"
+              "flex px-4 py-2 text-sm flex-row items-center justify-start"
             )}
           >
             {option.svg}
@@ -70,7 +70,8 @@ export default function Example() {
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
-        <MenuButton className="inline-flex w-full justify-center gap-x-1.5 rounded-full bg-white px-1 py-1 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+        <MenuButton className="pl-2 inline-flex w-full justify-center gap-x-1.5 rounded-full bg-white px-1 py-1 text-sm text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+          Opciones
           <ChevronDownIcon
             className="h-5 w-5 text-gray-400"
             aria-hidden="true"

@@ -1,5 +1,3 @@
-import Dropdown from "../components/Dropdown";
-
 const people = [
   {
     name: "Leslie Alexander",
@@ -161,94 +159,25 @@ const people = [
 
 export default function Example() {
   return (
-    <ul role="list" className="divide-y divide-gray-100">
+    <ul
+      role="list"
+      className="divide-y divide-gray-100 py-2 rounded-lg bg-gray-50 shadow-md"
+    >
       {people.map((person, index) => (
         <li
           key={"item-person-" + index}
-          className="flex justify-between gap-x-6 py-2"
+          className="flex justify-between gap-x-6 py-2 px-4 hover:bg-gray-100 cursor-pointer"
         >
           <div className="flex min-w-0 gap-x-4 items-center">
-            <img
-              className="h-8 w-8 flex-none rounded-full bg-gray-50"
-              src={person.imageUrl}
-              alt=""
-            />
             <div className="min-w-0 flex-auto">
-              <p className="text-md font-semibold leading-4 text-gray-900">
+              <p className="text-sm font-semibold leading-4 text-gray-400">
                 {person.name}
-              </p>
-              <p className="mt-1 truncate text-xs leading-3 text-gray-500">
-                {person.gender}
               </p>
             </div>
           </div>
           <div className="shrink-0 flex flex-row justify-between">
-            <div className="flex justify-center flex-col pr-2">
-              <div className="flex border border-gray-300 rounded-full px-2">
-                <div className="relative flex gap-x-3 mx-1">
-                  <div className="flex h-6 items-center">
-                    <input
-                      id="candidates"
-                      name="candidates"
-                      type="checkbox"
-                      className="h-4 w-4 rounded-full border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                    />
-                  </div>
-                </div>
-                <div className="relative flex gap-x-3 mx-1">
-                  <div className="flex h-6 items-center">
-                    <input
-                      id="candidates"
-                      name="candidates"
-                      type="checkbox"
-                      className="h-4 w-4 rounded-full border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                    />
-                  </div>
-                </div>
-                <div className="relative flex gap-x-3 mx-1">
-                  <div className="flex h-6 items-center">
-                    <input
-                      id="candidates"
-                      name="candidates"
-                      type="checkbox"
-                      className="h-4 w-4 rounded-full border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                    />
-                  </div>
-                </div>
-                <div className="relative flex gap-x-3 mx-1">
-                  <div className="flex h-6 items-center">
-                    <input
-                      id="candidates"
-                      name="candidates"
-                      type="checkbox"
-                      className="h-4 w-4 rounded-full border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                    />
-                  </div>
-                </div>
-              </div>
-              {/* <p className="text-sm leading-6 text-gray-900">{person.role}</p>
-              <p className="mt-1 text-xs leading-5 text-gray-500">
-                <time dateTime={person.lastSeenDateTime}>
-                  {person.lastSeen}
-                </time>
-              </p> */}
-              {/* {person.lastSeen ? (
-                <p className="mt-1 text-xs leading-5 text-gray-500">
-                  <time dateTime={person.lastSeenDateTime}>
-                    {person.lastSeen}
-                  </time>
-                </p>
-              ) : (
-                <div className="mt-1 flex items-center gap-x-1.5">
-                  <div className="flex-none rounded-full bg-emerald-500/20 p-1">
-                    <div className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                  </div>
-                  <p className="text-xs leading-5 text-gray-500">Online</p>
-                </div>
-              )} */}
-            </div>
             <div className="pl-2 flex items-center">
-              <Dropdown />
+              <span className="text-sm text-green-500">Activo</span>
             </div>
           </div>
         </li>
