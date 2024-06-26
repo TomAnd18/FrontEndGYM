@@ -50,24 +50,43 @@ export default function Example({ closeModalForm }) {
               </div>
             </div>
 
-            <div className="sm:col-span-full">
+            <div className="sm:col-span-3">
               <label
-                htmlFor="email"
+                htmlFor="phone-number"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
-                Email address
+                Teléfono
               </label>
               <div className="mt-2">
                 <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
+                  type="text"
+                  name="phone-number"
+                  id="phone-number"
+                  autoComplete="family-name"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
 
+            <div className="sm:col-span-3">
+              <label
+                htmlFor="gender"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                Genero
+              </label>
+              <div className="mt-2">
+                <select
+                  id="gender"
+                  name="gender"
+                  autoComplete="country-name"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                >
+                  <option>Hombre</option>
+                  <option>Mujer</option>
+                </select>
+              </div>
+            </div>
             <div className="sm:col-span-3">
               <label
                 htmlFor="subscription"
