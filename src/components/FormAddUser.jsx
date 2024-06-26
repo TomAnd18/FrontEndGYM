@@ -1,9 +1,47 @@
+import { useState } from "react";
+import useCustomerHook from "../hooks/useCustomerHook";
+
 export default function Example({ closeModalForm }) {
+  const { handleCreateCustomer } = useCustomerHook();
+
+  const [formData, setFormData] = useState({
+    name: "",
+    surname: "",
+    gender: "Hombre",
+    phone_number: "",
+    subscription: "Standard",
+    date_of_birth: "",
+    active: "activo",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      //envio los datos del form a redux para que desde ahi guarde el nuevo cliente en la API
+      await handleCreateCustomer(formData);
+
+      // Cierra el modal después del envío
+      closeModalForm();
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   const handleCloseModalForm = () => {
     closeModalForm();
   };
+
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <div className="space-y-12">
         <div>
           <h2 className="text-base font-semibold leading-7 text-gray-900">
@@ -16,7 +54,7 @@ export default function Example({ closeModalForm }) {
           <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
             <div className="sm:col-span-3">
               <label
-                htmlFor="first-name"
+                htmlFor="name"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
                 Nombre/s
@@ -24,9 +62,11 @@ export default function Example({ closeModalForm }) {
               <div className="mt-2">
                 <input
                   type="text"
-                  name="first-name"
-                  id="first-name"
-                  autoComplete="given-name"
+                  name="name"
+                  id="name"
+                  autoComplete="firstName"
+                  value={formData.name}
+                  onChange={handleChange}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -34,7 +74,7 @@ export default function Example({ closeModalForm }) {
 
             <div className="sm:col-span-3">
               <label
-                htmlFor="last-name"
+                htmlFor="surname"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
                 Apellido/s
@@ -42,9 +82,11 @@ export default function Example({ closeModalForm }) {
               <div className="mt-2">
                 <input
                   type="text"
-                  name="last-name"
-                  id="last-name"
-                  autoComplete="family-name"
+                  name="surname"
+                  id="surname"
+                  autoComplete="surname"
+                  value={formData.surname}
+                  onChange={handleChange}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -52,7 +94,7 @@ export default function Example({ closeModalForm }) {
 
             <div className="sm:col-span-3">
               <label
-                htmlFor="phone-number"
+                htmlFor="phone_number"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
                 Teléfono
@@ -60,9 +102,11 @@ export default function Example({ closeModalForm }) {
               <div className="mt-2">
                 <input
                   type="text"
-                  name="phone-number"
-                  id="phone-number"
-                  autoComplete="family-name"
+                  name="phone_number"
+                  id="phone_number"
+                  autoComplete="phone_number"
+                  value={formData.phoneNumber}
+                  onChange={handleChange}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -79,7 +123,9 @@ export default function Example({ closeModalForm }) {
                 <select
                   id="gender"
                   name="gender"
-                  autoComplete="country-name"
+                  autoComplete="gender"
+                  value={formData.gender}
+                  onChange={handleChange}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                 >
                   <option>Hombre</option>
@@ -98,7 +144,9 @@ export default function Example({ closeModalForm }) {
                 <select
                   id="subscription"
                   name="subscription"
-                  autoComplete="country-name"
+                  autoComplete="subscription"
+                  value={formData.subscription}
+                  onChange={handleChange}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                 >
                   <option>Standard</option>
@@ -108,7 +156,7 @@ export default function Example({ closeModalForm }) {
             </div>
             <div className="sm:col-span-3">
               <label
-                htmlFor="date-of-birthday"
+                htmlFor="date_of_birthday"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
                 Fecha de nacimiento
@@ -116,9 +164,11 @@ export default function Example({ closeModalForm }) {
               <div className="mt-2">
                 <input
                   type="date"
-                  name="date-of-birthday"
-                  id="date-of-birthday"
-                  autoComplete="given-name"
+                  name="date_of_birth"
+                  id="date_of_birth"
+                  autoComplete="date_of_birth"
+                  value={formData.date_of_birth}
+                  onChange={handleChange}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>

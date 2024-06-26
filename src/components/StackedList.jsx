@@ -1,17 +1,20 @@
 import Dropdown from "../components/Dropdown";
-import useGetAllCustomers from "../hooks/useGetAllCustomers";
+import useCustomerHook from "../hooks/useCustomerHook";
+import { useSelector } from "react-redux";
 
 export default function Example() {
-  const { data, loading, error } = useGetAllCustomers();
+  const { loading } = useCustomerHook();
   const imageUrl =
     "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80";
+  const data = useSelector((state) => state.customers.list);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
+  if (loading) return <p>Cargando...</p>;
+
+  if (data.length == 0) return <p>No hay usuarios</p>;
 
   return (
     <ul role="list" className="divide-y divide-gray-100">
-      {data.clientes.map((person, index) => (
+      {data.map((person, index) => (
         <li
           key={"item-person-" + index}
           className="flex justify-between gap-x-6 py-2"
@@ -80,7 +83,7 @@ export default function Example() {
               </div>
             </div>
             <div className="pl-2 flex items-center">
-              <Dropdown />
+              <Dropdown idCustomer={person.id} />
             </div>
           </div>
         </li>

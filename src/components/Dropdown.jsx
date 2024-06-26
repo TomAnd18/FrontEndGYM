@@ -1,14 +1,34 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
+import { useDispatch } from "react-redux";
+import useCustomerHook from "../hooks/useCustomerHook";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Example() {
+export default function Example({ idCustomer }) {
+  const dispatch = useDispatch();
+  const { handleDeleteCustomer } = useCustomerHook();
+
+  const handleOnClickViewCustomer = () => {
+    console.log("view customer");
+  };
+  const handleOnClickUpdateCustomer = () => {
+    console.log("update customer");
+  };
+  const handleOnClickDeleteCustomer = async () => {
+    try {
+      await handleDeleteCustomer(idCustomer);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const optionUser = [
     {
       title: "Ver",
+      onClick: handleOnClickViewCustomer,
       svg: (
         <svg
           className="w-4 h-4 mr-2"
@@ -22,6 +42,7 @@ export default function Example() {
     },
     {
       title: "Editar",
+      onClick: handleOnClickUpdateCustomer,
       svg: (
         <svg
           className="w-4 h-4 mr-2"
@@ -35,6 +56,7 @@ export default function Example() {
     },
     {
       title: "Dar de baja",
+      onClick: handleOnClickDeleteCustomer,
       svg: (
         <svg
           className="w-4 h-4 mr-2"
@@ -48,12 +70,12 @@ export default function Example() {
     },
   ];
 
-  const chartOptionsUser = optionUser.map((option) => {
+  const chartOptionsUser = optionUser.map((option, index) => {
     return (
-      <MenuItem>
+      <MenuItem key={`dropdown-item-${index}`}>
         {({ focus }) => (
-          <a
-            href="#"
+          <div
+            onClick={option.onClick}
             className={classNames(
               focus ? "bg-gray-100 text-gray-900" : "text-gray-500",
               "flex px-4 py-2 text-sm flex-row items-center justify-start"
@@ -61,7 +83,7 @@ export default function Example() {
           >
             {option.svg}
             {option.title}
-          </a>
+          </div>
         )}
       </MenuItem>
     );

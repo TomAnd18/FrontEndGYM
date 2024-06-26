@@ -9,3 +9,35 @@ export const getAllCustomers = async () => {
     console.log(error);
   }
 };
+
+export const postAddCustomer = async (formData) => {
+  const response = await fetch(`${url}/customer`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(formData),
+  });
+
+  if (!response.ok) {
+    throw new Error("Error en la petición");
+  }
+
+  const data = await response.json();
+
+  return data.cliente;
+};
+
+export const deleteCustomer = async (id) => {
+  try {
+    const datos = await fetch(`${url}/customer/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    return datos;
+  } catch (error) {
+    console.log(error);
+  }
+};
