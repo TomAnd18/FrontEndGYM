@@ -1,7 +1,7 @@
-import NavBar from "./NavBar";
-import StackedList from "./StackedList";
-import Calendar from "./Calendar";
-import ModalAddUser from "./ModalAddUser";
+import NavBar from "../components/NavBar";
+import StackedList from "../components/StackedList";
+import Calendar from "../components/Calendar";
+import ModalAddUser from "../components/ModalAddUser";
 import { useState } from "react";
 import SearchUserStackedList from "../components/SearchUserStackedList";
 import MiniStackedList from "../components/MiniStackedList";
