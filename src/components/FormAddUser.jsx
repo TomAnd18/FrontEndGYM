@@ -11,7 +11,7 @@ export default function Example({ closeModalForm }) {
     phone_number: "",
     subscription: "Standard",
     date_of_birth: "",
-    active: "activo",
+    active: "active",
   });
 
   const handleChange = (e) => {

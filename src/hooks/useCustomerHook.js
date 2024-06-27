@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   deleteCustomer,
   getAllCustomers,
@@ -14,6 +14,19 @@ import {
 const useCustomerHook = () => {
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
+
+  const getDaysInMonth = () => {
+    const currentDate = new Date();
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth() + 1;
+
+    const lastDayOfMonth = new Date(year, month, 0).getDate();
+    return lastDayOfMonth;
+  };
+
+  const scrollRefs = Array.from({ length: getDaysInMonth() }, () =>
+    useRef(null)
+  );
 
   useEffect(() => {
     const fetchData = async () => {
@@ -54,7 +67,12 @@ const useCustomerHook = () => {
     }
   };
 
-  return { loading, handleCreateCustomer, handleDeleteCustomer };
+  return {
+    loading,
+    handleCreateCustomer,
+    handleDeleteCustomer,
+    scrollRefs,
+  };
 };
 
 export default useCustomerHook;

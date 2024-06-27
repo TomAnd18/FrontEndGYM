@@ -1,28 +1,31 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
-import { useDispatch } from "react-redux";
-import useCustomerHook from "../hooks/useCustomerHook";
+// import { useDispatch } from "react-redux";
+import ModalDeleteUser from "./ModalDeleteUser";
+import { useState } from "react";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Example({ idCustomer }) {
-  const dispatch = useDispatch();
-  const { handleDeleteCustomer } = useCustomerHook();
+export default function Dropdown({ idCustomer, nameCustomer }) {
+  // const dispatch = useDispatch();
+
+  const [activate, setActivate] = useState(false);
+
+  const activateModalDeleteUser = () => {
+    setActivate(true);
+  };
+
+  const deactivateModalDeleteUser = () => {
+    setActivate(false);
+  };
 
   const handleOnClickViewCustomer = () => {
     console.log("view customer");
   };
   const handleOnClickUpdateCustomer = () => {
     console.log("update customer");
-  };
-  const handleOnClickDeleteCustomer = async () => {
-    try {
-      await handleDeleteCustomer(idCustomer);
-    } catch (error) {
-      console.log(error);
-    }
   };
 
   const optionUser = [
@@ -56,7 +59,7 @@ export default function Example({ idCustomer }) {
     },
     {
       title: "Dar de baja",
-      onClick: handleOnClickDeleteCustomer,
+      onClick: activateModalDeleteUser,
       svg: (
         <svg
           className="w-4 h-4 mr-2"
@@ -72,7 +75,7 @@ export default function Example({ idCustomer }) {
 
   const chartOptionsUser = optionUser.map((option, index) => {
     return (
-      <MenuItem key={`dropdown-item-${index}`}>
+      <MenuItem className="cursor-pointer" key={`dropdown-item-${index}`}>
         {({ focus }) => (
           <div
             onClick={option.onClick}
@@ -90,23 +93,31 @@ export default function Example({ idCustomer }) {
   });
 
   return (
-    <Menu as="div" className="relative inline-block text-left">
-      <div>
-        <MenuButton className="pl-2 inline-flex w-full justify-center gap-x-1.5 rounded-full bg-white px-1 py-1 text-sm text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
-          Opciones
-          <ChevronDownIcon
-            className="h-5 w-5 text-gray-400"
-            aria-hidden="true"
-          />
-        </MenuButton>
-      </div>
+    <>
+      <Menu as="div" className="relative inline-block text-left">
+        <div>
+          <MenuButton className="pl-2 inline-flex w-full justify-center gap-x-1.5 rounded-full bg-white px-1 py-1 text-sm text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+            Opciones
+            <ChevronDownIcon
+              className="h-5 w-5 text-gray-400"
+              aria-hidden="true"
+            />
+          </MenuButton>
+        </div>
 
-      <MenuItems
-        transition
-        className="absolute right-0 z-10 mt-2 w-44 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
-      >
-        <div className="py-1">{chartOptionsUser}</div>
-      </MenuItems>
-    </Menu>
+        <MenuItems
+          transition
+          className="absolute right-0 z-10 mt-2 w-44 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
+        >
+          <div className="py-1">{chartOptionsUser}</div>
+        </MenuItems>
+      </Menu>
+      <ModalDeleteUser
+        activate={activate}
+        deactivateModal={deactivateModalDeleteUser}
+        idCustomer={idCustomer}
+        nameCustomer={nameCustomer}
+      />
+    </>
   );
 }
