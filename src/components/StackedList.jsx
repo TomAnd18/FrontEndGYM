@@ -5,8 +5,6 @@ import CheckBoxGroup from "./CheckBoxGroup";
 
 export default function StackedList() {
   const { loading, scrollRefs } = useCustomerHook();
-  const imageUrl =
-    "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80";
   const data = useSelector((state) => state.customers.list);
 
   if (loading) return <p>Cargando...</p>;
@@ -33,11 +31,15 @@ export default function StackedList() {
             className="w-full flex flex-col xl:flex-row justify-between gap-x-6 py-2 hover:bg-gray-50"
           >
             <div className="w-auto flex min-w-0 gap-x-4 items-center">
-              <img
-                className="h-8 w-8 flex-none rounded-full bg-gray-50"
-                src={imageUrl}
-                alt=""
-              />
+              <div className="h-7 w-7">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 512 512"
+                  fill="#9ca3c0"
+                >
+                  <path d="M399 384.2C376.9 345.8 335.4 320 288 320H224c-47.4 0-88.9 25.8-111 64.2c35.2 39.2 86.2 63.8 143 63.8s107.8-24.7 143-63.8zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm256 16a72 72 0 1 0 0-144 72 72 0 1 0 0 144z" />
+                </svg>
+              </div>
               <div className="min-w-0 flex-auto">
                 <div className="text-md font-semibold leading-3 text-gray-700 flex items-center">
                   <p className="mr-1 capitalize">{person.name}</p>

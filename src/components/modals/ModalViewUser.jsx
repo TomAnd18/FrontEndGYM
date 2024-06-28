@@ -25,6 +25,11 @@ export default function ModalViewUser({ activate, deactivateModal, person }) {
     return `${day}-${month}-${year}`;
   };
 
+  function formatDateDataBase(dateString) {
+    const options = { year: "numeric", month: "2-digit", day: "2-digit" };
+    return new Date(dateString).toLocaleDateString("en-GB", options); // 'en-GB' for DD-MM-YYYY format
+  }
+
   return (
     <Dialog className="relative z-10" open={open} onClose={handleClose}>
       <DialogBackdrop
@@ -45,7 +50,21 @@ export default function ModalViewUser({ activate, deactivateModal, person }) {
                     as="h3"
                     className="text-lg px-4 font-semibold leading-6 text-gray-900 capitalize"
                   >
-                    {person.name + " " + person.surname}
+                    <div className="flex items-center mb-2">
+                      <div className="h-7 w-7 mr-2">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 512 512"
+                          fill="#9ca3c0"
+                        >
+                          <path d="M399 384.2C376.9 345.8 335.4 320 288 320H224c-47.4 0-88.9 25.8-111 64.2c35.2 39.2 86.2 63.8 143 63.8s107.8-24.7 143-63.8zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm256 16a72 72 0 1 0 0-144 72 72 0 1 0 0 144z" />
+                        </svg>
+                      </div>
+                      <p>{person.name + " " + person.surname}</p>
+                    </div>
+                    <span className="text-xs border-l-2 border-green-500 pl-2">{`fecha de registro: ${formatDateDataBase(
+                      person.created_at
+                    )}`}</span>
                   </DialogTitle>
                   <div className="mt-2 w-full">
                     <div className="w-full">
