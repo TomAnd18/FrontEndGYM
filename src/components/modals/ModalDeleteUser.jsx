@@ -6,7 +6,7 @@ import {
   DialogTitle,
 } from "@headlessui/react";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
-import useCustomerHook from "../hooks/useCustomerHook";
+import useCustomerHook from "../../hooks/useCustomerHook";
 
 export default function BtnDeleteUser({
   activate,

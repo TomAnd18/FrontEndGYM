@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
-import FormAddUser from "../components/FormAddUser";
+import FormAddUser from "../forms/FormAddUser";
 
 export default function Example({ activate, deactivateModal }) {
   const [open, setOpen] = useState(false);

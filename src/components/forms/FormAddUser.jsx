@@ -1,5 +1,5 @@
 import { useState } from "react";
-import useCustomerHook from "../hooks/useCustomerHook";
+import useCustomerHook from "../../hooks/useCustomerHook";
 
 export default function Example({ closeModalForm }) {
   const { handleCreateCustomer } = useCustomerHook();

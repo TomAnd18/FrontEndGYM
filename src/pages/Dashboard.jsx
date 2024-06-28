@@ -1,10 +1,10 @@
-import NavBar from "../components/NavBar";
+import NavBar from "../layouts/NavBar";
 import StackedList from "../components/StackedList";
 import Calendar from "../components/Calendar";
 
 import SearchUserStackedList from "../components/SearchUserStackedList";
 import MiniStackedList from "../components/MiniStackedList";
-import BtnAddUser from "../components/BtnAddUser";
+import BtnAddUser from "../components/buttons/BtnAddUser";
 
 export default function Dashboard() {
   return (

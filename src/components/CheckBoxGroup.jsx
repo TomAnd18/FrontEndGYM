@@ -43,7 +43,7 @@ const CheckBoxGroup = forwardRef(() => {
               id={`checkbox-${checkbox.id}`}
               name={`checkbox-${checkbox.id}`}
               type="checkbox"
-              className="h-6 w-6 rounded-md border-gray-200 text-indigo-600 focus:ring-indigo-600 checked:bg-none cursor-pointer hover:bg-indigo-600"
+              className="h-6 w-6 rounded-md border-gray-200 text-blue-500 focus:ring-blue-500 checked:bg-none cursor-pointer hover:bg-blue-500"
               checked={checkbox.checked}
               onChange={() => handleCheckBoxChange(checkbox.id)}
             />

@@ -25,6 +25,14 @@ export default function Calendar() {
       : "border-r border-b";
   };
 
+  if (1 == 1) {
+    //option1
+  } else if (2 == 2) {
+    //option2
+  } else {
+    //nada
+  }
+
   // Array para los nombres de los meses
   const months = [
     "Enero",
@@ -66,6 +74,7 @@ export default function Calendar() {
         day: prevMonthLastDate - i,
         backgroundC: "bg-gray-50",
         color: "text-gray-300",
+        currentDay: false,
       });
     }
 
@@ -77,6 +86,7 @@ export default function Calendar() {
         day: i,
         backgroundC: "none",
         color: "text-gray-600",
+        currentDay: getCurrentDay() == i,
       });
     }
 
@@ -89,6 +99,7 @@ export default function Calendar() {
         day: i,
         backgroundC: "bg-gray-50",
         color: "text-gray-300",
+        currentDay: false,
       });
     }
 
@@ -148,7 +159,7 @@ export default function Calendar() {
             >
               <time
                 className={
-                  getCurrentDay() == day.day
+                  day.currentDay
                     ? "bg-gray-800 text-white flex w-8 h-8 justify-center items-center rounded-full"
                     : ""
                 }

@@ -1,29 +1,39 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 // import { useDispatch } from "react-redux";
-import ModalDeleteUser from "./ModalDeleteUser";
+import ModalDeleteUser from "./modals/ModalDeleteUser";
 import { useState } from "react";
+import ModalViewUser from "./modals/ModalViewUser";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Dropdown({ idCustomer, nameCustomer }) {
+export default function Dropdown({ idCustomer, nameCustomer, person }) {
   // const dispatch = useDispatch();
 
-  const [activate, setActivate] = useState(false);
+  const [activateModalDelete, setActivateModalDelete] = useState(false);
+  const [activateModalView, setActivateModalView] = useState(false);
 
+  //Delete User
   const activateModalDeleteUser = () => {
-    setActivate(true);
+    setActivateModalDelete(true);
   };
-
   const deactivateModalDeleteUser = () => {
-    setActivate(false);
+    setActivateModalDelete(false);
   };
 
-  const handleOnClickViewCustomer = () => {
-    console.log("view customer");
+  //View User
+  const activateModalViewUser = () => {
+    setActivateModalView(true);
   };
+  const deactivateModalViewUser = () => {
+    setActivateModalView(false);
+  };
+
+  // const handleOnClickViewCustomer = () => {
+  //   console.log("view customer");
+  // };
   const handleOnClickUpdateCustomer = () => {
     console.log("update customer");
   };
@@ -31,7 +41,7 @@ export default function Dropdown({ idCustomer, nameCustomer }) {
   const optionUser = [
     {
       title: "Ver",
-      onClick: handleOnClickViewCustomer,
+      onClick: activateModalViewUser,
       svg: (
         <svg
           className="w-4 h-4 mr-2"
@@ -113,10 +123,15 @@ export default function Dropdown({ idCustomer, nameCustomer }) {
         </MenuItems>
       </Menu>
       <ModalDeleteUser
-        activate={activate}
+        activate={activateModalDelete}
         deactivateModal={deactivateModalDeleteUser}
         idCustomer={idCustomer}
         nameCustomer={nameCustomer}
+      />
+      <ModalViewUser
+        activate={activateModalView}
+        deactivateModal={deactivateModalViewUser}
+        person={person}
       />
     </>
   );

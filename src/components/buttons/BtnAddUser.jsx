@@ -1,5 +1,5 @@
 import React from "react";
-import ModalAddUser from "../components/ModalAddUser";
+import ModalAddUser from "../modals/ModalAddUser";
 import { useState } from "react";
 
 export default function BtnAddUser() {
