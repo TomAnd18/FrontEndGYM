@@ -3,12 +3,14 @@ import {
   deleteCustomer,
   getAllCustomers,
   postAddCustomer,
+  updateCustomer,
 } from "../api/apiService";
 import { useDispatch } from "react-redux";
 import {
   addCustomer,
   removeCustomer,
   setCustomers,
+  putCustomer,
 } from "../redux/customersSlice";
 
 const useCustomerHook = () => {
@@ -67,10 +69,22 @@ const useCustomerHook = () => {
     }
   };
 
+  const handleUpdateCustomer = async (idCustomer, formData) => {
+    try {
+      // Llamar a la API para eliminar el cliente
+      const customerUpdate = await updateCustomer(idCustomer, formData);
+      // Actualizar el estado de Redux eliminando el cliente de la lista
+      dispatch(putCustomer(customerUpdate.cliente));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return {
     loading,
     handleCreateCustomer,
     handleDeleteCustomer,
+    handleUpdateCustomer,
     scrollRefs,
   };
 };

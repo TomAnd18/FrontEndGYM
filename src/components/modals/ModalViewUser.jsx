@@ -48,9 +48,9 @@ export default function ModalViewUser({ activate, deactivateModal, person }) {
                 <div className="mt-3 text-center sm:mt-0 sm:text-left w-full">
                   <DialogTitle
                     as="h3"
-                    className="text-lg px-4 font-semibold leading-6 text-gray-900 capitalize"
+                    className="text-lg px-4 font-semibold leading-6 text-gray-900 capitalize flex flex-col justify-start"
                   >
-                    <div className="flex items-center mb-2">
+                    <div className="flex items-center mb-4">
                       <div className="h-7 w-7 mr-2">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -61,10 +61,21 @@ export default function ModalViewUser({ activate, deactivateModal, person }) {
                         </svg>
                       </div>
                       <p>{person.name + " " + person.surname}</p>
+                      {person.active == "active" ? (
+                        <span className="text-xs px-3 py-0.5 bg-green-500 text-white ml-2 rounded-full uppercase">
+                          Activo
+                        </span>
+                      ) : (
+                        <span className="text-xs px-3 py-1 bg-red-500 text-white ml-2 rounded-full uppercase">
+                          Pagar
+                        </span>
+                      )}
                     </div>
-                    <span className="text-xs border-l-2 border-green-500 pl-2">{`fecha de registro: ${formatDateDataBase(
-                      person.created_at
-                    )}`}</span>
+                    <span className="text-xs flex border-l-2 border-green-500 pl-2">
+                      {` fecha de registro: ${formatDateDataBase(
+                        person.created_at
+                      )}`}
+                    </span>
                   </DialogTitle>
                   <div className="mt-2 w-full">
                     <div className="w-full">

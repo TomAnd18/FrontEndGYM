@@ -11,7 +11,7 @@ export default function Dashboard() {
     <>
       <div className="w-full">
         <NavBar />
-        <main className="md:m-4 w-full md:w-auto shadow-md shadow-gray-300 rounded-lg">
+        <main className="md:m-4 w-full pb-28 md:w-auto shadow-md shadow-gray-300 rounded-lg">
           <div className="w-full pb-10 flex flex-col">
             <header className="p-4 border-b-2 rounded-md bg-gray-100">
               <div className="w-full">

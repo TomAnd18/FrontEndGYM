@@ -28,8 +28,8 @@ export default function BtnDeleteUser({
   };
 
   const handleOnClickDeleteCustomer = async () => {
+    setLoading(true);
     try {
-      setLoading(true);
       await handleDeleteCustomer(idCustomer);
     } catch (error) {
       console.log(error);
@@ -82,7 +82,7 @@ export default function BtnDeleteUser({
             <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
               {loading ? (
                 <div>
-                  <p>Eliminado cliente...</p>
+                  <p>Cargando...</p>
                 </div>
               ) : (
                 <>

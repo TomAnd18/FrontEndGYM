@@ -41,3 +41,19 @@ export const deleteCustomer = async (id) => {
     console.log(error);
   }
 };
+
+export const updateCustomer = async (id, formData) => {
+  try {
+    const response = await fetch(`${url}/customer/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};

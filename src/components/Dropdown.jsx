@@ -4,6 +4,7 @@ import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import ModalDeleteUser from "./modals/ModalDeleteUser";
 import { useState } from "react";
 import ModalViewUser from "./modals/ModalViewUser";
+import ModalUpdateUser from "./modals/ModalUpdateUser";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -14,6 +15,7 @@ export default function Dropdown({ idCustomer, nameCustomer, person }) {
 
   const [activateModalDelete, setActivateModalDelete] = useState(false);
   const [activateModalView, setActivateModalView] = useState(false);
+  const [activateModalUpdate, setActivateModalUpdate] = useState(false);
 
   //Delete User
   const activateModalDeleteUser = () => {
@@ -31,12 +33,17 @@ export default function Dropdown({ idCustomer, nameCustomer, person }) {
     setActivateModalView(false);
   };
 
-  // const handleOnClickViewCustomer = () => {
-  //   console.log("view customer");
-  // };
-  const handleOnClickUpdateCustomer = () => {
-    console.log("update customer");
+  //Update User
+  const activateModalUpdateUser = () => {
+    setActivateModalUpdate(true);
   };
+  const deactivateModalUpdateUser = () => {
+    setActivateModalUpdate(false);
+  };
+
+  // const handleOnClickUpdateCustomer = () => {
+  //   console.log("update customer");
+  // };
 
   const optionUser = [
     {
@@ -55,7 +62,7 @@ export default function Dropdown({ idCustomer, nameCustomer, person }) {
     },
     {
       title: "Editar",
-      onClick: handleOnClickUpdateCustomer,
+      onClick: activateModalUpdateUser,
       svg: (
         <svg
           className="w-4 h-4 mr-2"
@@ -131,6 +138,11 @@ export default function Dropdown({ idCustomer, nameCustomer, person }) {
       <ModalViewUser
         activate={activateModalView}
         deactivateModal={deactivateModalViewUser}
+        person={person}
+      />
+      <ModalUpdateUser
+        activate={activateModalUpdate}
+        deactivateModal={deactivateModalUpdateUser}
         person={person}
       />
     </>

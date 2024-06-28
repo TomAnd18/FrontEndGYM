@@ -1,25 +1,25 @@
 import { useState } from "react";
 import useCustomerHook from "../../hooks/useCustomerHook";
 
-export default function Example({ closeModalForm }) {
-  const { handleCreateCustomer } = useCustomerHook();
+export default function FormUpdateUser({ closeModalForm, person }) {
+  const { handleUpdateCustomer } = useCustomerHook();
+  const idCustomer = person.id;
   const [loading, setLoading] = useState(false);
 
-  const [formData, setFormData] = useState({
-    name: "",
-    surname: "",
-    gender: "Hombre",
-    phone_number: "",
-    subscription: "Standard",
-    date_of_birth: "",
-    active: "active",
+  const [updatedData, setUpdatedData] = useState({
+    name: person.name,
+    surname: person.surname,
+    gender: person.gender,
+    phone_number: person.phone_number,
+    subscription: person.subscription,
+    date_of_birth: person.date_of_birth,
+    active: person.active,
   });
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
+    setUpdatedData({
+      ...updatedData,
+      [e.target.name]: e.target.value,
     });
   };
 
@@ -29,11 +29,11 @@ export default function Example({ closeModalForm }) {
 
     try {
       //envio los datos del form a redux para que desde ahi guarde el nuevo cliente en la API
-      await handleCreateCustomer(formData);
+      await handleUpdateCustomer(idCustomer, updatedData);
     } catch (error) {
       console.error("Error:", error);
     } finally {
-      setLoading(true);
+      setLoading(false);
       closeModalForm();
     }
   };
@@ -46,13 +46,6 @@ export default function Example({ closeModalForm }) {
     <form onSubmit={handleSubmit}>
       <div className="space-y-12">
         <div>
-          <h2 className="text-base font-semibold leading-7 text-gray-900">
-            Información Personal
-          </h2>
-          <p className="mt-1 text-sm leading-6 text-gray-600">
-            Use a permanent address where you can receive mail.
-          </p>
-
           <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
             <div className="sm:col-span-3">
               <label
@@ -68,7 +61,7 @@ export default function Example({ closeModalForm }) {
                   name="name"
                   id="name"
                   autoComplete="firstName"
-                  value={formData.name}
+                  value={updatedData.name}
                   onChange={handleChange}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
@@ -89,7 +82,7 @@ export default function Example({ closeModalForm }) {
                   name="surname"
                   id="surname"
                   autoComplete="surname"
-                  value={formData.surname}
+                  value={updatedData.surname}
                   onChange={handleChange}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
@@ -110,7 +103,7 @@ export default function Example({ closeModalForm }) {
                   name="phone_number"
                   id="phone_number"
                   autoComplete="phone_number"
-                  value={formData.phoneNumber}
+                  value={updatedData.phone_number}
                   onChange={handleChange}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
@@ -129,7 +122,7 @@ export default function Example({ closeModalForm }) {
                   id="gender"
                   name="gender"
                   autoComplete="gender"
-                  value={formData.gender}
+                  value={updatedData.gender}
                   onChange={handleChange}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                 >
@@ -150,7 +143,7 @@ export default function Example({ closeModalForm }) {
                   id="subscription"
                   name="subscription"
                   autoComplete="subscription"
-                  value={formData.subscription}
+                  value={updatedData.subscription}
                   onChange={handleChange}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                 >
@@ -173,35 +166,13 @@ export default function Example({ closeModalForm }) {
                   name="date_of_birth"
                   id="date_of_birth"
                   autoComplete="date_of_birth"
-                  value={formData.date_of_birth}
+                  value={updatedData.date_of_birth}
                   onChange={handleChange}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
           </div>
-        </div>
-        <div className="border-b border-gray-900/10 pb-5">
-          <fieldset>
-            <div className="space-y-6">
-              <div className="relative flex gap-x-3">
-                <div className="flex h-6 items-center">
-                  <input
-                    id="pay"
-                    name="pay"
-                    type="checkbox"
-                    checked={true}
-                    className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                  />
-                </div>
-                <div className="text-sm leading-6">
-                  <label htmlFor="pay" className="font-medium text-gray-900">
-                    Realizó el pago del mes
-                  </label>
-                </div>
-              </div>
-            </div>
-          </fieldset>
         </div>
       </div>
 
