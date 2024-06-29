@@ -85,7 +85,7 @@ export default function StackedList() {
                     style={{ scrollBehavior: "smooth" }}
                     className="mx-5 py-1 flex overflow-x-hidden overflow-y-hidden"
                   >
-                    <CheckBoxGroup />
+                    <CheckBoxGroup person={person} />
                   </div>
                   <button
                     onClick={() => scrollRight(index)}

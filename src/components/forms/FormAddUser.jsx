@@ -190,7 +190,6 @@ export default function Example({ closeModalForm }) {
                     id="pay"
                     name="pay"
                     type="checkbox"
-                    checked={true}
                     className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
                   />
                 </div>

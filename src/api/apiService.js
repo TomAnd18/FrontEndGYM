@@ -1,3 +1,5 @@
+import { postDataUser } from "./apiFirebase";
+
 const url = "http://localhost:8000/api";
 
 export const getAllCustomers = async () => {
@@ -24,6 +26,10 @@ export const postAddCustomer = async (formData) => {
   }
 
   const data = await response.json();
+
+  //agregar datos del cliente a firebase + datos de asistencia
+  const dataFirebase = await postDataUser(data.cliente);
+  console.log(dataFirebase);
 
   return data.cliente;
 };

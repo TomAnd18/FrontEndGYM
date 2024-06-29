@@ -1,6 +1,7 @@
-import React, { useEffect, useState, forwardRef } from "react";
+import React, { useEffect, useState } from "react";
 
-const CheckBoxGroup = forwardRef(() => {
+const CheckBoxGroup = ({ person }) => {
+  //obtener dias del mes actual
   const getDaysInMonth = () => {
     const currentDate = new Date();
     const year = currentDate.getFullYear();
@@ -10,6 +11,7 @@ const CheckBoxGroup = forwardRef(() => {
     return lastDayOfMonth;
   };
 
+  //inicializar un array de tamaño de los dias que tenga el mes actual
   const initialCheckboxesState = Array.from(
     { length: getDaysInMonth() },
     (_, i) => ({
@@ -20,14 +22,121 @@ const CheckBoxGroup = forwardRef(() => {
 
   const [checkboxes, setCheckboxes] = useState(initialCheckboxesState);
 
-  const handleCheckBoxChange = (id) => {
-    setCheckboxes((prevCheckboxes) =>
-      prevCheckboxes.map((checkbox) =>
+  useEffect(() => {
+    const getCheckBoxesUserFirebase = async () => {
+      try {
+        const response = await fetch(
+          `https://python-app-web-cursos-it-default-rtdb.firebaseio.com/customers/${person.id}.json`
+        );
+        const dataUserFirebase = await response.json();
+
+        if (
+          dataUserFirebase &&
+          dataUserFirebase.assists &&
+          dataUserFirebase.assists.length > 0
+        ) {
+          if (
+            dataUserFirebase.assists[dataUserFirebase.assists.length - 1]
+              .month_year === getCurrentMonthAndYear()
+          ) {
+            const checkboxesAll =
+              dataUserFirebase.assists[dataUserFirebase.assists.length - 1]
+                .days;
+
+            const updatedCheckboxesState = Array.from(
+              { length: getDaysInMonth() },
+              (_, i) => ({
+                id: i + 1,
+                checked: checkboxesAll[i].checked,
+              })
+            );
+            setCheckboxes(updatedCheckboxesState);
+          } else {
+            //Aca quiero agregar la logica de si no es el mes actual, que entre en este el y cree lo que te pedi arriba
+            // Aquí añadimos la lógica para crear un nuevo objeto en el campo assists
+            const newAssist = {
+              days: initialCheckboxesState,
+              month_year: getCurrentMonthAndYear(),
+            };
+            dataUserFirebase.assists.push(newAssist);
+
+            await fetch(
+              `https://python-app-web-cursos-it-default-rtdb.firebaseio.com/customers/${person.id}.json`,
+              {
+                method: "PUT",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(dataUserFirebase),
+              }
+            );
+
+            setCheckboxes(initialCheckboxesState);
+          }
+        }
+      } catch (error) {
+        console.error("Error desde Firebase:", error);
+      }
+    };
+
+    getCheckBoxesUserFirebase();
+  }, [person.id]);
+
+  const handleCheckBoxChange = async (id) => {
+    setCheckboxes((prevCheckboxes) => {
+      const newCheckboxes = prevCheckboxes.map((checkbox) =>
         checkbox.id === id
           ? { ...checkbox, checked: !checkbox.checked }
           : checkbox
-      )
-    );
+      );
+
+      // Llamar a la función para actualizar en Firebase con el nuevo estado
+      postCheckBoxesUserFirebase(newCheckboxes);
+
+      return newCheckboxes;
+    });
+  };
+
+  const getCurrentMonthAndYear = () => {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = today.getMonth() + 1; // getMonth() devuelve un valor entre 0 y 11
+
+    // Formatear el mes a dos dígitos
+    const formattedMonth = month < 10 ? `0${month}` : month;
+
+    return `${formattedMonth}-${year}`;
+  };
+
+  const postCheckBoxesUserFirebase = async (updatedCheckboxes) => {
+    try {
+      const response = await fetch(
+        `https://python-app-web-cursos-it-default-rtdb.firebaseio.com/customers/${person.id}.json`
+      );
+      const dataUserFirebase = await response.json();
+
+      if (
+        dataUserFirebase &&
+        dataUserFirebase.assists &&
+        dataUserFirebase.assists.length > 0
+      ) {
+        dataUserFirebase.assists[dataUserFirebase.assists.length - 1].days =
+          updatedCheckboxes;
+
+        await fetch(
+          `https://python-app-web-cursos-it-default-rtdb.firebaseio.com/customers/${person.id}.json`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(dataUserFirebase),
+          }
+        );
+      }
+    } catch (error) {
+      console.error("Error updating data in Firebase:", error);
+    }
   };
 
   return (
@@ -55,6 +164,6 @@ const CheckBoxGroup = forwardRef(() => {
       ))}
     </>
   );
-});
+};
 
 export default CheckBoxGroup;
