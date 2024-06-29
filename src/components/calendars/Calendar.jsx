@@ -25,14 +25,6 @@ export default function Calendar() {
       : "border-r border-b";
   };
 
-  if (1 == 1) {
-    //option1
-  } else if (2 == 2) {
-    //option2
-  } else {
-    //nada
-  }
-
   // Array para los nombres de los meses
   const months = [
     "Enero",

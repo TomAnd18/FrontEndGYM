@@ -6,7 +6,7 @@ import {
   DialogTitle,
 } from "@headlessui/react";
 import { PaperClipIcon } from "@heroicons/react/20/solid";
-import Calendar from "../Calendar";
+import CalendarView from "../calendars/CalendarView";
 
 export default function ModalViewUser({ activate, deactivateModal, person }) {
   const [open, setOpen] = useState(false);
@@ -118,7 +118,7 @@ export default function ModalViewUser({ activate, deactivateModal, person }) {
                               Asistencias
                             </dt>
                             <dd>
-                              <Calendar />
+                              <CalendarView person={person} />
                             </dd>
                           </div>
                           <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4">
