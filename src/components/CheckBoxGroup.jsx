@@ -21,13 +21,12 @@ const CheckBoxGroup = ({ person }) => {
   );
 
   const [checkboxes, setCheckboxes] = useState(initialCheckboxesState);
+  const API_Firebase = import.meta.env.VITE_FIREBASEAPI_URL;
 
   useEffect(() => {
     const getCheckBoxesUserFirebase = async () => {
       try {
-        const response = await fetch(
-          `https://python-app-web-cursos-it-default-rtdb.firebaseio.com/customers/${person.id}.json`
-        );
+        const response = await fetch(`${API_Firebase}/${person.id}.json`);
         const dataUserFirebase = await response.json();
 
         if (
@@ -52,24 +51,20 @@ const CheckBoxGroup = ({ person }) => {
             );
             setCheckboxes(updatedCheckboxesState);
           } else {
-            //Aca quiero agregar la logica de si no es el mes actual, que entre en este el y cree lo que te pedi arriba
-            // Aquí añadimos la lógica para crear un nuevo objeto en el campo assists
+            // Si no es el mes actual, crea otro objeto con los dias y fecha mm-aaaa actual
             const newAssist = {
               days: initialCheckboxesState,
               month_year: getCurrentMonthAndYear(),
             };
             dataUserFirebase.assists.push(newAssist);
 
-            await fetch(
-              `https://python-app-web-cursos-it-default-rtdb.firebaseio.com/customers/${person.id}.json`,
-              {
-                method: "PUT",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify(dataUserFirebase),
-              }
-            );
+            await fetch(`${API_Firebase}/${person.id}.json`, {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(dataUserFirebase),
+            });
 
             setCheckboxes(initialCheckboxesState);
           }
@@ -110,9 +105,7 @@ const CheckBoxGroup = ({ person }) => {
 
   const postCheckBoxesUserFirebase = async (updatedCheckboxes) => {
     try {
-      const response = await fetch(
-        `https://python-app-web-cursos-it-default-rtdb.firebaseio.com/customers/${person.id}.json`
-      );
+      const response = await fetch(`${API_Firebase}/${person.id}.json`);
       const dataUserFirebase = await response.json();
 
       if (
@@ -123,16 +116,13 @@ const CheckBoxGroup = ({ person }) => {
         dataUserFirebase.assists[dataUserFirebase.assists.length - 1].days =
           updatedCheckboxes;
 
-        await fetch(
-          `https://python-app-web-cursos-it-default-rtdb.firebaseio.com/customers/${person.id}.json`,
-          {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(dataUserFirebase),
-          }
-        );
+        await fetch(`${API_Firebase}/${person.id}.json`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(dataUserFirebase),
+        });
       }
     } catch (error) {
       console.error("Error updating data in Firebase:", error);

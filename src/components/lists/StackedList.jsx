@@ -1,7 +1,7 @@
-import Dropdown from "./Dropdown";
-import useCustomerHook from "../hooks/useCustomerHook";
+import Dropdown from "../Dropdown";
+import useCustomerHook from "../../hooks/useCustomerHook";
 import { useSelector } from "react-redux";
-import CheckBoxGroup from "./CheckBoxGroup";
+import CheckBoxGroup from "../CheckBoxGroup";
 
 export default function StackedList() {
   const { loading, scrollRefs } = useCustomerHook();
@@ -13,7 +13,7 @@ export default function StackedList() {
         <p>Cargando...</p>
       </div>
     );
-  if (data.length == 0) return <p>No hay usuarios</p>;
+  if (data.length == 0) return <p>No hay usuarios registrados</p>;
 
   const scrollLeft = (index) => {
     if (scrollRefs[index].current) {

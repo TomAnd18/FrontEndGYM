@@ -1,6 +1,6 @@
 import { postDataUser } from "./apiFirebase";
 
-const url = "http://localhost:8000/api";
+const url = import.meta.env.VITE_BACKEND_API;
 
 export const getAllCustomers = async () => {
   try {
@@ -29,7 +29,6 @@ export const postAddCustomer = async (formData) => {
 
   //agregar datos del cliente a firebase + datos de asistencia
   const dataFirebase = await postDataUser(data.cliente);
-  console.log(dataFirebase);
 
   return data.cliente;
 };

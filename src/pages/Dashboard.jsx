@@ -1,9 +1,8 @@
 import NavBar from "../layouts/NavBar";
-import StackedList from "../components/StackedList";
+import StackedList from "../components/lists/StackedList";
 import Calendar from "../components/calendars/Calendar";
-
 import SearchUserStackedList from "../components/SearchUserStackedList";
-import MiniStackedList from "../components/MiniStackedList";
+import MiniStackedList from "../components/lists/MiniStackedList";
 import BtnAddUser from "../components/buttons/BtnAddUser";
 
 export default function Dashboard() {
