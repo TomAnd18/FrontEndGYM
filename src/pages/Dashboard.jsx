@@ -4,6 +4,7 @@ import Calendar from "../components/calendars/Calendar";
 import SearchUserStackedList from "../components/SearchUserStackedList";
 import MiniStackedList from "../components/lists/MiniStackedList";
 import BtnAddUser from "../components/buttons/BtnAddUser";
+import AsideList from "../components/AsideList";
 
 export default function Dashboard() {
   return (
@@ -40,19 +41,8 @@ export default function Dashboard() {
                   <Calendar />
                 </div>
                 <div className="w-auto mx-3 md:mx-0">
-                  <div className="text-md text-gray-500 mb-4 p-4 bg-gray-50 rounded-lg">
-                    <p>
-                      <b>Asistencias:</b> 4 en el día
-                    </p>
-                    <p>
-                      <b>Faltas:</b> 4 usuarios no asistieron hoy
-                    </p>
-                  </div>
-                  <div className="w-auto mb-4">
-                    <SearchUserStackedList />
-                  </div>
-                  <div className="w-auto">
-                    <MiniStackedList />
+                  <div>
+                    <AsideList />
                   </div>
                 </div>
               </div>

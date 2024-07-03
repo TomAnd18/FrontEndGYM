@@ -11,7 +11,12 @@ import {
   removeCustomer,
   setCustomers,
   putCustomer,
+  setUsersToday,
 } from "../redux/customersSlice";
+import {
+  getAllCustomersFirebase,
+  getCurrentMonthAndYear,
+} from "../api/apiFirebase";
 
 const useCustomerHook = () => {
   const [loading, setLoading] = useState(true);
@@ -36,6 +41,7 @@ const useCustomerHook = () => {
         const result = await getAllCustomers();
         //agrego los clientes a redux
         dispatch(setCustomers(result.clientes));
+        getCustomersPresentToday();
       } catch (error) {
         console.log(error);
       } finally {
@@ -71,10 +77,42 @@ const useCustomerHook = () => {
 
   const handleUpdateCustomer = async (idCustomer, formData) => {
     try {
-      // Llamar a la API para eliminar el cliente
+      // Llamar a la API para actualizar el cliente
       const customerUpdate = await updateCustomer(idCustomer, formData);
-      // Actualizar el estado de Redux eliminando el cliente de la lista
+      // Actualizar el estado de Redux actualizando el cliente de la lista
       dispatch(putCustomer(customerUpdate.cliente));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getCustomersPresentToday = async () => {
+    try {
+      const customers = await getAllCustomersFirebase();
+      const today = new Date();
+      const todayDate = today.getDate();
+      const currentMonthYear = getCurrentMonthAndYear();
+
+      const presentCustomers = Object.keys(customers).reduce(
+        (acc, customerId) => {
+          const customer = customers[customerId];
+          const assist = customer.assists.find(
+            (a) => a.month_year === currentMonthYear
+          );
+
+          if (assist) {
+            const todayAssist = assist.days.find((day) => day.id === todayDate);
+            if (todayAssist && todayAssist.checked) {
+              acc.push(customer); // Guardar en un array
+            }
+          }
+
+          return acc;
+        },
+        []
+      );
+
+      dispatch(setUsersToday(presentCustomers));
     } catch (error) {
       console.log(error);
     }

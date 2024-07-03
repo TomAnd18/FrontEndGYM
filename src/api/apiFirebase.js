@@ -1,5 +1,4 @@
-const urlFirebase =
-  "https://python-app-web-cursos-it-default-rtdb.firebaseio.com";
+const urlFirebase = import.meta.env.VITE_FIREBASEAPI_URL;
 
 const getDaysMonthCurrent = () => {
   const today = new Date();
@@ -21,7 +20,7 @@ const getDaysMonthCurrent = () => {
   return daysArray;
 };
 
-const getCurrentMonthAndYear = () => {
+export const getCurrentMonthAndYear = () => {
   const today = new Date();
   const year = today.getFullYear();
   const month = today.getMonth() + 1; // getMonth() devuelve un valor entre 0 y 11
@@ -50,7 +49,7 @@ export const postDataUser = async (dataUser) => {
     ],
   };
 
-  const response = await fetch(`${urlFirebase}/customers/${dataUser.id}.json`, {
+  const response = await fetch(`${urlFirebase}/${dataUser.id}.json`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -61,4 +60,48 @@ export const postDataUser = async (dataUser) => {
   const data = response.json();
 
   return data;
+};
+
+export const updateDataUser = async (dataUser) => {
+  const responseCustomerFirebase = await fetch(
+    `${urlFirebase}/${dataUser.id}.json`
+  );
+  const dataCustomerFirebase = await responseCustomerFirebase.json();
+  const assistsCustomerFirebase = dataCustomerFirebase.assists;
+
+  const newDataUser = {
+    id: dataUser.id,
+    name: dataUser.name,
+    surname: dataUser.surname,
+    gender: dataUser.gender,
+    phone_number: dataUser.phone_number,
+    subscription: dataUser.subscription,
+    date_of_birth: dataUser.date_of_birth,
+    active: dataUser.active,
+    assists: assistsCustomerFirebase,
+  };
+
+  console.log(newDataUser);
+
+  const response = await fetch(`${urlFirebase}/${dataUser.id}.json`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(newDataUser),
+  });
+
+  const data = await response.json();
+
+  return data;
+};
+
+export const getAllCustomersFirebase = async () => {
+  try {
+    const response = await fetch(`${urlFirebase}.json`);
+    const customers = response.json();
+    return customers;
+  } catch (error) {
+    console.log(error);
+  }
 };

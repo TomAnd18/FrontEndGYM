@@ -1,4 +1,4 @@
-import { postDataUser } from "./apiFirebase";
+import { postDataUser, updateDataUser } from "./apiFirebase";
 
 const url = import.meta.env.VITE_BACKEND_API;
 
@@ -57,6 +57,11 @@ export const updateCustomer = async (id, formData) => {
       body: JSON.stringify(formData),
     });
     const data = await response.json();
+
+    //agregar datos del cliente a firebase + datos de asistencia
+    const dataUSer = data.cliente;
+    const dataFirebase = await updateDataUser(dataUSer);
+
     return data;
   } catch (error) {
     console.log(error);

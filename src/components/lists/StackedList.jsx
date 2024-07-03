@@ -7,12 +7,14 @@ export default function StackedList() {
   const { loading, scrollRefs } = useCustomerHook();
   const data = useSelector((state) => state.customers.list);
 
-  if (loading)
+  if (loading) {
     return (
       <div className="w-full flex justify-center">
         <p>Cargando...</p>
       </div>
     );
+  }
+
   if (data.length == 0) return <p>No hay usuarios registrados</p>;
 
   const scrollLeft = (index) => {
@@ -50,11 +52,11 @@ export default function StackedList() {
                   <p className="mr-1 capitalize">{person.name}</p>
                   <p className="capitalize">{person.surname}</p>
                   {person.active == "active" ? (
-                    <span className="text-xxs px-2 py-0.5 bg-green-500 text-white ml-2 rounded-full uppercase">
+                    <span className="text-xxs px-2 py-0.5 font-bold bg-green-500 text-white ml-2 rounded-full uppercase">
                       Activo
                     </span>
                   ) : (
-                    <span className="text-xxs px-3 py-0.5 bg-red-500 text-white ml-2 rounded-full uppercase">
+                    <span className="text-xxs px-3 py-0.5 font-bold bg-red-500 text-white ml-2 rounded-full uppercase">
                       Pagar
                     </span>
                   )}

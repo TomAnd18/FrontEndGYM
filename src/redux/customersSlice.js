@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   list: [],
+  usersToday: [],
 };
 
 const customersSlice = createSlice({
@@ -27,10 +28,31 @@ const customersSlice = createSlice({
         state.list[index] = action.payload;
       }
     },
+    setUsersToday(state, action) {
+      // Nuevo reducer para establecer la lista de usuarios
+      state.usersToday = action.payload;
+    },
+    addUserToday(state, action) {
+      // Nuevo reducer para añadir un usuario a la lista
+      state.usersToday.push(action.payload);
+    },
+    removeUserToday(state, action) {
+      // Nuevo reducer para eliminar un usuario de la lista
+      state.usersToday = state.usersToday.filter(
+        (user) => user.id !== action.payload
+      );
+    },
   },
 });
 
-export const { setCustomers, addCustomer, removeCustomer, putCustomer } =
-  customersSlice.actions;
+export const {
+  setCustomers,
+  addCustomer,
+  removeCustomer,
+  putCustomer,
+  setUsersToday,
+  addUserToday,
+  removeUserToday,
+} = customersSlice.actions;
 
 export default customersSlice.reducer;
