@@ -81,8 +81,6 @@ export const updateDataUser = async (dataUser) => {
     assists: assistsCustomerFirebase,
   };
 
-  console.log(newDataUser);
-
   const response = await fetch(`${urlFirebase}/${dataUser.id}.json`, {
     method: "PUT",
     headers: {
@@ -101,6 +99,23 @@ export const getAllCustomersFirebase = async () => {
     const response = await fetch(`${urlFirebase}.json`);
     const customers = response.json();
     return customers;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const deleteDataUser = async (id) => {
+  try {
+    const response = await fetch(`${urlFirebase}/${id}.json`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const data = await response.json();
+
+    return data;
   } catch (error) {
     console.log(error);
   }

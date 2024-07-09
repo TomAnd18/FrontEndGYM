@@ -41,7 +41,6 @@ const useCustomerHook = () => {
         const result = await getAllCustomers();
         //agrego los clientes a redux
         dispatch(setCustomers(result.clientes));
-        getCustomersPresentToday();
       } catch (error) {
         console.log(error);
       } finally {
@@ -75,6 +74,7 @@ const useCustomerHook = () => {
     }
   };
 
+  //Funcion para actualizar un cliente de MySQL
   const handleUpdateCustomer = async (idCustomer, formData) => {
     try {
       // Llamar a la API para actualizar el cliente
@@ -86,11 +86,17 @@ const useCustomerHook = () => {
     }
   };
 
+  //Funcion para obtener los presentes del dia actual
   const getCustomersPresentToday = async () => {
     try {
+      //Obtengo todos los clientes de Firebase
       const customers = await getAllCustomersFirebase();
+
+      //Obtengo dia actual
       const today = new Date();
       const todayDate = today.getDate();
+
+      //Obtengo mm-aaaa actual
       const currentMonthYear = getCurrentMonthAndYear();
 
       const presentCustomers = Object.keys(customers).reduce(
@@ -112,6 +118,7 @@ const useCustomerHook = () => {
         []
       );
 
+      console.log(presentCustomers);
       dispatch(setUsersToday(presentCustomers));
     } catch (error) {
       console.log(error);
@@ -123,6 +130,7 @@ const useCustomerHook = () => {
     handleCreateCustomer,
     handleDeleteCustomer,
     handleUpdateCustomer,
+    getCustomersPresentToday,
     scrollRefs,
   };
 };

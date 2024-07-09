@@ -1,4 +1,4 @@
-import { postDataUser, updateDataUser } from "./apiFirebase";
+import { deleteDataUser, postDataUser, updateDataUser } from "./apiFirebase";
 
 const url = import.meta.env.VITE_BACKEND_API;
 
@@ -41,6 +41,11 @@ export const deleteCustomer = async (id) => {
         "Content-Type": "application/json",
       },
     });
+
+    //Eliminar datos del cliente de Firebase
+    const dataFirebase = await deleteDataUser(id);
+    console.log(dataFirebase);
+
     return datos;
   } catch (error) {
     console.log(error);
@@ -59,8 +64,8 @@ export const updateCustomer = async (id, formData) => {
     const data = await response.json();
 
     //agregar datos del cliente a firebase + datos de asistencia
-    const dataUSer = data.cliente;
-    const dataFirebase = await updateDataUser(dataUSer);
+    const dataUser = data.cliente;
+    const dataFirebase = await updateDataUser(dataUser);
 
     return data;
   } catch (error) {

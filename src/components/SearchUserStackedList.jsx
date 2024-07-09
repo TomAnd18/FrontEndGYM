@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function SearchUserStackedList() {
+export default function SearchUserStackedList({ search }) {
   return (
     <>
       <div className="relative">
@@ -16,7 +16,7 @@ export default function SearchUserStackedList() {
           </svg>
         </div>
         <input
-          id="search"
+          id={`search-${search}`}
           name="search"
           className="block w-full rounded-full pl-12"
           placeholder="Buscar usuario"

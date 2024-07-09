@@ -20,7 +20,7 @@ export default function AsideList() {
         </p>
       </div>
       <div className="w-auto mb-4">
-        <SearchUserStackedList />
+        <SearchUserStackedList search={"customers-present"} />
       </div>
       <div className="w-auto">
         <MiniStackedList />

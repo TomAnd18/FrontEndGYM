@@ -139,7 +139,7 @@ const CheckBoxGroup = ({ person }) => {
             }`}
           >
             <input
-              id={`checkbox-${checkbox.id}`}
+              id={`checkbox${person.id}-${checkbox.id}`}
               name={`checkbox-${checkbox.id}`}
               type="checkbox"
               className="h-6 w-6 rounded-md border-gray-200 text-blue-500 focus:ring-blue-500 checked:bg-none cursor-pointer hover:bg-blue-500"

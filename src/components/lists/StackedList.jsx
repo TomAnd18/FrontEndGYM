@@ -62,7 +62,7 @@ export default function StackedList() {
                   )}
                 </div>
                 <p className="mt-1 truncate text-xs leading-3 text-gray-500">
-                  {person.gender}
+                  {person.subscription}
                 </p>
               </div>
             </div>

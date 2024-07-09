@@ -29,7 +29,7 @@ export default function Dashboard() {
                     <BtnAddUser />
                   </div>
                   <div className="w-full mb-4 sm:mb-0">
-                    <SearchUserStackedList />
+                    <SearchUserStackedList search={"customers-list"} />
                   </div>
                 </div>
                 <div>
