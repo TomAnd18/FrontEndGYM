@@ -18,7 +18,9 @@ export default function SearchUserStackedList({ search }) {
         <input
           id={`search-${search}`}
           name="search"
-          className="block w-full rounded-full pl-12"
+          className={`block w-full pl-12 ${
+            search == "customers-list" ? "rounded-full" : "rounded-md"
+          }`}
           placeholder="Buscar usuario"
           type="search"
         ></input>

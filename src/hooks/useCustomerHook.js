@@ -12,6 +12,9 @@ import {
   setCustomers,
   putCustomer,
   setUsersToday,
+  addUserToday,
+  removeUserToday,
+  updateUserToday,
 } from "../redux/customersSlice";
 import {
   getAllCustomersFirebase,
@@ -22,6 +25,7 @@ const useCustomerHook = () => {
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
 
+  //funcion para obtener el total de dias en el mes actual
   const getDaysInMonth = () => {
     const currentDate = new Date();
     const year = currentDate.getFullYear();
@@ -31,12 +35,14 @@ const useCustomerHook = () => {
     return lastDayOfMonth;
   };
 
+  //creo un array que contiene en cada posicion una referencia para poder desplazar a la izquierda y/o derecha
   const scrollRefs = Array.from({ length: getDaysInMonth() }, () =>
     useRef(null)
   );
 
   useEffect(() => {
     const fetchData = async () => {
+      console.log("useEffect");
       try {
         const result = await getAllCustomers();
         //agrego los clientes a redux
@@ -51,36 +57,43 @@ const useCustomerHook = () => {
     fetchData();
   }, [dispatch]);
 
+  //Funcion para crear un cliente de la base de datos MySQL
   const handleCreateCustomer = async (customerData) => {
     try {
       // Llamar a la función de la API para crear un cliente
       const newCustomer = await postAddCustomer(customerData);
-      //guardar en redux
+      //guardar en redux al cliente nuevo
       dispatch(addCustomer(newCustomer));
+      //Guardar Cliente presente el dia actual
+      dispatch(addUserToday(newCustomer));
     } catch (error) {
       console.error("Error creating customer:", error);
-      // Puedes manejar el error aquí según sea necesario
     }
   };
 
+  //Funcion para eliminar un cliente de la base de datos MySQL
   const handleDeleteCustomer = async (id) => {
     try {
       // Llamar a la API para eliminar el cliente
       await deleteCustomer(id);
       // Actualizar el estado de Redux eliminando el cliente de la lista
       dispatch(removeCustomer(id));
+      //Eliminar cliente presente el dia actual
+      dispatch(removeUserToday(id));
     } catch (error) {
       console.log(error);
     }
   };
 
-  //Funcion para actualizar un cliente de MySQL
+  //Funcion para actualizar un cliente de la base de datos MySQL
   const handleUpdateCustomer = async (idCustomer, formData) => {
     try {
       // Llamar a la API para actualizar el cliente
       const customerUpdate = await updateCustomer(idCustomer, formData);
       // Actualizar el estado de Redux actualizando el cliente de la lista
       dispatch(putCustomer(customerUpdate.cliente));
+      //Actualizar cliente presente el dia actual
+      dispatch(updateUserToday(customerUpdate.cliente));
     } catch (error) {
       console.log(error);
     }
@@ -118,11 +131,18 @@ const useCustomerHook = () => {
         []
       );
 
-      console.log(presentCustomers);
       dispatch(setUsersToday(presentCustomers));
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const setCustomerPresentToday = (customer) => {
+    dispatch(addUserToday(customer));
+  };
+
+  const deleteCustomerPresentToday = (customer) => {
+    dispatch(removeUserToday(customer));
   };
 
   return {
@@ -131,6 +151,8 @@ const useCustomerHook = () => {
     handleDeleteCustomer,
     handleUpdateCustomer,
     getCustomersPresentToday,
+    setCustomerPresentToday,
+    deleteCustomerPresentToday,
     scrollRefs,
   };
 };

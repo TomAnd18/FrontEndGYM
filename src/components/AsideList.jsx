@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import SearchUserStackedList from "./SearchUserStackedList";
+import SearchUserStackedList from "./searches/SearchUserStackedList";
 import MiniStackedList from "./lists/MiniStackedList";
 
 export default function AsideList() {

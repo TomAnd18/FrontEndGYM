@@ -1,8 +1,7 @@
 import NavBar from "../layouts/NavBar";
 import StackedList from "../components/lists/StackedList";
 import Calendar from "../components/calendars/Calendar";
-import SearchUserStackedList from "../components/SearchUserStackedList";
-import MiniStackedList from "../components/lists/MiniStackedList";
+import SearchUserStackedList from "../components/searches/SearchUserStackedList";
 import BtnAddUser from "../components/buttons/BtnAddUser";
 import AsideList from "../components/AsideList";
 

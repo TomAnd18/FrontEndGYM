@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { getCurrentDayOfMonth, getCustomerByID } from "../api/apiFirebase";
 
-const CheckBoxGroup = ({ person }) => {
+const CheckBoxGroup = ({
+  person,
+  setCustomerPresentToday,
+  deleteCustomerPresentToday,
+}) => {
   //obtener dias del mes actual
   const getDaysInMonth = () => {
     const currentDate = new Date();
@@ -75,21 +80,39 @@ const CheckBoxGroup = ({ person }) => {
     };
 
     getCheckBoxesUserFirebase();
-  }, [person.id]);
+  }, [person]);
 
+  //Funcion para manejar el estado de los checkboxex
   const handleCheckBoxChange = async (id) => {
-    setCheckboxes((prevCheckboxes) => {
-      const newCheckboxes = prevCheckboxes.map((checkbox) =>
-        checkbox.id === id
-          ? { ...checkbox, checked: !checkbox.checked }
-          : checkbox
-      );
+    // Actualizar el estado de los checkboxes
+    const newCheckboxes = checkboxes.map((checkbox) =>
+      checkbox.id === id
+        ? { ...checkbox, checked: !checkbox.checked }
+        : checkbox
+    );
 
-      // Llamar a la función para actualizar en Firebase con el nuevo estado
-      postCheckBoxesUserFirebase(newCheckboxes);
+    // Actualizar el estado con el nuevo estado de los checkboxes
+    setCheckboxes(newCheckboxes);
 
-      return newCheckboxes;
-    });
+    // Llamar a la función para actualizar en Firebase con el nuevo estado
+    await postCheckBoxesUserFirebase(newCheckboxes);
+    //ACtualizar presentes de clientes de redux
+    await updatePresentCustomersToday(id, newCheckboxes);
+  };
+
+  //Funcion para actualizar la lista de clientes presentes que se muestra en pantalla
+  const updatePresentCustomersToday = async (id, newCheckboxes) => {
+    if (getCurrentDayOfMonth() === id) {
+      if (newCheckboxes[id - 1].checked) {
+        //Obtengo los datos del cliente
+        const dataCustomer = await getCustomerByID(person.id);
+        //Agrego los datos del cliente presente el dia actual a redux
+        setCustomerPresentToday(dataCustomer);
+      } else {
+        //Elimino los datos del cliente presente el dia actual de redux
+        deleteCustomerPresentToday(person.id);
+      }
+    }
   };
 
   const getCurrentMonthAndYear = () => {

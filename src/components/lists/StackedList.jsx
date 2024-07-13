@@ -4,7 +4,13 @@ import { useSelector } from "react-redux";
 import CheckBoxGroup from "../CheckBoxGroup";
 
 export default function StackedList() {
-  const { loading, scrollRefs } = useCustomerHook();
+  const {
+    loading,
+    scrollRefs,
+    setCustomerPresentToday,
+    deleteCustomerPresentToday,
+    handleDeleteCustomer,
+  } = useCustomerHook();
   const data = useSelector((state) => state.customers.list);
 
   if (loading) {
@@ -87,7 +93,11 @@ export default function StackedList() {
                     style={{ scrollBehavior: "smooth" }}
                     className="mx-5 py-1 flex overflow-x-hidden overflow-y-hidden"
                   >
-                    <CheckBoxGroup person={person} />
+                    <CheckBoxGroup
+                      person={person}
+                      setCustomerPresentToday={setCustomerPresentToday}
+                      deleteCustomerPresentToday={deleteCustomerPresentToday}
+                    />
                   </div>
                   <button
                     onClick={() => scrollRight(index)}
@@ -109,6 +119,7 @@ export default function StackedList() {
                   idCustomer={person.id}
                   nameCustomer={`${person.name} ${person.surname}`}
                   person={person}
+                  handleDeleteCustomer={handleDeleteCustomer}
                 />
               </div>
             </div>

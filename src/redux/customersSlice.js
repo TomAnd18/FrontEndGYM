@@ -29,18 +29,27 @@ const customersSlice = createSlice({
       }
     },
     setUsersToday(state, action) {
-      // Nuevo reducer para establecer la lista de usuarios
+      //Nuevo reducer para establecer la lista de usuarios
       state.usersToday = action.payload;
     },
     addUserToday(state, action) {
-      // Nuevo reducer para añadir un usuario a la lista
+      //Nuevo reducer para añadir un usuario a la lista
       state.usersToday.push(action.payload);
     },
     removeUserToday(state, action) {
-      // Nuevo reducer para eliminar un usuario de la lista
+      //Nuevo reducer para eliminar un usuario de la lista
       state.usersToday = state.usersToday.filter(
         (user) => user.id !== action.payload
       );
+    },
+    updateUserToday(state, action) {
+      //Nuevo reducer para actualizar un usuario en la lista
+      const index = state.usersToday.findIndex(
+        (user) => user.id === action.payload.id
+      );
+      if (index !== -1) {
+        state.usersToday[index] = action.payload;
+      }
     },
   },
 });
@@ -53,6 +62,7 @@ export const {
   setUsersToday,
   addUserToday,
   removeUserToday,
+  updateUserToday,
 } = customersSlice.actions;
 
 export default customersSlice.reducer;

@@ -120,3 +120,24 @@ export const deleteDataUser = async (id) => {
     console.log(error);
   }
 };
+
+export const getCustomerByID = async (id) => {
+  try {
+    const response = await fetch(`${urlFirebase}/${id}.json`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await response.json();
+
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getCurrentDayOfMonth = () => {
+  const today = new Date();
+  return today.getDate();
+};

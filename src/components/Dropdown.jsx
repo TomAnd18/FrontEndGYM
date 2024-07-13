@@ -1,6 +1,5 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
-// import { useDispatch } from "react-redux";
 import ModalDeleteUser from "./modals/ModalDeleteUser";
 import { useState } from "react";
 import ModalViewUser from "./modals/ModalViewUser";
@@ -10,9 +9,12 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Dropdown({ idCustomer, nameCustomer, person }) {
-  // const dispatch = useDispatch();
-
+export default function Dropdown({
+  idCustomer,
+  nameCustomer,
+  person,
+  handleDeleteCustomer,
+}) {
   const [activateModalDelete, setActivateModalDelete] = useState(false);
   const [activateModalView, setActivateModalView] = useState(false);
   const [activateModalUpdate, setActivateModalUpdate] = useState(false);
@@ -40,10 +42,6 @@ export default function Dropdown({ idCustomer, nameCustomer, person }) {
   const deactivateModalUpdateUser = () => {
     setActivateModalUpdate(false);
   };
-
-  // const handleOnClickUpdateCustomer = () => {
-  //   console.log("update customer");
-  // };
 
   const optionUser = [
     {
@@ -134,6 +132,7 @@ export default function Dropdown({ idCustomer, nameCustomer, person }) {
         deactivateModal={deactivateModalDeleteUser}
         idCustomer={idCustomer}
         nameCustomer={nameCustomer}
+        handleDeleteCustomer={handleDeleteCustomer}
       />
       <ModalViewUser
         activate={activateModalView}

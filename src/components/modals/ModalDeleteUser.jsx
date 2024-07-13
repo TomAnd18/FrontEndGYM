@@ -6,16 +6,15 @@ import {
   DialogTitle,
 } from "@headlessui/react";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
-import useCustomerHook from "../../hooks/useCustomerHook";
 
-export default function BtnDeleteUser({
+export default function ModalDeleteUser({
   activate,
   deactivateModal,
   idCustomer,
   nameCustomer,
+  handleDeleteCustomer,
 }) {
   const [open, setOpen] = useState(false);
-  const { handleDeleteCustomer } = useCustomerHook();
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
