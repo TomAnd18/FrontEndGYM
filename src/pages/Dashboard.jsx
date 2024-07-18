@@ -18,6 +18,7 @@ export default function Dashboard() {
     deleteCustomerPresentToday,
     handleDeleteCustomer,
     handleUpdateCustomer,
+    addCustomersPresentTodayFiltered,
   } = useCustomerHook();
 
   return (
@@ -43,7 +44,6 @@ export default function Dashboard() {
                   </div>
                   <div className="w-full mb-4 sm:mb-0">
                     <SearchUserStackedList
-                      search={"customers-list"}
                       addCustomersFiltered={addCustomersFiltered}
                       rechargeCustomers={rechargeCustomers}
                     />
@@ -67,10 +67,11 @@ export default function Dashboard() {
                 <div className="w-auto mx-3 md:mx-0">
                   <div>
                     <AsideList
-                      addCustomersFiltered={addCustomersFiltered}
-                      rechargeCustomers={rechargeCustomers}
-                      loading={loading}
+                      addCustomersPresentTodayFiltered={
+                        addCustomersPresentTodayFiltered
+                      }
                       getCustomersPresentToday={getCustomersPresentToday}
+                      loading={loading}
                     />
                   </div>
                 </div>

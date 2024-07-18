@@ -16,6 +16,7 @@ import {
   removeUserToday,
   updateUserToday,
   setFilteredCustomers,
+  setFilteredPresentCustomers,
 } from "../redux/customersSlice";
 import {
   getAllCustomersFirebase,
@@ -153,6 +154,10 @@ const useCustomerHook = () => {
     fetchData();
   };
 
+  const addCustomersPresentTodayFiltered = (customers) => {
+    dispatch(setFilteredPresentCustomers(customers));
+  };
+
   return {
     loading,
     handleCreateCustomer,
@@ -163,6 +168,7 @@ const useCustomerHook = () => {
     deleteCustomerPresentToday,
     addCustomersFiltered,
     rechargeCustomers,
+    addCustomersPresentTodayFiltered,
     scrollRefs,
   };
 };

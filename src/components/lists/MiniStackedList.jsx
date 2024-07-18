@@ -30,7 +30,7 @@ export default function MiniStackedList({ loading, getCustomersPresentToday }) {
         customers.map((person, index) => (
           <li
             key={"item-person-" + index}
-            className={`flex justify-between gap-x-6 py-2 px-4 cursor-pointer ${
+            className={`flex justify-between gap-x-6 py-2 px-4 cursor-pointer hover:shadow-inner ${
               person.active == "active"
                 ? "hover:bg-gray-100"
                 : "hover:bg-red-100 bg-red-50"
@@ -38,7 +38,7 @@ export default function MiniStackedList({ loading, getCustomersPresentToday }) {
           >
             <div className="flex min-w-0 gap-x-4 items-center">
               <div className="min-w-0 flex-auto">
-                <p className="text-sm font-semibold leading-4 text-gray-400">
+                <p className="text-sm font-semibold leading-4 text-gray-400 capitalize">
                   {`${person.name} ${person.surname}`}
                 </p>
               </div>

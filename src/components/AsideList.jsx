@@ -1,14 +1,13 @@
 import { useSelector } from "react-redux";
-import SearchUserStackedList from "./searches/SearchUserStackedList";
+import SearchPresentUsers from "./searches/SearchPresentUsers";
 import MiniStackedList from "./lists/MiniStackedList";
 
 export default function AsideList({
-  addCustomersFiltered,
-  rechargeCustomers,
+  addCustomersPresentTodayFiltered,
   loading,
   getCustomersPresentToday,
 }) {
-  const customers = useSelector((state) => state.customers.usersToday);
+  const customers = useSelector((state) => state.customers.backupUsersToday);
   const allCustomers = useSelector((state) => state.customers.list);
   return (
     <>
@@ -25,10 +24,9 @@ export default function AsideList({
         </p>
       </div>
       <div className="w-auto mb-4">
-        <SearchUserStackedList
-          search={"customers-present"}
-          addCustomersFiltered={addCustomersFiltered}
-          rechargeCustomers={rechargeCustomers}
+        <SearchPresentUsers
+          addCustomersPresentTodayFiltered={addCustomersPresentTodayFiltered}
+          getCustomersPresentToday={getCustomersPresentToday}
         />
       </div>
       <div className="w-auto">

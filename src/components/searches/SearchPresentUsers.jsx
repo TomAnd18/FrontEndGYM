@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 
 export default function SearchUserStackedList({
-  addCustomersFiltered,
-  rechargeCustomers,
+  addCustomersPresentTodayFiltered,
+  getCustomersPresentToday,
 }) {
   const [searchInput, setSearchInput] = useState("");
-  const backupList = useSelector((state) => state.customers.backupList);
+  const backupUsersToday = useSelector(
+    (state) => state.customers.backupUsersToday
+  );
 
   const handleChange = (e) => {
     const busqueda = e.target.value;
@@ -18,9 +20,9 @@ export default function SearchUserStackedList({
 
       const filteredCustomers = filterCustomer(name, surname);
 
-      addCustomersFiltered(filteredCustomers);
+      addCustomersPresentTodayFiltered(filteredCustomers);
     } else {
-      rechargeCustomers();
+      getCustomersPresentToday();
     }
   };
 
@@ -28,7 +30,7 @@ export default function SearchUserStackedList({
     const lowercasedInputName = name.toLowerCase();
     const lowercasedInputSurname = surname?.toLowerCase();
 
-    return backupList.filter((customer) => {
+    return backupUsersToday.filter((customer) => {
       return (
         customer.name.toLowerCase().includes(lowercasedInputName) ||
         customer.name.toLowerCase().includes(lowercasedInputSurname) ||
@@ -67,9 +69,9 @@ export default function SearchUserStackedList({
           </svg>
         </div>
         <input
-          id="search-customerslist"
+          id="search-presentusers"
           name="search"
-          className="block w-full pl-12 rounded-full"
+          className="block w-full pl-12 rounded-md"
           placeholder="Buscar cliente"
           type="search"
           value={searchInput}

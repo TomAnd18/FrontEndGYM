@@ -4,6 +4,7 @@ const initialState = {
   list: [],
   backupList: [],
   usersToday: [],
+  backupUsersToday: [],
 };
 
 const customersSlice = createSlice({
@@ -43,14 +44,19 @@ const customersSlice = createSlice({
     setUsersToday(state, action) {
       //Nuevo reducer para establecer la lista de usuarios
       state.usersToday = action.payload;
+      state.backupUsersToday = action.payload;
     },
     addUserToday(state, action) {
       //Nuevo reducer para añadir un usuario a la lista
       state.usersToday.push(action.payload);
+      state.backupUsersToday.push(action.payload);
     },
     removeUserToday(state, action) {
       //Nuevo reducer para eliminar un usuario de la lista
       state.usersToday = state.usersToday.filter(
+        (user) => user.id !== action.payload
+      );
+      state.backupUsersToday = state.backupUsersToday.filter(
         (user) => user.id !== action.payload
       );
     },
@@ -62,9 +68,18 @@ const customersSlice = createSlice({
       if (index !== -1) {
         state.usersToday[index] = action.payload;
       }
+      const index2 = state.backupUsersToday.findIndex(
+        (user) => user.id === action.payload.id
+      );
+      if (index2 !== -1) {
+        state.backupUsersToday[index2] = action.payload;
+      }
     },
     setFilteredCustomers(state, action) {
       state.list = action.payload;
+    },
+    setFilteredPresentCustomers(state, action) {
+      state.usersToday = action.payload;
     },
   },
 });
@@ -79,6 +94,7 @@ export const {
   removeUserToday,
   updateUserToday,
   setFilteredCustomers,
+  setFilteredPresentCustomers,
 } = customersSlice.actions;
 
 export default customersSlice.reducer;
