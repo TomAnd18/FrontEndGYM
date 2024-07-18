@@ -48,6 +48,13 @@ export default function Calendar() {
     return day;
   };
 
+  //Obtener mes actual
+  const getCurrentMonth = () => {
+    const now = new Date();
+    const month = now.getMonth();
+    return month;
+  };
+
   // Función para obtener los días del calendario
   const getCalendarDays = (year, month) => {
     const firstDay = new Date(year, month, 0);
@@ -151,7 +158,8 @@ export default function Calendar() {
             >
               <time
                 className={
-                  day.currentDay
+                  day.currentDay &&
+                  months[getCurrentMonth()] === months[currentDate.getMonth()]
                     ? "bg-gray-800 text-white flex w-8 h-8 justify-center items-center rounded-full"
                     : ""
                 }

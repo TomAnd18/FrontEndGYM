@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   list: [],
+  backupList: [],
   usersToday: [],
 };
 
@@ -11,12 +12,17 @@ const customersSlice = createSlice({
   reducers: {
     setCustomers(state, action) {
       state.list = action.payload;
+      state.backupList = action.payload;
     },
     addCustomer(state, action) {
       state.list.push(action.payload);
+      state.backupList.push(action.payload);
     },
     removeCustomer(state, action) {
       state.list = state.list.filter(
+        (customer) => customer.id !== action.payload
+      );
+      state.backupList = state.backupList.filter(
         (customer) => customer.id !== action.payload
       );
     },
@@ -26,6 +32,12 @@ const customersSlice = createSlice({
       );
       if (index !== -1) {
         state.list[index] = action.payload;
+      }
+      const index2 = state.backupList.findIndex(
+        (customer) => customer.id === action.payload.id
+      );
+      if (index2 !== -1) {
+        state.backupList[index2] = action.payload;
       }
     },
     setUsersToday(state, action) {
@@ -51,6 +63,9 @@ const customersSlice = createSlice({
         state.usersToday[index] = action.payload;
       }
     },
+    setFilteredCustomers(state, action) {
+      state.list = action.payload;
+    },
   },
 });
 
@@ -63,6 +78,7 @@ export const {
   addUserToday,
   removeUserToday,
   updateUserToday,
+  setFilteredCustomers,
 } = customersSlice.actions;
 
 export default customersSlice.reducer;

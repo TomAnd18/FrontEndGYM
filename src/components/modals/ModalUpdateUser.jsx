@@ -7,7 +7,12 @@ import {
 } from "@headlessui/react";
 import FormUpdateUser from "../forms/FormUpdateUser";
 
-export default function ModalUpdateUser({ activate, deactivateModal, person }) {
+export default function ModalUpdateUser({
+  activate,
+  deactivateModal,
+  person,
+  handleUpdateCustomer,
+}) {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -46,6 +51,7 @@ export default function ModalUpdateUser({ activate, deactivateModal, person }) {
                       <FormUpdateUser
                         closeModalForm={handleClose}
                         person={person}
+                        handleUpdateCustomer={handleUpdateCustomer}
                       />
                     </div>
                   </div>

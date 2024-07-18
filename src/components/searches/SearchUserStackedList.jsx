@@ -1,6 +1,58 @@
-import React from "react";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
 
-export default function SearchUserStackedList({ search }) {
+export default function SearchUserStackedList({
+  search,
+  addCustomersFiltered,
+  rechargeCustomers,
+}) {
+  const [searchInput, setSearchInput] = useState("");
+  const backupList = useSelector((state) => state.customers.backupList);
+
+  const handleChange = (e) => {
+    const busqueda = e.target.value;
+
+    setSearchInput(busqueda);
+
+    if (busqueda.trim() !== "") {
+      const { firstName: name, lastName: surname } = splitSearchInput(busqueda);
+
+      const filteredCustomers = filterCustomer(name, surname);
+
+      addCustomersFiltered(filteredCustomers);
+    } else {
+      rechargeCustomers();
+    }
+  };
+
+  const filterCustomer = (name, surname) => {
+    const lowercasedInputName = name.toLowerCase();
+    const lowercasedInputSurname = surname?.toLowerCase();
+
+    return backupList.filter((customer) => {
+      return (
+        customer.name.toLowerCase().includes(lowercasedInputName) ||
+        customer.name.toLowerCase().includes(lowercasedInputSurname) ||
+        customer.surname.toLowerCase().includes(lowercasedInputName) ||
+        customer.surname.toLowerCase().includes(lowercasedInputSurname)
+      );
+    });
+  };
+
+  const splitSearchInput = (busqueda) => {
+    // Trim para eliminar espacios en blanco al inicio y al final
+    const trimmedInput = busqueda.trim();
+
+    // Utiliza el método split para separar la cadena en el primer espacio
+    const [firstName, lastName] = trimmedInput.split(" ", 2);
+
+    if (!lastName) {
+      return { firstName };
+    }
+
+    return { firstName, lastName };
+  };
+
   return (
     <>
       <div className="relative">
@@ -21,8 +73,10 @@ export default function SearchUserStackedList({ search }) {
           className={`block w-full pl-12 ${
             search == "customers-list" ? "rounded-full" : "rounded-md"
           }`}
-          placeholder="Buscar usuario"
+          placeholder="Buscar cliente"
           type="search"
+          value={searchInput}
+          onChange={handleChange}
         ></input>
       </div>
     </>

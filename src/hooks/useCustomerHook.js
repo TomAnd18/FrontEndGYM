@@ -15,6 +15,7 @@ import {
   addUserToday,
   removeUserToday,
   updateUserToday,
+  setFilteredCustomers,
 } from "../redux/customersSlice";
 import {
   getAllCustomersFirebase,
@@ -40,20 +41,19 @@ const useCustomerHook = () => {
     useRef(null)
   );
 
-  useEffect(() => {
-    const fetchData = async () => {
-      console.log("useEffect");
-      try {
-        const result = await getAllCustomers();
-        //agrego los clientes a redux
-        dispatch(setCustomers(result.clientes));
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const fetchData = async () => {
+    try {
+      const result = await getAllCustomers();
+      //agrego los clientes a redux
+      dispatch(setCustomers(result.clientes));
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchData();
   }, [dispatch]);
 
@@ -145,6 +145,14 @@ const useCustomerHook = () => {
     dispatch(removeUserToday(customer));
   };
 
+  const addCustomersFiltered = (customers) => {
+    dispatch(setFilteredCustomers(customers));
+  };
+
+  const rechargeCustomers = async () => {
+    fetchData();
+  };
+
   return {
     loading,
     handleCreateCustomer,
@@ -153,6 +161,8 @@ const useCustomerHook = () => {
     getCustomersPresentToday,
     setCustomerPresentToday,
     deleteCustomerPresentToday,
+    addCustomersFiltered,
+    rechargeCustomers,
     scrollRefs,
   };
 };

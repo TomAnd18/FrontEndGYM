@@ -44,7 +44,6 @@ export const deleteCustomer = async (id) => {
 
     //Eliminar datos del cliente de Firebase
     const dataFirebase = await deleteDataUser(id);
-    console.log(dataFirebase);
 
     return datos;
   } catch (error) {

@@ -2,7 +2,7 @@ import React from "react";
 import ModalAddUser from "../modals/ModalAddUser";
 import { useState } from "react";
 
-export default function BtnAddUser() {
+export default function BtnAddUser({ handleCreateCustomer }) {
   const [activate, setActivate] = useState(false);
 
   const activateModalAddUser = () => {
@@ -27,11 +27,12 @@ export default function BtnAddUser() {
         >
           <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM232 344V280H168c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H280v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z" />
         </svg>
-        Nuevo usuario
+        Nuevo Cliente
       </button>
       <ModalAddUser
         activate={activate}
         deactivateModal={deactivateModalAddUser}
+        handleCreateCustomer={handleCreateCustomer}
       />
     </>
   );

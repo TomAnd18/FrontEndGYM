@@ -4,8 +4,22 @@ import Calendar from "../components/calendars/Calendar";
 import SearchUserStackedList from "../components/searches/SearchUserStackedList";
 import BtnAddUser from "../components/buttons/BtnAddUser";
 import AsideList from "../components/AsideList";
+import useCustomerHook from "../hooks/useCustomerHook";
 
 export default function Dashboard() {
+  const {
+    addCustomersFiltered,
+    rechargeCustomers,
+    handleCreateCustomer,
+    loading,
+    getCustomersPresentToday,
+    scrollRefs,
+    setCustomerPresentToday,
+    deleteCustomerPresentToday,
+    handleDeleteCustomer,
+    handleUpdateCustomer,
+  } = useCustomerHook();
+
   return (
     <>
       <div className="w-full">
@@ -22,17 +36,28 @@ export default function Dashboard() {
               </div>
             </header>
             <div className="w-full flex justify-evenly flex-col-reverse md:flex-row-reverse pt-10">
-              <div className="w-full md:w-1/2 p-4">
+              <div className="w-full md:w-1/2">
                 <div className="w-full flex flex-col mb-10 justify-between">
                   <div>
-                    <BtnAddUser />
+                    <BtnAddUser handleCreateCustomer={handleCreateCustomer} />
                   </div>
                   <div className="w-full mb-4 sm:mb-0">
-                    <SearchUserStackedList search={"customers-list"} />
+                    <SearchUserStackedList
+                      search={"customers-list"}
+                      addCustomersFiltered={addCustomersFiltered}
+                      rechargeCustomers={rechargeCustomers}
+                    />
                   </div>
                 </div>
                 <div>
-                  <StackedList />
+                  <StackedList
+                    loading={loading}
+                    scrollRefs={scrollRefs}
+                    setCustomerPresentToday={setCustomerPresentToday}
+                    deleteCustomerPresentToday={deleteCustomerPresentToday}
+                    handleDeleteCustomer={handleDeleteCustomer}
+                    handleUpdateCustomer={handleUpdateCustomer}
+                  />
                 </div>
               </div>
               <div className="w-full md:w-auto flex flex-col">
@@ -41,7 +66,12 @@ export default function Dashboard() {
                 </div>
                 <div className="w-auto mx-3 md:mx-0">
                   <div>
-                    <AsideList />
+                    <AsideList
+                      addCustomersFiltered={addCustomersFiltered}
+                      rechargeCustomers={rechargeCustomers}
+                      loading={loading}
+                      getCustomersPresentToday={getCustomersPresentToday}
+                    />
                   </div>
                 </div>
               </div>

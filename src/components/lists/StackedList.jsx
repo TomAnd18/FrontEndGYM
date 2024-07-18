@@ -1,16 +1,15 @@
 import Dropdown from "../Dropdown";
-import useCustomerHook from "../../hooks/useCustomerHook";
 import { useSelector } from "react-redux";
 import CheckBoxGroup from "../CheckBoxGroup";
 
-export default function StackedList() {
-  const {
-    loading,
-    scrollRefs,
-    setCustomerPresentToday,
-    deleteCustomerPresentToday,
-    handleDeleteCustomer,
-  } = useCustomerHook();
+export default function StackedList({
+  loading,
+  scrollRefs,
+  setCustomerPresentToday,
+  deleteCustomerPresentToday,
+  handleDeleteCustomer,
+  handleUpdateCustomer,
+}) {
   const data = useSelector((state) => state.customers.list);
 
   if (loading) {
@@ -21,7 +20,12 @@ export default function StackedList() {
     );
   }
 
-  if (data.length == 0) return <p>No hay usuarios registrados</p>;
+  if (data.length == 0)
+    return (
+      <p className="font-semibold w-full flex justify-center">
+        No hay clientes registrados
+      </p>
+    );
 
   const scrollLeft = (index) => {
     if (scrollRefs[index].current) {
@@ -36,12 +40,14 @@ export default function StackedList() {
   };
 
   return (
-    <ul role="list" className="divide-y divide-gray-100">
+    <ul role="list" className="list-none">
       {data.map((person, index) => {
         return (
           <li
             key={"item-person-" + index}
-            className="w-full flex flex-col xl:flex-row justify-between gap-x-6 py-2 hover:bg-gray-50"
+            className={`w-full flex flex-col xl:flex-row justify-between gap-x-6 py-2 px-4 hover:bg-gray-50 hover:shadow-lg hover:border-l-2 hover:border-l-blue-600 ${
+              index === data.length - 1 ? "" : "border-b"
+            }`}
           >
             <div className="w-auto flex min-w-0 gap-x-4 items-center">
               <div className="h-7 w-7">
@@ -120,6 +126,7 @@ export default function StackedList() {
                   nameCustomer={`${person.name} ${person.surname}`}
                   person={person}
                   handleDeleteCustomer={handleDeleteCustomer}
+                  handleUpdateCustomer={handleUpdateCustomer}
                 />
               </div>
             </div>

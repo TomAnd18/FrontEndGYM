@@ -1,8 +1,10 @@
 import { useState } from "react";
-import useCustomerHook from "../../hooks/useCustomerHook";
 
-export default function FormUpdateUser({ closeModalForm, person }) {
-  const { handleUpdateCustomer } = useCustomerHook();
+export default function FormUpdateUser({
+  closeModalForm,
+  person,
+  handleUpdateCustomer,
+}) {
   const idCustomer = person.id;
   const [loading, setLoading] = useState(false);
 

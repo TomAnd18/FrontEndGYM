@@ -2,8 +2,7 @@ import { useSelector } from "react-redux";
 import useCustomerHook from "../../hooks/useCustomerHook";
 import { useEffect } from "react";
 
-export default function MiniStackedList() {
-  const { loading, getCustomersPresentToday } = useCustomerHook();
+export default function MiniStackedList({ loading, getCustomersPresentToday }) {
   const customers = useSelector((state) => state.customers.usersToday);
 
   useEffect(() => {

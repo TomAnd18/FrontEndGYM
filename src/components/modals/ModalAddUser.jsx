@@ -2,7 +2,11 @@ import { useEffect, useState } from "react";
 import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 import FormAddUser from "../forms/FormAddUser";
 
-export default function Example({ activate, deactivateModal }) {
+export default function ModalAddUser({
+  activate,
+  deactivateModal,
+  handleCreateCustomer,
+}) {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -31,7 +35,10 @@ export default function Example({ activate, deactivateModal }) {
               <div className="sm:flex sm:items-center sm:justify-center">
                 <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
                   <div className="mt-2">
-                    <FormAddUser closeModalForm={handleClose} />
+                    <FormAddUser
+                      closeModalForm={handleClose}
+                      handleCreateCustomer={handleCreateCustomer}
+                    />
                   </div>
                 </div>
               </div>
