@@ -1,21 +1,26 @@
 import React, { useEffect, useState } from "react";
+import { getCustomerByID } from "../../api/apiFirebase";
 
 export default function Calendar({ person }) {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [days, setDays] = useState([]);
   const daysM = ["Lu", "Ma", "Mi", "Ju", "Vi", "Sa", "Do"];
   const [daysMonthPaint, setDaysMonthPaint] = useState([]);
+  const [countMonth, setCountMonth] = useState(0);
+  const [countMonthSelect, setCountMonthSelect] = useState(0);
+  const [positionPresents, setPositionPresents] = useState(1);
 
-  const getDaysAssists = async () => {
+  const getDaysAssists = async (id) => {
     try {
-      const response = await fetch(
-        `https://python-app-web-cursos-it-default-rtdb.firebaseio.com/customers/${person.id}.json`
-      );
-      const data = await response.json();
+      const data = await getCustomerByID(id);
 
       if (data && data.assists && data.assists.length > 0) {
-        const arrayDays = data.assists[data.assists.length - 1].days;
+        // const arrayDays = data.assists[data.assists.length - 1].days;
+        const arrayDays =
+          data.assists[data.assists.length - positionPresents].days;
         setDaysMonthPaint(arrayDays);
+        //seteo el limite para seleccionar el mes de asistencias
+        setCountMonth(data.assists.length);
       }
     } catch (error) {
       console.log(error);
@@ -57,13 +62,6 @@ export default function Calendar({ person }) {
     "Noviembre",
     "Diciembre",
   ];
-
-  //Obtener dia actual
-  const getCurrentDay = () => {
-    const now = new Date();
-    const day = now.getDate();
-    return day;
-  };
 
   // Función para obtener los días del calendario
   const getCalendarDays = (year, month) => {
@@ -115,20 +113,30 @@ export default function Calendar({ person }) {
     return [...prevMonthDays, ...currentMonthDays, ...nextMonthDays];
   };
 
-  //   const handlePrevMonth = () => {
-  //     setCurrentDate(
-  //       new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1)
-  //     );
-  //   };
+  const handlePrevMonth = () => {
+    if (countMonthSelect < countMonth - 1) {
+      setCountMonthSelect(countMonthSelect + 1);
+      //setear posicion del array de meses de asistencias
+      setPositionPresents(positionPresents + 1);
+      setCurrentDate(
+        new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1)
+      );
+    }
+  };
 
-  //   const handleNextMonth = () => {
-  //     setCurrentDate(
-  //       new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1)
-  //     );
-  //   };
+  const handleNextMonth = () => {
+    if (countMonthSelect > 0) {
+      setCountMonthSelect(countMonthSelect - 1);
+      //setear posicion del array de meses de asistencias
+      setPositionPresents(positionPresents - 1);
+      setCurrentDate(
+        new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1)
+      );
+    }
+  };
 
   useEffect(() => {
-    getDaysAssists();
+    getDaysAssists(person.id);
   }, [currentDate]);
 
   useEffect(() => {
@@ -141,23 +149,39 @@ export default function Calendar({ person }) {
     <>
       <div className="flex flex-col w-max">
         <div className="flex flex-row w-auto justify-between px-1">
-          {/* <button onClick={handlePrevMonth}>
+          <button
+            disabled={countMonthSelect < countMonth - 1 ? false : true}
+            onClick={handlePrevMonth}
+          >
             <svg
               style={{ width: "9px" }}
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 320 512"
             >
-              <path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z" />
+              <path
+                fill={countMonthSelect < countMonth - 1 ? "" : "#d1d5db"}
+                d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"
+              />
             </svg>
-          </button> */}
+          </button>
           <div className="font-semibold flex w-full justify-center">
             {months[currentDate.getMonth()]} {currentDate.getFullYear()}
           </div>
-          {/* <button style={{ width: "9px" }} onClick={handleNextMonth}>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
-              <path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z" />
+          <button
+            disabled={countMonthSelect > 0 ? false : true}
+            onClick={handleNextMonth}
+          >
+            <svg
+              style={{ width: "9px" }}
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 320 512"
+            >
+              <path
+                fill={countMonthSelect > 0 ? "" : "#d1d5db"}
+                d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"
+              />
             </svg>
-          </button> */}
+          </button>
         </div>
         <div className="grid grid-cols-7 mt-5 mb-3 text-sm">{divDays}</div>
         <div className="border rounded-xl overflow-hidden grid grid-cols-7 gap-0 w-max">
