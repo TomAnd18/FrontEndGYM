@@ -1,4 +1,4 @@
-import Dropdown from "../Dropdown";
+import Dropdown from "../dropdowns/Dropdown";
 import { useSelector } from "react-redux";
 import CheckBoxGroup from "../CheckBoxGroup";
 

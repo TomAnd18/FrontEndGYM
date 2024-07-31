@@ -5,6 +5,7 @@ import SearchUserStackedList from "../components/searches/SearchUserStackedList"
 import BtnAddUser from "../components/buttons/BtnAddUser";
 import AsideList from "../components/AsideList";
 import useCustomerHook from "../hooks/useCustomerHook";
+import OrderDropdown from "../components/dropdowns/OrderDropdown";
 
 export default function Dashboard() {
   const {
@@ -39,8 +40,9 @@ export default function Dashboard() {
             <div className="w-full flex justify-evenly flex-col-reverse md:flex-row-reverse pt-10">
               <div className="w-full md:w-1/2">
                 <div className="w-full flex flex-col mb-10 justify-between">
-                  <div>
+                  <div className="flex mb-4">
                     <BtnAddUser handleCreateCustomer={handleCreateCustomer} />
+                    <OrderDropdown />
                   </div>
                   <div className="w-full mb-4 sm:mb-0">
                     <SearchUserStackedList

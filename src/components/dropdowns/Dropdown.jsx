@@ -1,9 +1,9 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
-import ModalDeleteUser from "./modals/ModalDeleteUser";
+import ModalDeleteUser from "../modals/ModalDeleteUser";
 import { useState } from "react";
-import ModalViewUser from "./modals/ModalViewUser";
-import ModalUpdateUser from "./modals/ModalUpdateUser";
+import ModalViewUser from "../modals/ModalViewUser";
+import ModalUpdateUser from "../modals/ModalUpdateUser";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
