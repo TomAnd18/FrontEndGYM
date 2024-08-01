@@ -95,6 +95,20 @@ export const updateDataUser = async (dataUser) => {
   return data;
 };
 
+export const updateCheckPayDataUser = async (dataUser) => {
+  const response = await fetch(`${urlFirebase}/${dataUser.id}.json`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(dataUser),
+  });
+
+  const data = await response.json();
+
+  return data;
+};
+
 export const getAllCustomersFirebase = async () => {
   try {
     const response = await fetch(`${urlFirebase}.json`);

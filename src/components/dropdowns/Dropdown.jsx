@@ -15,6 +15,7 @@ export default function Dropdown({
   person,
   handleDeleteCustomer,
   handleUpdateCustomer,
+  updateStatePayMonthCustomer,
 }) {
   const [activateModalDelete, setActivateModalDelete] = useState(false);
   const [activateModalView, setActivateModalView] = useState(false);
@@ -139,6 +140,7 @@ export default function Dropdown({
         activate={activateModalView}
         deactivateModal={deactivateModalViewUser}
         person={person}
+        updateStatePayMonthCustomer={updateStatePayMonthCustomer}
       />
       <ModalUpdateUser
         activate={activateModalUpdate}

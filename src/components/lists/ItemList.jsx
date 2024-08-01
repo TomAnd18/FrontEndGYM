@@ -11,18 +11,22 @@ export default function ItemList({
   handleDeleteCustomer,
   handleUpdateCustomer,
   getActiveCustomer,
+  updateStatePayMonthCustomer,
 }) {
   const [activeCustomer, setActiveCustomer] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchActiveCustomer = async () => {
-      const activeC = await getActiveCustomer(person.id);
-      setActiveCustomer(activeC);
-      setLoading(false);
-    };
+    // const fetchActiveCustomer = async () => {
+    //   const activeC = await getActiveCustomer(person.id);
+    //   setActiveCustomer(activeC);
+    //   setLoading(false);
+    // };
 
-    fetchActiveCustomer();
+    // fetchActiveCustomer();
+    if (person && person.assists && person.assists.length > 0) {
+      setActiveCustomer(person.assists[person.assists.length - 1].pay_month);
+    }
   }, [person.id]);
 
   const scrollLeft = (index) => {
@@ -53,17 +57,13 @@ export default function ItemList({
           <div className="text-md font-semibold leading-3 text-gray-700 flex items-center">
             <p className="mr-1 capitalize">{person.name}</p>
             <p className="capitalize">{person.surname}</p>
-            {loading ? (
-              <span className="text-xxs px-3 py-0.5 font-bold">...</span>
-            ) : (
-              <span
-                className={`text-xxs px-3 py-0.5 font-bold ${
-                  activeCustomer ? "bg-green-500" : "bg-red-500"
-                } text-white ml-2 rounded-full uppercase`}
-              >
-                {activeCustomer ? "Activo" : "Pagar"}
-              </span>
-            )}
+            <span
+              className={`text-xxs px-3 py-0.5 font-bold ${
+                activeCustomer ? "bg-green-500" : "bg-red-500"
+              } text-white ml-2 rounded-full uppercase`}
+            >
+              {activeCustomer ? "Activo" : "Pagar"}
+            </span>
           </div>
           <p className="mt-1 truncate text-xs leading-3 text-gray-500">
             {person.subscription}
@@ -119,6 +119,7 @@ export default function ItemList({
             person={person}
             handleDeleteCustomer={handleDeleteCustomer}
             handleUpdateCustomer={handleUpdateCustomer}
+            updateStatePayMonthCustomer={updateStatePayMonthCustomer}
           />
         </div>
       </div>

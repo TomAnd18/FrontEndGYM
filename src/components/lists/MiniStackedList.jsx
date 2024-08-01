@@ -33,8 +33,8 @@ export default function MiniStackedList({
       ) : (
         customers.map((person, index) => (
           <ItemMiniStackedList
+            key={"item-miniperson-" + index}
             person={person}
-            index={index}
             getActiveCustomer={getActiveCustomer}
           />
         ))

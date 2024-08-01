@@ -1,10 +1,6 @@
 import { useEffect, useState } from "react";
 
-export default function ItemMiniStackedList({
-  person,
-  index,
-  getActiveCustomer,
-}) {
+export default function ItemMiniStackedList({ person, getActiveCustomer }) {
   const [activeCustomer, setActiveCustomer] = useState(false);
   const [loading, setLoading] = useState(true);
 
@@ -20,7 +16,6 @@ export default function ItemMiniStackedList({
   return (
     <>
       <li
-        key={"item-miniperson-" + index}
         className={`flex justify-between gap-x-6 py-2 px-4 cursor-pointer hover:shadow-inner hover:bg-gray-100`}
       >
         <div className="flex min-w-0 gap-x-4 items-center">

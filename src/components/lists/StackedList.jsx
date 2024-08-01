@@ -9,6 +9,7 @@ export default function StackedList({
   handleDeleteCustomer,
   handleUpdateCustomer,
   getActiveCustomer,
+  updateStatePayMonthCustomer,
 }) {
   const data = useSelector((state) => state.customers.list);
 
@@ -46,6 +47,7 @@ export default function StackedList({
               handleDeleteCustomer={handleDeleteCustomer}
               handleUpdateCustomer={handleUpdateCustomer}
               getActiveCustomer={getActiveCustomer}
+              updateStatePayMonthCustomer={updateStatePayMonthCustomer}
             />
           </li>
         );

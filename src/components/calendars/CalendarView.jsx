@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getCustomerByID } from "../../api/apiFirebase";
 
-export default function Calendar({ person }) {
+export default function Calendar({ person, updateStatePayMonthCustomer }) {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [days, setDays] = useState([]);
   const daysM = ["Lu", "Ma", "Mi", "Ju", "Vi", "Sa", "Do"];
@@ -144,9 +144,16 @@ export default function Calendar({ person }) {
     }
   };
 
-  const handleCheckPayMonth = (e) => {
+  const handleCheckPayMonth = async (e) => {
     setIsChecked(e.target.checked);
+    const monthSelect =
+      currentDate.getMonth() < 10
+        ? `0${currentDate.getMonth() + 1}`
+        : currentDate.getMonth();
+    const dateSelect = monthSelect + "-" + currentDate.getFullYear();
     console.log(e.target.checked);
+    console.log(dateSelect);
+    await updateStatePayMonthCustomer(person.id, dateSelect, e.target.checked);
   };
 
   useEffect(() => {

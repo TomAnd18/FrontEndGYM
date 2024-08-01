@@ -1,4 +1,9 @@
-import { deleteDataUser, postDataUser, updateDataUser } from "./apiFirebase";
+import {
+  deleteDataUser,
+  getAllCustomersFirebase,
+  postDataUser,
+  updateDataUser,
+} from "./apiFirebase";
 
 const url = import.meta.env.VITE_BACKEND_API;
 
@@ -6,7 +11,9 @@ export const getAllCustomers = async () => {
   try {
     const response = await fetch(`${url}/customers`);
     const datos = await response.json();
-    return datos;
+    //
+    const datosCustomer = await getAllCustomersFirebase();
+    return Object.values(datosCustomer);
   } catch (error) {
     console.log(error);
   }

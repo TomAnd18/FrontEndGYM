@@ -8,7 +8,12 @@ import {
 import { PaperClipIcon } from "@heroicons/react/20/solid";
 import CalendarView from "../calendars/CalendarView";
 
-export default function ModalViewUser({ activate, deactivateModal, person }) {
+export default function ModalViewUser({
+  activate,
+  deactivateModal,
+  person,
+  updateStatePayMonthCustomer,
+}) {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -61,15 +66,6 @@ export default function ModalViewUser({ activate, deactivateModal, person }) {
                         </svg>
                       </div>
                       <p>{person.name + " " + person.surname}</p>
-                      {person.active == "active" ? (
-                        <span className="text-xs px-3 py-0.5 bg-green-500 text-white ml-2 rounded-full uppercase">
-                          Activo
-                        </span>
-                      ) : (
-                        <span className="text-xs px-3 py-1 bg-red-500 text-white ml-2 rounded-full uppercase">
-                          Pagar
-                        </span>
-                      )}
                     </div>
                     <span className="text-xs flex border-l-2 border-green-500 pl-2">
                       {` fecha de registro: ${formatDateDataBase(
@@ -118,7 +114,12 @@ export default function ModalViewUser({ activate, deactivateModal, person }) {
                               Asistencias
                             </dt>
                             <dd>
-                              <CalendarView person={person} />
+                              <CalendarView
+                                person={person}
+                                updateStatePayMonthCustomer={
+                                  updateStatePayMonthCustomer
+                                }
+                              />
                             </dd>
                           </div>
                           <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4">

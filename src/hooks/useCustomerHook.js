@@ -22,6 +22,7 @@ import {
   getAllCustomersFirebase,
   getCurrentMonthAndYear,
   getCustomerByID,
+  updateCheckPayDataUser,
 } from "../api/apiFirebase";
 
 const useCustomerHook = () => {
@@ -47,7 +48,9 @@ const useCustomerHook = () => {
     try {
       const result = await getAllCustomers();
       //agrego los clientes a redux
-      dispatch(setCustomers(result.clientes));
+      // dispatch(setCustomers(result.clientes));
+      dispatch(setCustomers(result));
+      console.log(result);
     } catch (error) {
       console.log(error);
     } finally {
@@ -169,6 +172,20 @@ const useCustomerHook = () => {
     return false; // Asegúrate de devolver algo en caso de que no se cumplan las condiciones
   };
 
+  const updateStatePayMonthCustomer = async (id, date, state) => {
+    const customer = await getCustomerByID(id);
+
+    if (customer && customer.assists && customer.assists.length > 0) {
+      customer.assists.map((month, index) => {
+        if (month.month_year == date) {
+          customer.assists[index].pay_month = state;
+        }
+      });
+    }
+    const customerUpdated = await updateCheckPayDataUser(customer);
+    console.log(customerUpdated);
+  };
+
   return {
     loading,
     handleCreateCustomer,
@@ -181,6 +198,7 @@ const useCustomerHook = () => {
     rechargeCustomers,
     addCustomersPresentTodayFiltered,
     getActiveCustomer,
+    updateStatePayMonthCustomer,
     scrollRefs,
   };
 };
