@@ -45,6 +45,7 @@ export const postDataUser = async (dataUser) => {
       {
         days: getDaysMonthCurrent(),
         month_year: getCurrentMonthAndYear(),
+        pay_month: true,
       },
     ],
   };

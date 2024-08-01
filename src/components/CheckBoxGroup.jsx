@@ -60,6 +60,7 @@ const CheckBoxGroup = ({
             const newAssist = {
               days: initialCheckboxesState,
               month_year: getCurrentMonthAndYear(),
+              pay_month: false,
             };
             dataUserFirebase.assists.push(newAssist);
 

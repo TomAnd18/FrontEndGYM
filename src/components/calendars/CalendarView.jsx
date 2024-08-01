@@ -9,18 +9,27 @@ export default function Calendar({ person }) {
   const [countMonth, setCountMonth] = useState(0);
   const [countMonthSelect, setCountMonthSelect] = useState(0);
   const [positionPresents, setPositionPresents] = useState(1);
+  const [loading, setLoading] = useState(true);
+  const [customer, setCustomer] = useState([]);
+  const [isChecked, setIsChecked] = useState(false);
 
   const getDaysAssists = async (id) => {
     try {
       const data = await getCustomerByID(id);
 
+      setCustomer(data);
+
       if (data && data.assists && data.assists.length > 0) {
-        // const arrayDays = data.assists[data.assists.length - 1].days;
         const arrayDays =
           data.assists[data.assists.length - positionPresents].days;
         setDaysMonthPaint(arrayDays);
         //seteo el limite para seleccionar el mes de asistencias
         setCountMonth(data.assists.length);
+        setLoading(false);
+        //seteo el check del pago del mes
+        setIsChecked(
+          data.assists[data.assists.length - positionPresents].pay_month
+        );
       }
     } catch (error) {
       console.log(error);
@@ -93,7 +102,7 @@ export default function Calendar({ person }) {
         day: i,
         backgroundC: "none",
         color: "text-gray-600",
-        currentDay: daysMonthPaint[i - 1] && daysMonthPaint[i - 1].checked, //aca tengo el error, quiero agregar los datos guardados en daysMonthPaint en currentDay, que ponga true o false en currentDay
+        currentDay: daysMonthPaint[i - 1] && daysMonthPaint[i - 1].checked,
       });
     }
 
@@ -133,6 +142,11 @@ export default function Calendar({ person }) {
         new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1)
       );
     }
+  };
+
+  const handleCheckPayMonth = (e) => {
+    setIsChecked(e.target.checked);
+    console.log(e.target.checked);
   };
 
   useEffect(() => {
@@ -205,6 +219,45 @@ export default function Calendar({ person }) {
               </time>
             </button>
           ))}
+        </div>
+        <div className="mt-6 space-y-6">
+          <div className="relative flex gap-x-3">
+            <div className="flex h-6 items-center">
+              <input
+                id="pay_month"
+                name="pay_month"
+                type="checkbox"
+                onChange={handleCheckPayMonth}
+                checked={isChecked}
+                className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+              />
+            </div>
+            <div className="text-sm leading-6">
+              <label
+                htmlFor="pay_month"
+                className="font-medium text-gray-900 flex items-center"
+              >
+                Pago del mes de
+                {!loading && (
+                  <span
+                    className={`flex w-3 h-3 mx-1 rounded-full ${
+                      customer.assists[
+                        customer.assists.length - positionPresents
+                      ].pay_month
+                        ? "bg-green-500"
+                        : "bg-red-500"
+                    }`}
+                  ></span>
+                )}
+                <span className="font-bold text-md">
+                  {months[currentDate.getMonth()]}
+                </span>
+              </label>
+              <p className="text-gray-500">
+                Marcá la casilla si el cliente realizo el pago del mes
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </>

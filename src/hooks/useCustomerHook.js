@@ -21,6 +21,7 @@ import {
 import {
   getAllCustomersFirebase,
   getCurrentMonthAndYear,
+  getCustomerByID,
 } from "../api/apiFirebase";
 
 const useCustomerHook = () => {
@@ -158,6 +159,16 @@ const useCustomerHook = () => {
     dispatch(setFilteredPresentCustomers(customers));
   };
 
+  // Funcion para obtener un valor booleano si el cliente esta activo o no
+  const getActiveCustomer = async (id) => {
+    const customer = await getCustomerByID(id);
+    if (customer && customer.assists && customer.assists.length > 0) {
+      const activeC = customer.assists[customer.assists.length - 1].pay_month;
+      return activeC;
+    }
+    return false; // Asegúrate de devolver algo en caso de que no se cumplan las condiciones
+  };
+
   return {
     loading,
     handleCreateCustomer,
@@ -169,6 +180,7 @@ const useCustomerHook = () => {
     addCustomersFiltered,
     rechargeCustomers,
     addCustomersPresentTodayFiltered,
+    getActiveCustomer,
     scrollRefs,
   };
 };

@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function Example({ closeModalForm, handleCreateCustomer }) {
+export default function FormAddUser({ closeModalForm, handleCreateCustomer }) {
   const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
@@ -42,14 +42,11 @@ export default function Example({ closeModalForm, handleCreateCustomer }) {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="space-y-12">
+      <div className="space-y-12 mb-8">
         <div>
           <h2 className="text-base font-semibold leading-7 text-gray-900">
-            Información Personal
+            Información personal
           </h2>
-          <p className="mt-1 text-sm leading-6 text-gray-600">
-            Use a permanent address where you can receive mail.
-          </p>
 
           <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
             <div className="sm:col-span-3">
@@ -178,27 +175,6 @@ export default function Example({ closeModalForm, handleCreateCustomer }) {
               </div>
             </div>
           </div>
-        </div>
-        <div className="border-b border-gray-900/10 pb-5">
-          <fieldset>
-            <div className="space-y-6">
-              <div className="relative flex gap-x-3">
-                <div className="flex h-6 items-center">
-                  <input
-                    id="pay"
-                    name="pay"
-                    type="checkbox"
-                    className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                  />
-                </div>
-                <div className="text-sm leading-6">
-                  <label htmlFor="pay" className="font-medium text-gray-900">
-                    Realizó el pago del mes
-                  </label>
-                </div>
-              </div>
-            </div>
-          </fieldset>
         </div>
       </div>
 

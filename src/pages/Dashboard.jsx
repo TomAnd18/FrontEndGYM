@@ -20,6 +20,7 @@ export default function Dashboard() {
     handleDeleteCustomer,
     handleUpdateCustomer,
     addCustomersPresentTodayFiltered,
+    getActiveCustomer,
   } = useCustomerHook();
 
   return (
@@ -59,6 +60,7 @@ export default function Dashboard() {
                     deleteCustomerPresentToday={deleteCustomerPresentToday}
                     handleDeleteCustomer={handleDeleteCustomer}
                     handleUpdateCustomer={handleUpdateCustomer}
+                    getActiveCustomer={getActiveCustomer}
                   />
                 </div>
               </div>
@@ -74,6 +76,7 @@ export default function Dashboard() {
                       }
                       getCustomersPresentToday={getCustomersPresentToday}
                       loading={loading}
+                      getActiveCustomer={getActiveCustomer}
                     />
                   </div>
                 </div>
