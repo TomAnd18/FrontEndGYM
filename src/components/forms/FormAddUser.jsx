@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Spinner from "../spinners/Spinner";
 
 export default function FormAddUser({ closeModalForm, handleCreateCustomer }) {
   const [loading, setLoading] = useState(false);
@@ -31,7 +32,7 @@ export default function FormAddUser({ closeModalForm, handleCreateCustomer }) {
     } catch (error) {
       console.error("Error:", error);
     } finally {
-      setLoading(true);
+      //setLoading(true);
       closeModalForm();
     }
   };
@@ -105,7 +106,7 @@ export default function FormAddUser({ closeModalForm, handleCreateCustomer }) {
                   name="phone_number"
                   id="phone_number"
                   autoComplete="phone_number"
-                  value={formData.phoneNumber}
+                  value={formData.phone_number}
                   onChange={handleChange}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
@@ -156,7 +157,7 @@ export default function FormAddUser({ closeModalForm, handleCreateCustomer }) {
             </div>
             <div className="sm:col-span-3">
               <label
-                htmlFor="date_of_birthday"
+                htmlFor="date_of_birth"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
                 Fecha de nacimiento
@@ -180,9 +181,15 @@ export default function FormAddUser({ closeModalForm, handleCreateCustomer }) {
 
       <div className="mt-6 flex items-center justify-end gap-x-6">
         {loading ? (
-          <div>
-            <p>Guardando...</p>
-          </div>
+          <button
+            type="submit"
+            className="rounded-md flex justify-center items-center bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          >
+            Guardando{" "}
+            <span className="block w-4 h-4 ml-2">
+              <Spinner />
+            </span>
+          </button>
         ) : (
           <>
             <button

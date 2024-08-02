@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import {
   deleteCustomer,
   getAllCustomers,
+  getCustomerAPIByID,
   postAddCustomer,
   updateCustomer,
 } from "../api/apiService";
@@ -50,7 +51,7 @@ const useCustomerHook = () => {
       //agrego los clientes a redux
       // dispatch(setCustomers(result.clientes));
       dispatch(setCustomers(result));
-      console.log(result);
+      // console.log(result);
     } catch (error) {
       console.log(error);
     } finally {
@@ -96,9 +97,11 @@ const useCustomerHook = () => {
       // Llamar a la API para actualizar el cliente
       const customerUpdate = await updateCustomer(idCustomer, formData);
       // Actualizar el estado de Redux actualizando el cliente de la lista
-      dispatch(putCustomer(customerUpdate.cliente));
+      // dispatch(putCustomer(customerUpdate.cliente));
+      dispatch(putCustomer(customerUpdate));
       //Actualizar cliente presente el dia actual
-      dispatch(updateUserToday(customerUpdate.cliente));
+      // dispatch(updateUserToday(customerUpdate.cliente));
+      dispatch(updateUserToday(customerUpdate));
     } catch (error) {
       console.log(error);
     }
@@ -162,15 +165,20 @@ const useCustomerHook = () => {
     dispatch(setFilteredPresentCustomers(customers));
   };
 
-  // Funcion para obtener un valor booleano si el cliente esta activo o no
-  const getActiveCustomer = async (id) => {
-    const customer = await getCustomerByID(id);
-    if (customer && customer.assists && customer.assists.length > 0) {
-      const activeC = customer.assists[customer.assists.length - 1].pay_month;
-      return activeC;
-    }
-    return false; // Asegúrate de devolver algo en caso de que no se cumplan las condiciones
-  };
+  // // Funcion para obtener un valor booleano si el cliente esta activo o no
+  // const getActiveCustomer = async (id) => {
+  //   const customer = await getCustomerByID(id);
+  //   if (customer && customer.assists && customer.assists.length > 0) {
+  //     const activeC = customer.assists[customer.assists.length - 1].pay_month;
+  //     return activeC;
+  //   }
+  //   return false; // Asegúrate de devolver algo en caso de que no se cumplan las condiciones
+  // };
+
+  // const rechargeAllViewCustomers = (id, dataCustomer) => {
+  //   handleUpdateCustomer(id, dataCustomer);
+  //   getCustomersPresentToday();
+  // };
 
   const updateStatePayMonthCustomer = async (id, date, state) => {
     const customer = await getCustomerByID(id);
@@ -182,8 +190,18 @@ const useCustomerHook = () => {
         }
       });
     }
-    const customerUpdated = await updateCheckPayDataUser(customer);
-    console.log(customerUpdated);
+    const customerPayUpdated = await updateCheckPayDataUser(customer);
+    const customerUpdated = await getCustomerByID(id);
+
+    handleUpdateCustomer(id, customerUpdated);
+  };
+
+  const getDateCreationCustomer = async (id) => {
+    const dataCustomersAPI = await getCustomerAPIByID(id);
+
+    const dateCreation = dataCustomersAPI.created_at;
+
+    return dateCreation;
   };
 
   return {
@@ -197,8 +215,8 @@ const useCustomerHook = () => {
     addCustomersFiltered,
     rechargeCustomers,
     addCustomersPresentTodayFiltered,
-    getActiveCustomer,
     updateStatePayMonthCustomer,
+    getDateCreationCustomer,
     scrollRefs,
   };
 };

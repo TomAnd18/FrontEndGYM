@@ -13,8 +13,19 @@ export default function ModalViewUser({
   deactivateModal,
   person,
   updateStatePayMonthCustomer,
+  getDateCreationCustomer,
 }) {
   const [open, setOpen] = useState(false);
+  const [dateCreation, setDateCreation] = useState("");
+
+  const getDateCreatedCustomer = async () => {
+    const dateCreated = await getDateCreationCustomer(person.id);
+    setDateCreation(dateCreated);
+  };
+
+  useEffect(() => {
+    getDateCreatedCustomer();
+  }, [person]);
 
   useEffect(() => {
     setOpen(activate);
@@ -46,7 +57,7 @@ export default function ModalViewUser({
         <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
           <DialogPanel
             transition
-            className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all data-[closed]:translate-y-4 data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in sm:my-8 sm:w-full sm:max-w-lg data-[closed]:sm:translate-y-0 data-[closed]:sm:scale-95"
+            className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all data-[closed]:translate-y-4 data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in sm:my-8 sm:w-full sm:max-w-4xl data-[closed]:sm:translate-y-0 data-[closed]:sm:scale-95"
           >
             <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
               <div className="sm:flex sm:items-start w-full">
@@ -69,7 +80,7 @@ export default function ModalViewUser({
                     </div>
                     <span className="text-xs flex border-l-2 border-green-500 pl-2">
                       {` fecha de registro: ${formatDateDataBase(
-                        person.created_at
+                        dateCreation
                       )}`}
                     </span>
                   </DialogTitle>
@@ -77,50 +88,54 @@ export default function ModalViewUser({
                     <div className="w-full">
                       <div className="mt-6 border-t border-gray-100">
                         <dl className="divide-y divide-gray-100">
-                          <div className="py-6 px-4 flex justify-between">
-                            <p className="text-sm font-medium leading-6 text-gray-900">
-                              Suscripción
-                            </p>
-                            <p className="text-sm leading-6 text-gray-700">
-                              {person.subscription}
-                            </p>
-                          </div>
-                          <div className="py-6 px-4 flex justify-between">
-                            <p className="text-sm font-medium leading-6 text-gray-900">
-                              Genero
-                            </p>
-                            <p className="text-sm leading-6 text-gray-700">
-                              {person.gender}
-                            </p>
-                          </div>
-                          <div className="py-6 px-4 flex justify-between">
-                            <p className="text-sm font-medium leading-6 text-gray-900">
-                              Telefono
-                            </p>
-                            <p className="text-sm leading-6 text-gray-700">
-                              {person.phone_number}
-                            </p>
-                          </div>
-                          <div className="py-6 px-4 flex justify-between">
-                            <p className="text-sm font-medium leading-6 text-gray-900">
-                              Fecha de nacimiento
-                            </p>
-                            <time className="text-sm leading-6 text-gray-700">
-                              {formatDate(person.date_of_birth)}
-                            </time>
-                          </div>
-                          <div className="py-6 flex items-center flex-col">
-                            <dt className="w-full px-4 mb-4 text-sm font-medium leading-6 text-gray-900">
-                              Asistencias
-                            </dt>
-                            <dd>
-                              <CalendarView
-                                person={person}
-                                updateStatePayMonthCustomer={
-                                  updateStatePayMonthCustomer
-                                }
-                              />
-                            </dd>
+                          <div className="flex justify-around flex-col md:flex-row">
+                            <div className="flex flex-col shadow-md bg-gray-50 h-max mt-8 px-0 md:px-4 rounded-md">
+                              <div className="py-6 px-4 flex justify-between">
+                                <p className="text-sm font-medium leading-6 text-gray-900">
+                                  Suscripción
+                                </p>
+                                <p className="text-sm leading-6 text-gray-700">
+                                  {person.subscription}
+                                </p>
+                              </div>
+                              <div className="py-6 px-4 flex justify-between">
+                                <p className="text-sm font-medium leading-6 text-gray-900">
+                                  Genero
+                                </p>
+                                <p className="text-sm leading-6 text-gray-700">
+                                  {person.gender}
+                                </p>
+                              </div>
+                              <div className="py-6 px-4 flex justify-between">
+                                <p className="text-sm font-medium leading-6 text-gray-900">
+                                  Telefono
+                                </p>
+                                <p className="text-sm leading-6 text-gray-700">
+                                  {person.phone_number}
+                                </p>
+                              </div>
+                              <div className="py-6 px-4 flex justify-between">
+                                <p className="text-sm font-medium leading-6 text-gray-900 mr-16">
+                                  Fecha de nacimiento
+                                </p>
+                                <time className="text-sm leading-6 text-gray-700">
+                                  {formatDate(person.date_of_birth)}
+                                </time>
+                              </div>
+                            </div>
+                            <div className="py-6 flex items-center flex-col">
+                              <dt className="w-full mb-4 text-sm font-medium leading-6 text-gray-900">
+                                Asistencias
+                              </dt>
+                              <dd>
+                                <CalendarView
+                                  person={person}
+                                  updateStatePayMonthCustomer={
+                                    updateStatePayMonthCustomer
+                                  }
+                                />
+                              </dd>
+                            </div>
                           </div>
                           <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4">
                             <dt className="text-sm font-medium leading-6 text-gray-900">

@@ -1,18 +1,15 @@
 import { useEffect, useState } from "react";
 
-export default function ItemMiniStackedList({ person, getActiveCustomer }) {
+export default function ItemMiniStackedList({ person }) {
   const [activeCustomer, setActiveCustomer] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchActiveCustomer = async () => {
-      const activeC = await getActiveCustomer(person.id);
-      setActiveCustomer(activeC);
+    if (person && person.assists && person.assists.length > 0) {
+      setActiveCustomer(person.assists[person.assists.length - 1].pay_month);
       setLoading(false);
-    };
-
-    fetchActiveCustomer();
-  }, [person.id]);
+    }
+  }, [person]);
   return (
     <>
       <li
@@ -32,7 +29,7 @@ export default function ItemMiniStackedList({ person, getActiveCustomer }) {
             ) : (
               <span
                 className={`text-xs font-bold uppercase ${
-                  activeCustomer ? "text-green-500" : "text-red-500"
+                  activeCustomer ? "text-green-600" : "text-red-600"
                 }`}
               >
                 {activeCustomer ? "Activo" : "Pagar"}

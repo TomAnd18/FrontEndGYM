@@ -7,12 +7,18 @@ import {
 
 const url = import.meta.env.VITE_BACKEND_API;
 
+export const getCustomerAPIByID = async (id) => {
+  const response = await fetch(`${url}/customer/${id}`);
+  const datos = await response.json();
+
+  return datos.cliente;
+};
+
 export const getAllCustomers = async () => {
   try {
-    const response = await fetch(`${url}/customers`);
-    const datos = await response.json();
-    //
+    //Obtengo los clientes de firebase
     const datosCustomer = await getAllCustomersFirebase();
+
     return Object.values(datosCustomer);
   } catch (error) {
     console.log(error);
@@ -37,7 +43,8 @@ export const postAddCustomer = async (formData) => {
   //agregar datos del cliente a firebase + datos de asistencia
   const dataFirebase = await postDataUser(data.cliente);
 
-  return data.cliente;
+  // return data.cliente;
+  return dataFirebase;
 };
 
 export const deleteCustomer = async (id) => {
@@ -73,7 +80,8 @@ export const updateCustomer = async (id, formData) => {
     const dataUser = data.cliente;
     const dataFirebase = await updateDataUser(dataUser);
 
-    return data;
+    //return data;
+    return dataFirebase;
   } catch (error) {
     console.log(error);
   }

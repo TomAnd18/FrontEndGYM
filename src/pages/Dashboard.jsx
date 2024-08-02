@@ -20,8 +20,8 @@ export default function Dashboard() {
     handleDeleteCustomer,
     handleUpdateCustomer,
     addCustomersPresentTodayFiltered,
-    getActiveCustomer,
     updateStatePayMonthCustomer,
+    getDateCreationCustomer,
   } = useCustomerHook();
 
   return (
@@ -41,7 +41,7 @@ export default function Dashboard() {
             </header>
             <div className="w-full flex justify-evenly flex-col-reverse md:flex-row-reverse pt-10">
               <div className="w-full md:w-1/2">
-                <div className="w-full flex flex-col mb-10 justify-between">
+                <div className="w-full flex flex-col justify-between mb-4 md:mb-7 p-2 md:p-0">
                   <div className="flex mb-4">
                     <BtnAddUser handleCreateCustomer={handleCreateCustomer} />
                     <OrderDropdown />
@@ -61,13 +61,13 @@ export default function Dashboard() {
                     deleteCustomerPresentToday={deleteCustomerPresentToday}
                     handleDeleteCustomer={handleDeleteCustomer}
                     handleUpdateCustomer={handleUpdateCustomer}
-                    getActiveCustomer={getActiveCustomer}
                     updateStatePayMonthCustomer={updateStatePayMonthCustomer}
+                    getDateCreationCustomer={getDateCreationCustomer}
                   />
                 </div>
               </div>
-              <div className="w-full md:w-auto flex flex-col">
-                <div className="w-auto mb-12 flex justify-center">
+              <div className="w-full md:w-auto flex flex-col mb-8">
+                <div className="w-auto mb-6 flex justify-center">
                   <Calendar />
                 </div>
                 <div className="w-auto mx-3 md:mx-0">
@@ -78,7 +78,6 @@ export default function Dashboard() {
                       }
                       getCustomersPresentToday={getCustomersPresentToday}
                       loading={loading}
-                      getActiveCustomer={getActiveCustomer}
                     />
                   </div>
                 </div>

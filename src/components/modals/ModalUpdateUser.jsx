@@ -42,7 +42,7 @@ export default function ModalUpdateUser({
                 <div className="mt-3 w-full text-center sm:mt-0 sm:text-left">
                   <DialogTitle
                     as="h3"
-                    className="text-base font-semibold leading-6 text-gray-900 capitalize"
+                    className="text-base font-semibold leading-6 text-gray-900"
                   >
                     Modificar datos
                   </DialogTitle>

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { getCustomerByID } from "../../api/apiFirebase";
+import Spinner from "../spinners/Spinner";
 
-export default function Calendar({ person, updateStatePayMonthCustomer }) {
+export default function CalendarView({ person, updateStatePayMonthCustomer }) {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [days, setDays] = useState([]);
   const daysM = ["Lu", "Ma", "Mi", "Ju", "Vi", "Sa", "Do"];
@@ -10,10 +11,12 @@ export default function Calendar({ person, updateStatePayMonthCustomer }) {
   const [countMonthSelect, setCountMonthSelect] = useState(0);
   const [positionPresents, setPositionPresents] = useState(1);
   const [loading, setLoading] = useState(true);
+  const [loadingCalendar, setLoadingCalendar] = useState(true);
   const [customer, setCustomer] = useState([]);
   const [isChecked, setIsChecked] = useState(false);
 
   const getDaysAssists = async (id) => {
+    setLoading(true);
     try {
       const data = await getCustomerByID(id);
 
@@ -23,9 +26,9 @@ export default function Calendar({ person, updateStatePayMonthCustomer }) {
         const arrayDays =
           data.assists[data.assists.length - positionPresents].days;
         setDaysMonthPaint(arrayDays);
-        //seteo el limite para seleccionar el mes de asistencias
+        //seteo el tamaño del array para seleccionar el mes de asistencias
         setCountMonth(data.assists.length);
-        setLoading(false);
+
         //seteo el check del pago del mes
         setIsChecked(
           data.assists[data.assists.length - positionPresents].pay_month
@@ -33,6 +36,9 @@ export default function Calendar({ person, updateStatePayMonthCustomer }) {
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
+      setLoadingCalendar(false);
     }
   };
 
@@ -123,6 +129,8 @@ export default function Calendar({ person, updateStatePayMonthCustomer }) {
   };
 
   const handlePrevMonth = () => {
+    setLoadingCalendar(true);
+
     if (countMonthSelect < countMonth - 1) {
       setCountMonthSelect(countMonthSelect + 1);
       //setear posicion del array de meses de asistencias
@@ -134,6 +142,8 @@ export default function Calendar({ person, updateStatePayMonthCustomer }) {
   };
 
   const handleNextMonth = () => {
+    setLoadingCalendar(true);
+
     if (countMonthSelect > 0) {
       setCountMonthSelect(countMonthSelect - 1);
       //setear posicion del array de meses de asistencias
@@ -151,8 +161,7 @@ export default function Calendar({ person, updateStatePayMonthCustomer }) {
         ? `0${currentDate.getMonth() + 1}`
         : currentDate.getMonth();
     const dateSelect = monthSelect + "-" + currentDate.getFullYear();
-    console.log(e.target.checked);
-    console.log(dateSelect);
+
     await updateStatePayMonthCustomer(person.id, dateSelect, e.target.checked);
   };
 
@@ -165,6 +174,10 @@ export default function Calendar({ person, updateStatePayMonthCustomer }) {
     const month = currentDate.getMonth();
     setDays(getCalendarDays(year, month));
   }, [currentDate, daysMonthPaint]);
+
+  useEffect(() => {
+    getDaysAssists(person.id);
+  }, [isChecked]);
 
   return (
     <>
@@ -215,29 +228,41 @@ export default function Calendar({ person, updateStatePayMonthCustomer }) {
                 day.backgroundC
               } ${day.color}`}
             >
-              <time
-                className={
-                  day.currentDay
-                    ? "bg-green-500 text-white flex w-8 h-8 justify-center items-center rounded-full"
-                    : ""
-                }
-              >
-                {day.day}
-              </time>
+              {loadingCalendar ? (
+                <span className="w-4 h-4">
+                  <Spinner />
+                </span>
+              ) : (
+                <time
+                  className={
+                    day.currentDay
+                      ? "bg-green-500 text-white flex w-8 h-8 justify-center items-center rounded-full"
+                      : ""
+                  }
+                >
+                  {day.day}
+                </time>
+              )}
             </button>
           ))}
         </div>
         <div className="mt-6 space-y-6">
           <div className="relative flex gap-x-3">
             <div className="flex h-6 items-center">
-              <input
-                id="pay_month"
-                name="pay_month"
-                type="checkbox"
-                onChange={handleCheckPayMonth}
-                checked={isChecked}
-                className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-              />
+              {loading ? (
+                <span className="w-4 h-4">
+                  <Spinner />
+                </span>
+              ) : (
+                <input
+                  id="pay_month"
+                  name="pay_month"
+                  type="checkbox"
+                  onChange={handleCheckPayMonth}
+                  checked={isChecked}
+                  className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                />
+              )}
             </div>
             <div className="text-sm leading-6">
               <label
@@ -245,7 +270,11 @@ export default function Calendar({ person, updateStatePayMonthCustomer }) {
                 className="font-medium text-gray-900 flex items-center"
               >
                 Pago del mes de
-                {!loading && (
+                {loading ? (
+                  <span className="w-3 h-3 mx-1">
+                    <Spinner />
+                  </span>
+                ) : (
                   <span
                     className={`flex w-3 h-3 mx-1 rounded-full ${
                       customer.assists[

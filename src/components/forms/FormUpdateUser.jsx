@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Spinner from "../spinners/Spinner";
 
 export default function FormUpdateUser({
   closeModalForm,
@@ -35,7 +36,7 @@ export default function FormUpdateUser({
     } catch (error) {
       console.error("Error:", error);
     } finally {
-      setLoading(false);
+      // setLoading(false);
       closeModalForm();
     }
   };
@@ -156,7 +157,7 @@ export default function FormUpdateUser({
             </div>
             <div className="sm:col-span-3">
               <label
-                htmlFor="date_of_birthday"
+                htmlFor="date_of_birth"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
                 Fecha de nacimiento
@@ -180,9 +181,15 @@ export default function FormUpdateUser({
 
       <div className="mt-6 flex items-center justify-end gap-x-6">
         {loading ? (
-          <div>
-            <p>Guardando...</p>
-          </div>
+          <button
+            type="submit"
+            className="rounded-md flex justify-center items-center bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          >
+            Guardando{" "}
+            <span className="block w-4 h-4 ml-2">
+              <Spinner />
+            </span>
+          </button>
         ) : (
           <>
             <button

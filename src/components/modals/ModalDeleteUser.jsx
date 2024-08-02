@@ -6,6 +6,7 @@ import {
   DialogTitle,
 } from "@headlessui/react";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
+import Spinner from "../spinners/Spinner";
 
 export default function ModalDeleteUser({
   activate,
@@ -33,7 +34,7 @@ export default function ModalDeleteUser({
     } catch (error) {
       console.log(error);
     } finally {
-      setLoading(false);
+      // setLoading(false);
       setOpen(false);
       deactivateModal();
     }
@@ -65,14 +66,15 @@ export default function ModalDeleteUser({
                     as="h3"
                     className="text-base font-semibold leading-6 text-gray-900"
                   >
-                    Dar de baja a cliente
+                    Eliminar cliente
                   </DialogTitle>
                   <div className="mt-2">
                     <p className="text-sm text-gray-500">
-                      Dar de baja del sistema a{" "}
+                      ¿Estas seguro que quieres eliminar a{" "}
                       <span className="uppercase font-semibold">
                         {nameCustomer}
                       </span>
+                      ?
                     </p>
                   </div>
                 </div>
@@ -80,9 +82,15 @@ export default function ModalDeleteUser({
             </div>
             <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
               {loading ? (
-                <div>
-                  <p>Cargando...</p>
-                </div>
+                <button
+                  type="button"
+                  className="flex items-center w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
+                >
+                  Eliminando{" "}
+                  <span className="block w-4 h-4 ml-2">
+                    <Spinner />
+                  </span>
+                </button>
               ) : (
                 <>
                   <button
@@ -90,7 +98,7 @@ export default function ModalDeleteUser({
                     className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
                     onClick={() => handleOnClickDeleteCustomer()}
                   >
-                    Dar de baja
+                    Eliminar
                   </button>
                   <button
                     type="button"

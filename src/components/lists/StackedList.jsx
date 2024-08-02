@@ -8,8 +8,8 @@ export default function StackedList({
   deleteCustomerPresentToday,
   handleDeleteCustomer,
   handleUpdateCustomer,
-  getActiveCustomer,
   updateStatePayMonthCustomer,
+  getDateCreationCustomer,
 }) {
   const data = useSelector((state) => state.customers.list);
 
@@ -32,24 +32,18 @@ export default function StackedList({
     <ul role="list" className="list-none">
       {data.map((person, index) => {
         return (
-          <li
-            key={"item-person-" + index}
-            className={`w-full flex flex-col xl:flex-row justify-between gap-x-6 py-2 px-4 hover:bg-gray-50 hover:shadow-inner hover:border-l-2 hover:border-l-blue-600 hover:border-r-2 hover:border-r-blue-600 ${
-              index === data.length - 1 ? "" : "border-b"
-            }`}
-          >
-            <ItemList
-              person={person}
-              index={index}
-              scrollRefs={scrollRefs}
-              setCustomerPresentToday={setCustomerPresentToday}
-              deleteCustomerPresentToday={deleteCustomerPresentToday}
-              handleDeleteCustomer={handleDeleteCustomer}
-              handleUpdateCustomer={handleUpdateCustomer}
-              getActiveCustomer={getActiveCustomer}
-              updateStatePayMonthCustomer={updateStatePayMonthCustomer}
-            />
-          </li>
+          <ItemList
+            key={`stacked-list${index}`}
+            person={person}
+            index={index}
+            scrollRefs={scrollRefs}
+            setCustomerPresentToday={setCustomerPresentToday}
+            deleteCustomerPresentToday={deleteCustomerPresentToday}
+            handleDeleteCustomer={handleDeleteCustomer}
+            handleUpdateCustomer={handleUpdateCustomer}
+            updateStatePayMonthCustomer={updateStatePayMonthCustomer}
+            getDateCreationCustomer={getDateCreationCustomer}
+          />
         );
       })}
     </ul>

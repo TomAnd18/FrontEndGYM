@@ -6,7 +6,6 @@ export default function AsideList({
   addCustomersPresentTodayFiltered,
   loading,
   getCustomersPresentToday,
-  getActiveCustomer,
 }) {
   const customers = useSelector((state) => state.customers.backupUsersToday);
   const allCustomers = useSelector((state) => state.customers.list);
@@ -34,7 +33,6 @@ export default function AsideList({
         <MiniStackedList
           loading={loading}
           getCustomersPresentToday={getCustomersPresentToday}
-          getActiveCustomer={getActiveCustomer}
         />
       </div>
     </>

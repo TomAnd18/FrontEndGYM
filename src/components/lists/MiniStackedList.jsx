@@ -2,11 +2,7 @@ import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import ItemMiniStackedList from "./ItemMiniStackedList";
 
-export default function MiniStackedList({
-  loading,
-  getCustomersPresentToday,
-  getActiveCustomer,
-}) {
+export default function MiniStackedList({ loading, getCustomersPresentToday }) {
   const customers = useSelector((state) => state.customers.usersToday);
 
   useEffect(() => {
@@ -35,7 +31,6 @@ export default function MiniStackedList({
           <ItemMiniStackedList
             key={"item-miniperson-" + index}
             person={person}
-            getActiveCustomer={getActiveCustomer}
           />
         ))
       )}
