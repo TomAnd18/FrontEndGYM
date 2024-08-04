@@ -6,6 +6,9 @@ import BtnAddUser from "../components/buttons/BtnAddUser";
 import AsideList from "../components/AsideList";
 import useCustomerHook from "../hooks/useCustomerHook";
 import OrderDropdown from "../components/dropdowns/OrderDropdown";
+import FilterDropdown from "../components/dropdowns/FilterDropdown";
+import SelectFilter from "../components/dropdowns/SelectFilter";
+import SelectOrder from "../components/dropdowns/SelectOrder";
 
 export default function Dashboard() {
   const {
@@ -42,9 +45,14 @@ export default function Dashboard() {
             <div className="w-full flex justify-evenly flex-col-reverse md:flex-row-reverse pt-10">
               <div className="w-full md:w-1/2">
                 <div className="w-full flex flex-col justify-between mb-4 md:mb-7 p-2 md:p-0">
-                  <div className="flex mb-4">
+                  <div className="flex mb-4 flex-col lg:flex-row items-start lg:items-center">
                     <BtnAddUser handleCreateCustomer={handleCreateCustomer} />
-                    <OrderDropdown />
+                    <div className="flex mt-4 lg:mt-0">
+                      {/* <OrderDropdown />
+                      <FilterDropdown /> */}
+                      <SelectOrder />
+                      <SelectFilter />
+                    </div>
                   </div>
                   <div className="w-full mb-4 sm:mb-0">
                     <SearchUserStackedList
@@ -67,7 +75,7 @@ export default function Dashboard() {
                 </div>
               </div>
               <div className="w-full md:w-auto flex flex-col mb-8">
-                <div className="w-auto mb-6 flex justify-center">
+                <div className="w-auto mb-4 flex justify-center">
                   <Calendar />
                 </div>
                 <div className="w-auto mx-3 md:mx-0">

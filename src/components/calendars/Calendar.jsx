@@ -164,7 +164,7 @@ export default function Calendar() {
                 className={
                   day.currentDay &&
                   months[getCurrentMonth()] === months[currentDate.getMonth()]
-                    ? "bg-gray-800 text-white flex w-8 h-8 justify-center items-center rounded-full"
+                    ? "bg-blue-500 text-white flex w-8 h-8 justify-center items-center rounded-full"
                     : ""
                 }
               >

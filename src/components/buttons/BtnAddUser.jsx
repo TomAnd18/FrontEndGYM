@@ -17,7 +17,7 @@ export default function BtnAddUser({ handleCreateCustomer }) {
       <button
         onClick={activateModalAddUser}
         type="button"
-        className="w-max px-3 py-2 rounded-full flex items-center font-semibold bg-blue-500 text-white hover:bg-blue-600"
+        className="w-max px-2.5 py-1.5 rounded-full flex items-center font-semibold bg-blue-500 text-white hover:bg-blue-600"
       >
         <svg
           className="w-6 h-6 mr-2"
