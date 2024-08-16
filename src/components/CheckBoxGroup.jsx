@@ -1,11 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { getCurrentDayOfMonth, getCustomerByID } from "../api/apiFirebase";
 
 const CheckBoxGroup = ({
   person,
   setCustomerPresentToday,
   deleteCustomerPresentToday,
+  scrollRefs,
+  index,
 }) => {
+  const currentDayRef = useRef(null); // Ref para el día actual
+
   //obtener dias del mes actual
   const getDaysInMonth = () => {
     const currentDate = new Date();
@@ -153,29 +157,97 @@ const CheckBoxGroup = ({
     }
   };
 
+  const scrollLeft = (index) => {
+    if (scrollRefs[index].current) {
+      scrollRefs[index].current.scrollBy({ left: -100, behavior: "smooth" });
+    }
+  };
+
+  const scrollRight = (index) => {
+    if (scrollRefs[index].current) {
+      scrollRefs[index].current.scrollBy({ left: 100, behavior: "smooth" });
+    }
+  };
+
+  //centrar con un scroll automatico el checkbox del dia actual
+  useEffect(() => {
+    if (currentDayRef.current && scrollRefs[index]?.current) {
+      const container = scrollRefs[index].current;
+      const currentDayElement = currentDayRef.current;
+
+      const containerRect = container.getBoundingClientRect();
+      const currentDayRect = currentDayElement.getBoundingClientRect();
+
+      const scrollLeftPosition =
+        currentDayElement.offsetLeft -
+        containerRect.width / 2 +
+        currentDayRect.width / 2;
+
+      container.scrollTo({ left: scrollLeftPosition, behavior: "smooth" });
+    }
+  });
+
   return (
     <>
-      {checkboxes.map((checkbox) => (
-        <div key={checkbox.id} className="relative flex gap-x-3 ml-1.5">
+      <div
+        onClick={() => scrollLeft(index)}
+        className="absolute cursor-pointer left-0 top-1/2 transform -translate-y-1/2 w-5 h-5 rounded-full"
+      >
+        <svg
+          className="w-5 h-5"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 512 512"
+          fill="#9ca3b7"
+        >
+          <path d="M512 256A256 256 0 1 0 0 256a256 256 0 1 0 512 0zM271 135c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-87 87 87 87c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L167 273c-9.4-9.4-9.4-24.6 0-33.9L271 135z" />
+        </svg>
+      </div>
+      <div
+        ref={scrollRefs[index]}
+        style={{ scrollBehavior: "smooth" }}
+        className="mx-5 py-1 flex overflow-x-hidden overflow-y-hidden"
+      >
+        {checkboxes.map((checkbox) => (
           <div
-            className={`flex h-6 items-center relative rounded-md ${
-              checkbox.checked ? "text-white" : "text-black hover:text-white"
-            }`}
+            key={checkbox.id}
+            ref={
+              checkbox.id === getCurrentDayOfMonth() - 1 ? currentDayRef : null
+            }
+            className="relative flex gap-x-3 ml-1.5"
           >
-            <input
-              id={`checkbox${person.id}-${checkbox.id}`}
-              name={`checkbox-${checkbox.id}`}
-              type="checkbox"
-              className="h-6 w-6 rounded-md border-gray-200 text-blue-500 focus:ring-blue-500 checked:bg-none cursor-pointer hover:bg-blue-500"
-              checked={checkbox.checked}
-              onChange={() => handleCheckBoxChange(checkbox.id)}
-            />
-            <span className="absolute inset-0 flex items-center justify-center pointer-events-none text-xs font-bold">
-              {checkbox.id}
-            </span>
+            <div
+              className={`flex h-6 items-center relative rounded-md ${
+                checkbox.checked ? "text-white" : "text-black hover:text-white"
+              }`}
+            >
+              <input
+                id={`checkbox${person.id}-${checkbox.id}`}
+                name={`checkbox-${checkbox.id}`}
+                type="checkbox"
+                className="h-6 w-6 rounded-md border-gray-200 text-blue-500 focus:ring-blue-500 checked:bg-none cursor-pointer hover:bg-blue-500"
+                checked={checkbox.checked}
+                onChange={() => handleCheckBoxChange(checkbox.id)}
+              />
+              <span className="absolute inset-0 flex items-center justify-center pointer-events-none text-xs font-bold">
+                {checkbox.id}
+              </span>
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
+      <div
+        onClick={() => scrollRight(index)}
+        className="absolute cursor-pointer right-0 top-1/2 transform -translate-y-1/2 w-5 h-5 rounded-full"
+      >
+        <svg
+          className="w-5 h-5"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 512 512"
+          fill="#9ca3b7"
+        >
+          <path d="M0 256a256 256 0 1 0 512 0A256 256 0 1 0 0 256zM241 377c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l87-87-87-87c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0L345 239c9.4 9.4 9.4 24.6 0 33.9L241 377z" />
+        </svg>
+      </div>
     </>
   );
 };

@@ -18,30 +18,11 @@ export default function ItemList({
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // const fetchActiveCustomer = async () => {
-    //   const activeC = await getActiveCustomer(person.id);
-    //   setActiveCustomer(activeC);
-    //   setLoading(false);
-    // };
-
-    // fetchActiveCustomer();
     if (person && person.assists && person.assists.length > 0) {
       setActiveCustomer(person.assists[person.assists.length - 1].pay_month);
       setLoading(false);
     }
   }, [person]);
-
-  const scrollLeft = (index) => {
-    if (scrollRefs[index].current) {
-      scrollRefs[index].current.scrollBy({ left: -100, behavior: "smooth" });
-    }
-  };
-
-  const scrollRight = (index) => {
-    if (scrollRefs[index].current) {
-      scrollRefs[index].current.scrollBy({ left: 100, behavior: "smooth" });
-    }
-  };
 
   return (
     <>
@@ -56,9 +37,9 @@ export default function ItemList({
           <div className="min-w-0 flex-auto">
             <div className="text-md font-semibold leading-3 flex items-center">
               {person.gender == "Hombre" ? (
-                <span className="w-4 h-4 mr-1">
+                <span className="w-3.5 h-3.5 mr-1">
                   <svg
-                    className="w-4 h-4"
+                    className="w-3.5 h-3.5"
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 448 512"
                     fill="#1e3050"
@@ -67,9 +48,9 @@ export default function ItemList({
                   </svg>
                 </span>
               ) : (
-                <span className="w-4 h-4 mr-1">
+                <span className="w-3.5 h-3.5 mr-1">
                   <svg
-                    className="w-4 h-4"
+                    className="w-3.5 h-3.5"
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 384 512"
                     fill="#1e3050"
@@ -104,43 +85,13 @@ export default function ItemList({
         <div className="shrink-0 flex flex-row justify-between xl:justify-end mt-2 xl:mt-0 w-full xl:w-7/12">
           <div className="w-2/3 flex justify-center flex-col pr-2">
             <div className="w-full relative flex pl-2 pr-3 overflow-hidden">
-              <div
-                onClick={() => scrollLeft(index)}
-                className="absolute cursor-pointer left-0 top-1/2 transform -translate-y-1/2 w-5 h-5 rounded-full"
-              >
-                <svg
-                  className="w-5 h-5"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 512 512"
-                  fill="#9ca3b7"
-                >
-                  <path d="M512 256A256 256 0 1 0 0 256a256 256 0 1 0 512 0zM271 135c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-87 87 87 87c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L167 273c-9.4-9.4-9.4-24.6 0-33.9L271 135z" />
-                </svg>
-              </div>
-              <div
-                ref={scrollRefs[index]}
-                style={{ scrollBehavior: "smooth" }}
-                className="mx-5 py-1 flex overflow-x-hidden overflow-y-hidden"
-              >
-                <CheckBoxGroup
-                  person={person}
-                  setCustomerPresentToday={setCustomerPresentToday}
-                  deleteCustomerPresentToday={deleteCustomerPresentToday}
-                />
-              </div>
-              <div
-                onClick={() => scrollRight(index)}
-                className="absolute cursor-pointer right-0 top-1/2 transform -translate-y-1/2 w-5 h-5 rounded-full"
-              >
-                <svg
-                  className="w-5 h-5"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 512 512"
-                  fill="#9ca3b7"
-                >
-                  <path d="M0 256a256 256 0 1 0 512 0A256 256 0 1 0 0 256zM241 377c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l87-87-87-87c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0L345 239c9.4 9.4 9.4 24.6 0 33.9L241 377z" />
-                </svg>
-              </div>
+              <CheckBoxGroup
+                person={person}
+                setCustomerPresentToday={setCustomerPresentToday}
+                deleteCustomerPresentToday={deleteCustomerPresentToday}
+                scrollRefs={scrollRefs}
+                index={index}
+              />
             </div>
           </div>
           <div className="pl-2 flex items-center w-auto">

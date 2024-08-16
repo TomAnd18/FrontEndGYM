@@ -9,6 +9,7 @@ import OrderDropdown from "../components/dropdowns/OrderDropdown";
 import FilterDropdown from "../components/dropdowns/FilterDropdown";
 import SelectFilter from "../components/dropdowns/SelectFilter";
 import SelectOrder from "../components/dropdowns/SelectOrder";
+import Badge from "../components/badges/Badge";
 
 export default function Dashboard() {
   const {
@@ -30,28 +31,44 @@ export default function Dashboard() {
   return (
     <>
       <div className="w-full">
-        <NavBar />
+        <div>
+          <NavBar />
+        </div>
         <main className="md:m-4 w-full pb-28 md:w-auto shadow-md shadow-gray-300 rounded-lg">
           <div className="w-full pb-10 flex flex-col">
             <header className="p-4 border-b-2 rounded-md bg-gray-100">
               <div className="w-full">
-                <div className="w-full p-6">
-                  <h1 className="text-3xl font-bold tracking-tight text-gray-900">
-                    Dashboard
-                  </h1>
-                </div>
+                <h1 className="text-3xl font-bold tracking-tight text-gray-900">
+                  Dashboard
+                </h1>
               </div>
             </header>
             <div className="w-full flex justify-evenly flex-col-reverse md:flex-row-reverse pt-10">
               <div className="w-full md:w-1/2">
                 <div className="w-full flex flex-col justify-between mb-4 md:mb-7 p-2 md:p-0">
-                  <div className="flex mb-4 flex-col lg:flex-row items-start lg:items-center">
-                    <BtnAddUser handleCreateCustomer={handleCreateCustomer} />
-                    <div className="flex mt-4 lg:mt-0">
-                      {/* <OrderDropdown />
-                      <FilterDropdown /> */}
-                      <SelectOrder />
-                      <SelectFilter />
+                  <div className="flex mb-4 flex-col">
+                    <div className="flex flex-col lg:flex-row items-start lg:items-center">
+                      <div className="flex">
+                        <BtnAddUser
+                          handleCreateCustomer={handleCreateCustomer}
+                        />
+                      </div>
+                      <div className="flex mt-4 lg:mt-0">
+                        <div>
+                          <SelectOrder />
+                        </div>
+                        <div>
+                          <SelectFilter />
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex mt-2">
+                      <div>
+                        <Badge type={"Ordenar"} select={"Predeterminado"} />
+                      </div>
+                      <div className="flex ml-2">
+                        <Badge type={"Filtrar"} select={"Hombres"} />
+                      </div>
                     </div>
                   </div>
                   <div className="w-full mb-4 sm:mb-0">
