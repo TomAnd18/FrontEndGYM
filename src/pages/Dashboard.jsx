@@ -15,6 +15,7 @@ export default function Dashboard() {
   const {
     addCustomersFiltered,
     rechargeCustomers,
+    rechargeCustomersDefault,
     handleCreateCustomer,
     loading,
     getCustomersPresentToday,
@@ -26,6 +27,7 @@ export default function Dashboard() {
     addCustomersPresentTodayFiltered,
     updateStatePayMonthCustomer,
     getDateCreationCustomer,
+    saveSortCustomers,
   } = useCustomerHook();
 
   return (
@@ -55,21 +57,24 @@ export default function Dashboard() {
                       </div>
                       <div className="flex mt-4 lg:mt-0">
                         <div>
-                          <SelectOrder />
+                          <SelectOrder
+                            saveSortCustomers={saveSortCustomers}
+                            rechargeCustomersDefault={rechargeCustomersDefault}
+                          />
                         </div>
                         <div>
                           <SelectFilter />
                         </div>
                       </div>
                     </div>
-                    <div className="flex mt-2">
+                    {/* <div className="flex mt-2">
                       <div>
                         <Badge type={"Ordenar"} select={"Predeterminado"} />
                       </div>
                       <div className="flex ml-2">
                         <Badge type={"Filtrar"} select={"Hombres"} />
                       </div>
-                    </div>
+                    </div> */}
                   </div>
                   <div className="w-full mb-4 sm:mb-0">
                     <SearchUserStackedList

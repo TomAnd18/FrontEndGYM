@@ -26,9 +26,11 @@ export default function FormAddUser({ closeModalForm, handleCreateCustomer }) {
     e.preventDefault();
     setLoading(true);
 
+    const orderCustomers = localStorage.getItem("order");
+
     try {
       //envio los datos del form a redux para que desde ahi guarde el nuevo cliente en la API
-      await handleCreateCustomer(formData);
+      await handleCreateCustomer(formData, orderCustomers);
     } catch (error) {
       console.error("Error:", error);
     } finally {

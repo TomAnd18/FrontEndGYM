@@ -20,7 +20,7 @@ export default function SearchUserStackedList({
 
       addCustomersFiltered(filteredCustomers);
     } else {
-      rechargeCustomers();
+      rechargeCustomers(backupList);
     }
   };
 

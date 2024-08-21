@@ -19,6 +19,46 @@ const customersSlice = createSlice({
       state.list.push(action.payload);
       state.backupList.push(action.payload);
     },
+    addCustomerSortNameAZ(state, action) {
+      // Agregar el nuevo cliente a la lista y ordenarla alfabéticamente de menor a mayor
+      const newList = [...state.list, action.payload];
+      newList.sort((a, b) => a.name.localeCompare(b.name));
+      state.list = newList;
+
+      const newBackupList = [...state.backupList, action.payload];
+      newBackupList.sort((a, b) => a.name.localeCompare(b.name));
+      state.backupList = newBackupList;
+    },
+    addCustomerSortNameZA(state, action) {
+      // Agregar el nuevo cliente a la lista y ordenarla alfabéticamente de mayor a menor
+      const newList = [...state.list, action.payload];
+      newList.sort((a, b) => b.name.localeCompare(a.name));
+      state.list = newList;
+
+      const newBackupList = [...state.backupList, action.payload];
+      newBackupList.sort((a, b) => b.name.localeCompare(a.name));
+      state.backupList = newBackupList;
+    },
+    addCustomerSortSurnameAZ(state, action) {
+      // Agregar el nuevo cliente a la lista y ordenarla por surname de menor a mayor
+      const newList = [...state.list, action.payload];
+      newList.sort((a, b) => a.surname.localeCompare(b.surname));
+      state.list = newList;
+
+      const newBackupList = [...state.backupList, action.payload];
+      newBackupList.sort((a, b) => a.surname.localeCompare(b.surname));
+      state.backupList = newBackupList;
+    },
+    addCustomerSortSurnameZA(state, action) {
+      // Agregar el nuevo cliente a la lista y ordenarla por surname de mayor a menor
+      const newList = [...state.list, action.payload];
+      newList.sort((a, b) => b.surname.localeCompare(a.surname));
+      state.list = newList;
+
+      const newBackupList = [...state.backupList, action.payload];
+      newBackupList.sort((a, b) => b.surname.localeCompare(a.surname));
+      state.backupList = newBackupList;
+    },
     removeCustomer(state, action) {
       state.list = state.list.filter(
         (customer) => customer.id !== action.payload
@@ -40,6 +80,12 @@ const customersSlice = createSlice({
       if (index2 !== -1) {
         state.backupList[index2] = action.payload;
       }
+    },
+    clearAllCustomers(state) {
+      state.items = [];
+    },
+    setCustomersSort(state, action) {
+      state.list = action.payload;
     },
     setUsersToday(state, action) {
       //Nuevo reducer para establecer la lista de usuarios
@@ -87,8 +133,14 @@ const customersSlice = createSlice({
 export const {
   setCustomers,
   addCustomer,
+  addCustomerSortNameAZ,
+  addCustomerSortNameZA,
+  addCustomerSortSurnameAZ,
+  addCustomerSortSurnameZA,
   removeCustomer,
   putCustomer,
+  clearAllCustomers,
+  setCustomersSort,
   setUsersToday,
   addUserToday,
   removeUserToday,

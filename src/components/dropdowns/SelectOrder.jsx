@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Label,
   Listbox,
@@ -9,48 +9,115 @@ import {
   ListboxOptions,
 } from "@headlessui/react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
+import { useSelector } from "react-redux";
 
-const people = [
-  {
-    id: 1,
-    name: "Odernar",
-    avatar:
-      "https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-  },
-  {
-    id: 2,
-    name: "Predeterminado",
-    avatar:
-      "https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-  },
-  {
-    id: 3,
-    name: "Nombre A-Z",
-    avatar:
-      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80",
-  },
-  {
-    id: 4,
-    name: "Nombre Z-A",
-    avatar:
-      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-  },
-  {
-    id: 5,
-    name: "Apellido A-Z",
-    avatar:
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-  },
-  {
-    id: 6,
-    name: "Apellido Z-A",
-    avatar:
-      "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-  },
-];
+export default function SelectOrder({
+  saveSortCustomers,
+  rechargeCustomersDefault,
+}) {
+  const data = useSelector((state) => state.customers.list);
+  const order = localStorage.getItem("order");
+  const [orderCustomers, setOrderCustomers] = useState(order);
 
-export default function SelectOrder() {
-  const [selected, setSelected] = useState(people[0]);
+  const customersList = Object.keys(data).map((key) => {
+    return { id: key, ...data[key] };
+  });
+
+  const customersDefault = () => {
+    setOrderCustomers("default");
+    rechargeCustomersDefault();
+  };
+
+  const sortCustomersNameAZ = () => {
+    setOrderCustomers("nameAZ");
+
+    customersList.sort((a, b) => a.name.localeCompare(b.name));
+
+    //envio los clientes ya ordenados
+    saveSortCustomers(customersList);
+  };
+
+  const sortCustomersNameZA = () => {
+    setOrderCustomers("nameZA");
+
+    customersList.sort((a, b) => b.name.localeCompare(a.name));
+
+    //envio los clientes ya ordenados
+    saveSortCustomers(customersList);
+  };
+
+  const sortCustomersSurnameAZ = () => {
+    setOrderCustomers("surnameAZ");
+
+    customersList.sort((a, b) => a.surname.localeCompare(b.surname));
+
+    //envio los clientes ya ordenados
+    saveSortCustomers(customersList);
+  };
+
+  const sortCustomersSurnameZA = () => {
+    setOrderCustomers("surnameZA");
+
+    customersList.sort((a, b) => b.surname.localeCompare(a.surname));
+
+    //envio los clientes ya ordenados
+    saveSortCustomers(customersList);
+  };
+
+  const people = [
+    {
+      id: 1,
+      name: "Odernar",
+      onClickAction: sortCustomersNameAZ,
+    },
+    {
+      id: 2,
+      name: "Predeterminado",
+      onClickAction: customersDefault,
+    },
+    {
+      id: 3,
+      name: "Nombre A-Z",
+      onClickAction: sortCustomersNameAZ,
+    },
+    {
+      id: 4,
+      name: "Nombre Z-A",
+      onClickAction: sortCustomersNameZA,
+    },
+    {
+      id: 5,
+      name: "Apellido A-Z",
+      onClickAction: sortCustomersSurnameAZ,
+    },
+    {
+      id: 6,
+      name: "Apellido Z-A",
+      onClickAction: sortCustomersSurnameZA,
+    },
+  ];
+
+  const selectedOrder = () => {
+    if (order === "nameAZ") {
+      return people[2];
+    }
+    if (order === "nameZA") {
+      return people[3];
+    }
+    if (order === "surnameAZ") {
+      return people[4];
+    }
+    if (order === "surnameZA") {
+      return people[5];
+    }
+    return people[1];
+  };
+
+  const [selected, setSelected] = useState(selectedOrder);
+
+  useEffect(() => {
+    localStorage.setItem("order", orderCustomers);
+  }, [orderCustomers, order, selected]);
 
   return (
     <Listbox value={selected} onChange={setSelected}>
@@ -65,7 +132,7 @@ export default function SelectOrder() {
               src={selected.avatar}
               className="h-5 w-5 flex-shrink-0 rounded-full"
             /> */}
-            <span className="ml-3 block truncate">{selected.name}</span>
+            <span className="ml-3 block truncate">{people[0].name}</span>
           </span>
           <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
             <ChevronUpDownIcon
@@ -87,6 +154,7 @@ export default function SelectOrder() {
                 key={person.id}
                 value={person}
                 className="group relative cursor-default select-none py-2 pl-3 pr-9 text-gray-900 data-[focus]:bg-blue-600 data-[focus]:text-white"
+                onClick={person.onClickAction}
               >
                 <div className="flex items-center">
                   <span className="ml-3 block truncate font-normal group-data-[selected]:font-semibold">

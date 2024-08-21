@@ -12,12 +12,17 @@ import {
   removeCustomer,
   setCustomers,
   putCustomer,
+  clearAllCustomers,
   setUsersToday,
   addUserToday,
   removeUserToday,
   updateUserToday,
   setFilteredCustomers,
   setFilteredPresentCustomers,
+  addCustomerSortNameAZ,
+  addCustomerSortNameZA,
+  addCustomerSortSurnameAZ,
+  addCustomerSortSurnameZA,
 } from "../redux/customersSlice";
 import {
   getAllCustomersFirebase,
@@ -64,12 +69,27 @@ const useCustomerHook = () => {
   }, [dispatch]);
 
   //Funcion para crear un cliente de la base de datos MySQL
-  const handleCreateCustomer = async (customerData) => {
+  const handleCreateCustomer = async (customerData, order) => {
     try {
       // Llamar a la función de la API para crear un cliente
       const newCustomer = await postAddCustomer(customerData);
-      //guardar en redux al cliente nuevo
-      dispatch(addCustomer(newCustomer));
+
+      //guardar en redux al cliente nuevo dependiendo el tipo de ordenamiento
+      if (order == "default") {
+        dispatch(addCustomer(newCustomer));
+      }
+      if (order == "nameAZ") {
+        dispatch(addCustomerSortNameAZ(newCustomer));
+      }
+      if (order == "nameZA") {
+        dispatch(addCustomerSortNameZA(newCustomer));
+      }
+      if (order == "surnameAZ") {
+        dispatch(addCustomerSortSurnameAZ(newCustomer));
+      }
+      if (order == "surnameZA") {
+        dispatch(addCustomerSortSurnameZA(newCustomer));
+      }
       //Guardar Cliente presente el dia actual
       dispatch(addUserToday(newCustomer));
     } catch (error) {
@@ -105,6 +125,14 @@ const useCustomerHook = () => {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const saveSortCustomers = (data) => {
+    //Elimino todos los clientes del dispatch
+    dispatch(clearAllCustomers());
+
+    //Agrego a los clientes ordenados
+    dispatch(setCustomers(data));
   };
 
   //Funcion para obtener los presentes del dia actual
@@ -157,7 +185,12 @@ const useCustomerHook = () => {
     dispatch(setFilteredCustomers(customers));
   };
 
-  const rechargeCustomers = async () => {
+  const rechargeCustomers = async (data) => {
+    dispatch(setCustomers(data));
+    //fetchData();
+  };
+
+  const rechargeCustomersDefault = async () => {
     fetchData();
   };
 
@@ -209,11 +242,13 @@ const useCustomerHook = () => {
     handleCreateCustomer,
     handleDeleteCustomer,
     handleUpdateCustomer,
+    saveSortCustomers,
     getCustomersPresentToday,
     setCustomerPresentToday,
     deleteCustomerPresentToday,
     addCustomersFiltered,
     rechargeCustomers,
+    rechargeCustomersDefault,
     addCustomersPresentTodayFiltered,
     updateStatePayMonthCustomer,
     getDateCreationCustomer,

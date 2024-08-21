@@ -28,7 +28,7 @@ export default function ItemList({
     <>
       <li
         key={"item-person-" + index}
-        className={`w-full flex flex-col xl:flex-row justify-between gap-x-6 py-2 px-4 hover:bg-gray-50 hover:shadow-md hover:border-l-2 hover:border-l-blue-600 hover:border-r-2 hover:border-r-blue-600`}
+        className={`w-full flex flex-col xl:flex-row justify-between gap-x-6 py-2 px-4 hover:bg-gray-100 hover:shadow-md xl:hover:rounded-full`}
       >
         <div className="w-auto flex min-w-0 gap-x-4 items-center">
           <div className="h-7 w-7 rounded-full bg-gray-200 flex justify-center items-center">

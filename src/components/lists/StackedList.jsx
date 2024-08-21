@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import ItemList from "./ItemList";
 import Spinner from "../spinners/Spinner";
+import { useEffect, useState } from "react";
 
 export default function StackedList({
   loading,
@@ -12,7 +13,31 @@ export default function StackedList({
   updateStatePayMonthCustomer,
   getDateCreationCustomer,
 }) {
+  const order = localStorage.getItem("order");
   const data = useSelector((state) => state.customers.list);
+  const [dataC, setDataC] = useState([]);
+
+  useEffect(() => {
+    let sortedData = [...data];
+    if (order === "nameAZ") {
+      console.log("nameAZ");
+      sortedData.sort((a, b) => a.name.localeCompare(b.name));
+    }
+    if (order === "nameZA") {
+      console.log("nameZA");
+      sortedData.sort((a, b) => b.name.localeCompare(a.name));
+    }
+    if (order === "surnameAZ") {
+      console.log("surnameAZ");
+      sortedData.sort((a, b) => a.surname.localeCompare(b.surname));
+    }
+    if (order === "surnameZA") {
+      console.log("surnameZA");
+      sortedData.sort((a, b) => b.surname.localeCompare(a.surname));
+    }
+
+    setDataC(sortedData);
+  }, [order, data]);
 
   if (loading) {
     return (
@@ -46,22 +71,23 @@ export default function StackedList({
 
   return (
     <ul role="list" className="list-none">
-      {data.map((person, index) => {
-        return (
-          <ItemList
-            key={`stacked-list${index}`}
-            person={person}
-            index={index}
-            scrollRefs={scrollRefs}
-            setCustomerPresentToday={setCustomerPresentToday}
-            deleteCustomerPresentToday={deleteCustomerPresentToday}
-            handleDeleteCustomer={handleDeleteCustomer}
-            handleUpdateCustomer={handleUpdateCustomer}
-            updateStatePayMonthCustomer={updateStatePayMonthCustomer}
-            getDateCreationCustomer={getDateCreationCustomer}
-          />
-        );
-      })}
+      {!loading &&
+        dataC.map((person, index) => {
+          return (
+            <ItemList
+              key={`stacked-list${index}`}
+              person={person}
+              index={index}
+              scrollRefs={scrollRefs}
+              setCustomerPresentToday={setCustomerPresentToday}
+              deleteCustomerPresentToday={deleteCustomerPresentToday}
+              handleDeleteCustomer={handleDeleteCustomer}
+              handleUpdateCustomer={handleUpdateCustomer}
+              updateStatePayMonthCustomer={updateStatePayMonthCustomer}
+              getDateCreationCustomer={getDateCreationCustomer}
+            />
+          );
+        })}
     </ul>
   );
 }

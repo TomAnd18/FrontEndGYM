@@ -216,7 +216,7 @@ const CheckBoxGroup = ({
             className="relative flex gap-x-3 ml-1.5"
           >
             <div
-              className={`flex h-6 items-center relative rounded-md ${
+              className={`flex h-6 items-center rounded-lg relative ${
                 checkbox.checked ? "text-white" : "text-black hover:text-white"
               }`}
             >
@@ -224,7 +224,15 @@ const CheckBoxGroup = ({
                 id={`checkbox${person.id}-${checkbox.id}`}
                 name={`checkbox-${checkbox.id}`}
                 type="checkbox"
-                className="h-6 w-6 rounded-md border-gray-200 text-blue-500 focus:ring-blue-500 checked:bg-none cursor-pointer hover:bg-blue-500"
+                className={`h-6 w-6 ${
+                  checkbox.id === getCurrentDayOfMonth()
+                    ? "rounded-b-lg rounded-t-sm"
+                    : "rounded-lg"
+                } ${
+                  checkbox.id === getCurrentDayOfMonth()
+                    ? "border-blue-500 border-2"
+                    : "border-gray-200"
+                } text-blue-500 focus:ring-blue-500 checked:bg-none cursor-pointer hover:bg-blue-500`}
                 checked={checkbox.checked}
                 onChange={() => handleCheckBoxChange(checkbox.id)}
               />

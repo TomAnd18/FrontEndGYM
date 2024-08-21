@@ -71,7 +71,7 @@ export default function SelectFilter() {
               src={selected.avatar}
               className="h-5 w-5 flex-shrink-0 rounded-full"
             /> */}
-            <span className="ml-3 block truncate">{selected.name}</span>
+            <span className="ml-3 block truncate">{people[0].name}</span>
           </span>
           <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
             <ChevronUpDownIcon
