@@ -20,19 +20,15 @@ export default function StackedList({
   useEffect(() => {
     let sortedData = [...data];
     if (order === "nameAZ") {
-      console.log("nameAZ");
       sortedData.sort((a, b) => a.name.localeCompare(b.name));
     }
     if (order === "nameZA") {
-      console.log("nameZA");
       sortedData.sort((a, b) => b.name.localeCompare(a.name));
     }
     if (order === "surnameAZ") {
-      console.log("surnameAZ");
       sortedData.sort((a, b) => a.surname.localeCompare(b.surname));
     }
     if (order === "surnameZA") {
-      console.log("surnameZA");
       sortedData.sort((a, b) => b.surname.localeCompare(a.surname));
     }
 

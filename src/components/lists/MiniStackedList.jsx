@@ -24,13 +24,13 @@ export default function MiniStackedList({ loading, getCustomersPresentToday }) {
   return (
     <ul
       role="list"
-      className="divide-y divide-gray-100 py-2 rounded-lg bg-gray-50 shadow-md"
+      className="divide-y divide-gray-200 py-2 rounded-lg bg-gray-100 shadow-gray-300 shadow-md"
     >
       {customers.length === 0 ? (
         <div className="flex w-full justify-center items-center py-8">
-          <span className="w-5 h-5">
+          <span className="w-4 h-4">
             <svg
-              className="w-5 h-5"
+              className="w-4 h-4"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 512 512"
             >
@@ -40,7 +40,7 @@ export default function MiniStackedList({ loading, getCustomersPresentToday }) {
               />
             </svg>
           </span>
-          <p className="font-semibold ml-2">No hay registros</p>
+          <p className="font-semibold ml-2 text-sm">No hay registros</p>
         </div>
       ) : (
         customers.map((person, index) => (

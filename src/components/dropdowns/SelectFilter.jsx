@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Label,
   Listbox,
@@ -9,54 +9,154 @@ import {
   ListboxOptions,
 } from "@headlessui/react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
+import { useSelector } from "react-redux";
 
-const people = [
-  {
-    id: 1,
-    name: "Filtrar",
-    avatar:
-      "https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-  },
-  {
-    id: 2,
-    name: "Activos",
-    avatar:
-      "https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-  },
-  {
-    id: 3,
-    name: "Pagar",
-    avatar:
-      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80",
-  },
-  {
-    id: 4,
-    name: "Hombres",
-    avatar:
-      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-  },
-  {
-    id: 5,
-    name: "Mujeres",
-    avatar:
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-  },
-  {
-    id: 6,
-    name: "Premium",
-    avatar:
-      "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-  },
-  {
-    id: 7,
-    name: "Standard",
-    avatar:
-      "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-  },
-];
+export default function SelectFilter({ saveFilterCustomers }) {
+  const data = useSelector((state) => state.customers.backupList);
+  const filter = localStorage.getItem("filter");
+  const [filterCustomers, setFilterCustomers] = useState(filter);
+  const filteredData = data;
 
-export default function SelectFilter() {
-  const [selected, setSelected] = useState(people[0]);
+  const handleFilterAll = () => {
+    setFilterCustomers("all");
+
+    //envio los clientes ya filtrados
+    saveFilterCustomers(filteredData);
+  };
+
+  const handleFilterActive = () => {
+    setFilterCustomers("active");
+
+    const filteredData = data.filter(
+      (item) => item.assists[item.assists.length - 1].pay_month
+    );
+
+    //envio los clientes ya filtrados
+    saveFilterCustomers(filteredData);
+  };
+
+  const handleFilterInactive = () => {
+    setFilterCustomers("inactive");
+
+    const filteredData = data.filter(
+      (item) => !item.assists[item.assists.length - 1].pay_month
+    );
+
+    //envio los clientes ya filtrados
+    saveFilterCustomers(filteredData);
+  };
+
+  const handleFilterHombre = () => {
+    setFilterCustomers("hombre");
+
+    const filteredData = data.filter((item) => item.gender === "Hombre");
+
+    //envio los clientes ya filtrados
+    saveFilterCustomers(filteredData);
+  };
+
+  const handleFilterMujer = () => {
+    setFilterCustomers("mujer");
+
+    const filteredData = data.filter((item) => item.gender === "Mujer");
+
+    //envio los clientes ya filtrados
+    saveFilterCustomers(filteredData);
+  };
+
+  const handleFilterPremium = () => {
+    setFilterCustomers("premium");
+
+    const filteredData = data.filter((item) => item.subscription === "Premium");
+
+    //envio los clientes ya filtrados
+    saveFilterCustomers(filteredData);
+  };
+
+  const handleFilterStandard = () => {
+    setFilterCustomers("standard");
+
+    const filteredData = data.filter(
+      (item) => item.subscription === "Standard"
+    );
+
+    //envio los clientes ya filtrados
+    saveFilterCustomers(filteredData);
+  };
+
+  const people = [
+    {
+      id: 1,
+      name: "Filtrar",
+      onclickEvent: handleFilterAll,
+    },
+    {
+      id: 2,
+      name: "Todos",
+      onclickEvent: handleFilterAll,
+    },
+    {
+      id: 3,
+      name: "Activos",
+      onclickEvent: handleFilterActive,
+    },
+    {
+      id: 4,
+      name: "Inactivos",
+      onclickEvent: handleFilterInactive,
+    },
+    {
+      id: 5,
+      name: "Hombres",
+      onclickEvent: handleFilterHombre,
+    },
+    {
+      id: 6,
+      name: "Mujeres",
+      onclickEvent: handleFilterMujer,
+    },
+    {
+      id: 7,
+      name: "Premium",
+      onclickEvent: handleFilterPremium,
+    },
+    {
+      id: 8,
+      name: "Standard",
+      onclickEvent: handleFilterStandard,
+    },
+  ];
+  const selectedFilter = () => {
+    if (filter === "active") {
+      return people[2];
+    }
+    if (filter === "inactive") {
+      return people[3];
+    }
+    if (filter === "hombre") {
+      return people[4];
+    }
+    if (filter === "mujer") {
+      return people[5];
+    }
+    if (filter === "premium") {
+      return people[6];
+    }
+    if (filter === "standard") {
+      return people[7];
+    }
+    return people[1];
+  };
+
+  const [selected, setSelected] = useState(people[1]);
+
+  useEffect(() => {
+    console.log(selected);
+
+    localStorage.setItem("filter", filterCustomers);
+  }, [filterCustomers, filter, selected]);
+
+  // const [selected, setSelected] = useState(people[0]);
 
   return (
     <Listbox value={selected} onChange={setSelected}>
@@ -66,11 +166,6 @@ export default function SelectFilter() {
       <div className="relative ml-4 w-32">
         <ListboxButton className="relative w-full h-full cursor-default rounded-full bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 sm:text-sm sm:leading-6">
           <span className="flex items-center">
-            {/* <img
-              alt=""
-              src={selected.avatar}
-              className="h-5 w-5 flex-shrink-0 rounded-full"
-            /> */}
             <span className="ml-3 block truncate">{people[0].name}</span>
           </span>
           <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
@@ -83,7 +178,7 @@ export default function SelectFilter() {
 
         <ListboxOptions
           transition
-          className="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none data-[closed]:data-[leave]:opacity-0 data-[leave]:transition data-[leave]:duration-100 data-[leave]:ease-in sm:text-sm"
+          className="absolute z-10 mt-1 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none data-[closed]:data-[leave]:opacity-0 data-[leave]:transition data-[leave]:duration-100 data-[leave]:ease-in sm:text-sm"
         >
           {people.map((person, index) =>
             index == 0 ? (
@@ -93,6 +188,7 @@ export default function SelectFilter() {
                 key={person.id}
                 value={person}
                 className="group relative cursor-default select-none py-2 pl-3 pr-9 text-gray-900 data-[focus]:bg-blue-600 data-[focus]:text-white"
+                onClick={person.onclickEvent}
               >
                 <div className="flex items-center">
                   <span className="ml-3 block truncate font-normal group-data-[selected]:font-semibold">

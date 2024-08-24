@@ -23,6 +23,7 @@ import {
   addCustomerSortNameZA,
   addCustomerSortSurnameAZ,
   addCustomerSortSurnameZA,
+  setCustomersSort,
 } from "../redux/customersSlice";
 import {
   getAllCustomersFirebase,
@@ -135,6 +136,14 @@ const useCustomerHook = () => {
     dispatch(setCustomers(data));
   };
 
+  const saveFilterCustomers = (data) => {
+    //Elimino todos los clientes del dispatch
+    dispatch(clearAllCustomers());
+
+    //Agrego a los clientes ordenados
+    dispatch(setCustomersSort(data));
+  };
+
   //Funcion para obtener los presentes del dia actual
   const getCustomersPresentToday = async () => {
     try {
@@ -243,6 +252,7 @@ const useCustomerHook = () => {
     handleDeleteCustomer,
     handleUpdateCustomer,
     saveSortCustomers,
+    saveFilterCustomers,
     getCustomersPresentToday,
     setCustomerPresentToday,
     deleteCustomerPresentToday,

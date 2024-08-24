@@ -112,8 +112,8 @@ export const updateCheckPayDataUser = async (dataUser) => {
 export const getAllCustomersFirebase = async () => {
   try {
     const response = await fetch(`${urlFirebase}.json`);
-    const customers = response.json();
-    return customers;
+    const customers = await response.json();
+    return customers.filter((item) => item !== null);
   } catch (error) {
     console.log(error);
   }

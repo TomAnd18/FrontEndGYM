@@ -1,5 +1,3 @@
-"use client";
-
 import { useEffect, useState } from "react";
 import {
   Label,
@@ -24,13 +22,14 @@ export default function SelectOrder({
   });
 
   const customersDefault = () => {
+    localStorage.setItem("filter", "all");
     setOrderCustomers("default");
     rechargeCustomersDefault();
   };
 
   const sortCustomersNameAZ = () => {
     setOrderCustomers("nameAZ");
-
+    rechargeCustomersDefault();
     customersList.sort((a, b) => a.name.localeCompare(b.name));
 
     //envio los clientes ya ordenados
@@ -39,7 +38,7 @@ export default function SelectOrder({
 
   const sortCustomersNameZA = () => {
     setOrderCustomers("nameZA");
-
+    rechargeCustomersDefault();
     customersList.sort((a, b) => b.name.localeCompare(a.name));
 
     //envio los clientes ya ordenados
@@ -48,7 +47,7 @@ export default function SelectOrder({
 
   const sortCustomersSurnameAZ = () => {
     setOrderCustomers("surnameAZ");
-
+    rechargeCustomersDefault();
     customersList.sort((a, b) => a.surname.localeCompare(b.surname));
 
     //envio los clientes ya ordenados
@@ -57,7 +56,7 @@ export default function SelectOrder({
 
   const sortCustomersSurnameZA = () => {
     setOrderCustomers("surnameZA");
-
+    rechargeCustomersDefault();
     customersList.sort((a, b) => b.surname.localeCompare(a.surname));
 
     //envio los clientes ya ordenados
@@ -121,17 +120,9 @@ export default function SelectOrder({
 
   return (
     <Listbox value={selected} onChange={setSelected}>
-      {/* <Label className="block text-sm font-medium leading-6 text-gray-900">
-        Assigned to
-      </Label> */}
       <div className="relative inline-block ml-0 lg:ml-4 w-44">
         <ListboxButton className="relative w-full h-full cursor-default rounded-full bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 sm:text-sm sm:leading-6">
           <span className="flex items-center">
-            {/* <img
-              alt=""
-              src={selected.avatar}
-              className="h-5 w-5 flex-shrink-0 rounded-full"
-            /> */}
             <span className="ml-3 block truncate">{people[0].name}</span>
           </span>
           <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">

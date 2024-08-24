@@ -54,7 +54,7 @@ export default function ItemMiniStackedList({ person }) {
               </span>
             ) : (
               <span
-                className={`text-xs font-bold uppercase ${
+                className={`text-xxs font-bold uppercase ${
                   activeCustomer ? "text-green-600" : "text-red-600"
                 }`}
               >

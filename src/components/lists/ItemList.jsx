@@ -32,7 +32,7 @@ export default function ItemList({
       >
         <div className="w-auto flex min-w-0 gap-x-4 items-center">
           <div className="h-7 w-7 rounded-full bg-gray-200 flex justify-center items-center">
-            <p className="text-gray-500 font-bold text-sm">{`${person.id}`}</p>
+            <p className="text-gray-500 font-bold text-sm">{`${index + 1}`}</p>
           </div>
           <div className="min-w-0 flex-auto">
             <div className="text-md font-semibold leading-3 flex items-center">
