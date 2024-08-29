@@ -14,7 +14,7 @@ export default function ItemMiniStackedList({ person }) {
   return (
     <>
       <li
-        className={`flex justify-between gap-x-6 py-2 px-4 cursor-pointer hover:shadow-inner hover:bg-gray-100`}
+        className={`flex justify-between gap-x-6 py-2 px-4 cursor-pointer hover:shadow-md hover:bg-white`}
       >
         <div className="flex min-w-0 gap-x-4 items-center">
           <div className="min-w-0 flex items-center">

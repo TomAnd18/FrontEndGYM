@@ -42,7 +42,7 @@ export default function InfoGeneral({ loading }) {
             Información general
           </p>
         </div>
-        <div className="flex justify-between mb-1">
+        <div className="flex justify-between mb-3">
           <div className="flex items-center">
             <span className="w-3 h-3 mr-1">
               <svg
@@ -64,13 +64,13 @@ export default function InfoGeneral({ loading }) {
                 <Spinner />
               </span>
             ) : (
-              <p className="ml-2 font-semibold text-gray-400">
+              <p className="ml-2 font-semibold text-gray-400 text-sm">
                 {allCustomers.length}
               </p>
             )}
           </div>
         </div>
-        <div className="flex justify-between mb-1">
+        <div className="flex justify-between mb-3">
           <div className="flex items-center">
             <span className="w-3.5 h-3.5 mr-1">
               <svg
@@ -92,13 +92,13 @@ export default function InfoGeneral({ loading }) {
                 <Spinner />
               </span>
             ) : (
-              <p className="ml-2 font-semibold text-gray-400">
+              <p className="ml-2 font-semibold text-gray-400 text-sm">
                 {filterInactive()}
               </p>
             )}
           </div>
         </div>
-        <div className="flex justify-between mb-1">
+        <div className="flex justify-between mb-3">
           <div className="flex items-center">
             <span className="w-3.5 h-3.5 mr-1">
               <svg
@@ -118,13 +118,13 @@ export default function InfoGeneral({ loading }) {
                 <Spinner />
               </span>
             ) : (
-              <p className="ml-2 font-semibold text-gray-400">
+              <p className="ml-2 font-semibold text-gray-400 text-sm">
                 {filterHombre()}
               </p>
             )}
           </div>
         </div>
-        <div className="flex justify-between mb-1">
+        <div className="flex justify-between mb-3">
           <div className="flex items-center">
             <span className="w-3.5 h-3.5 mr-1">
               <svg
@@ -144,13 +144,13 @@ export default function InfoGeneral({ loading }) {
                 <Spinner />
               </span>
             ) : (
-              <p className="ml-2 font-semibold text-gray-400">
+              <p className="ml-2 font-semibold text-gray-400 text-sm">
                 {filterMujer()}
               </p>
             )}
           </div>
         </div>
-        <div className="flex justify-between mb-1">
+        <div className="flex justify-between mb-3">
           <div className="flex items-center">
             <span className="w-3.5 h-3.5 mr-1">
               <svg
@@ -172,7 +172,7 @@ export default function InfoGeneral({ loading }) {
                 <Spinner />
               </span>
             ) : (
-              <p className="ml-2 font-semibold text-gray-400">
+              <p className="ml-2 font-semibold text-gray-400 text-sm">
                 {filterPremium()}
               </p>
             )}
@@ -200,7 +200,7 @@ export default function InfoGeneral({ loading }) {
                 <Spinner />
               </span>
             ) : (
-              <p className="ml-2 font-semibold text-gray-400">
+              <p className="ml-2 font-semibold text-gray-400 text-sm">
                 {filterStandard()}
               </p>
             )}

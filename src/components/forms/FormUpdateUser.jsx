@@ -118,7 +118,7 @@ export default function FormUpdateUser({
                 htmlFor="gender"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
-                Genero
+                Género
               </label>
               <div className="mt-2">
                 <select

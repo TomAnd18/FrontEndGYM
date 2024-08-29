@@ -13,7 +13,7 @@ export default function MiniStackedList({ loading, getCustomersPresentToday }) {
   if (loading) {
     return (
       <div className="w-full flex justify-center items-center">
-        <p>Obteniendo asistencias</p>
+        <p className="text-sm">Obteniendo asistencias</p>
         <span className="block w-4 h-4 ml-2">
           <Spinner />
         </span>
@@ -22,10 +22,7 @@ export default function MiniStackedList({ loading, getCustomersPresentToday }) {
   }
 
   return (
-    <ul
-      role="list"
-      className="divide-y divide-gray-200 py-2 rounded-lg bg-gray-100 shadow-gray-300 shadow-md"
-    >
+    <ul role="list" className="divide-y divide-gray-200">
       {customers.length === 0 ? (
         <div className="flex w-full justify-center items-center py-8">
           <span className="w-4 h-4">

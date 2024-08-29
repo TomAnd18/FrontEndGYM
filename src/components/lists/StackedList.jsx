@@ -81,6 +81,7 @@ export default function StackedList({
               handleUpdateCustomer={handleUpdateCustomer}
               updateStatePayMonthCustomer={updateStatePayMonthCustomer}
               getDateCreationCustomer={getDateCreationCustomer}
+              loading={loading}
             />
           );
         })}

@@ -14,6 +14,8 @@ export default function ModalViewUser({
   person,
   updateStatePayMonthCustomer,
   getDateCreationCustomer,
+  loading,
+  activeCustomer,
 }) {
   const [open, setOpen] = useState(false);
   // const [dateCreation, setDateCreation] = useState("");
@@ -77,7 +79,23 @@ export default function ModalViewUser({
                         </svg>
                       </div>
                       <p>{person.name + " " + person.surname}</p>
+                      {loading ? (
+                        <span className="w-3 h-3 ml-5">
+                          <Spinner />
+                        </span>
+                      ) : (
+                        <span
+                          className={`text-xs px-2 py-0.5 ${
+                            activeCustomer ? "bg-green-600" : "bg-red-600"
+                          } text-white ml-2 rounded-full uppercase`}
+                        >
+                          {activeCustomer ? "Activo" : "Pagar"}
+                        </span>
+                      )}
                     </div>
+                    <span className="text-xs flex border-l-2 border-green-500 pl-2">
+                      {` fecha de registro: 18-05-2024`}
+                    </span>
                     {/* <span className="text-xs flex border-l-2 border-green-500 pl-2">
                       {` fecha de registro: ${formatDateDataBase(
                         dateCreation
@@ -149,7 +167,7 @@ export default function ModalViewUser({
                                     </svg>
                                   </span>
                                   <p className="text-sm font-medium leading-6 text-gray-900 ml-2">
-                                    Genero
+                                    Género
                                   </p>
                                 </div>
                                 <div className="flex items-center">

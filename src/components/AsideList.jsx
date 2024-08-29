@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import SearchPresentUsers from "./searches/SearchPresentUsers";
 import MiniStackedList from "./lists/MiniStackedList";
 import Spinner from "./spinners/Spinner";
+import Accordion from "./dropdowns/Accordion";
 
 export default function AsideList({
   addCustomersPresentTodayFiltered,
@@ -25,7 +26,7 @@ export default function AsideList({
 
   return (
     <>
-      <div className="p-4 bg-gray-100 shadow-md shadow-gray-300 rounded-lg xl:sticky xl:top-24 z-30">
+      <div className="p-4 bg-gray-100 shadow-md shadow-gray-300 rounded-lg z-10">
         <div>
           <div className="w-full flex justify-center items-center mb-3 ">
             <span className="w-4 h-4">
@@ -63,13 +64,13 @@ export default function AsideList({
                   <Spinner />
                 </span>
               ) : (
-                <p className="ml-2 font-semibold text-gray-400">
+                <p className="ml-2 font-semibold text-gray-400 text-sm">
                   {customers.length}
                 </p>
               )}
             </div>
           </div>
-          <div className="flex justify-between mt-1">
+          <div className="flex justify-between mt-2">
             <div className="flex items-center">
               <span className="w-4 h-4">
                 <svg
@@ -89,7 +90,7 @@ export default function AsideList({
                   <Spinner />
                 </span>
               ) : (
-                <p className="ml-2 font-semibold text-gray-400">
+                <p className="ml-2 font-semibold text-gray-400 text-sm">
                   {allCustomers.length - customers.length}
                 </p>
               )}
@@ -97,14 +98,14 @@ export default function AsideList({
           </div>
         </div>
       </div>
-      <div className="w-auto py-4 xl:sticky xl:top-[13.5rem] z-30">
+      <div className="w-auto py-4 z-10">
         <SearchPresentUsers
           addCustomersPresentTodayFiltered={addCustomersPresentTodayFiltered}
           getCustomersPresentToday={getCustomersPresentToday}
         />
       </div>
-      <div className="w-auto xl:sticky xl:top-72">
-        <MiniStackedList
+      <div className="mb-8">
+        <Accordion
           loading={loading}
           getCustomersPresentToday={getCustomersPresentToday}
         />
